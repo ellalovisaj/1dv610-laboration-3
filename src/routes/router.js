@@ -8,11 +8,11 @@ export function createRouter(controllers) {
 
   router.get('/test-form', (req, res) => controllers.home.testForm(req, res))
 
-  router.post('/test-form', (req, res, next) => controllers.home.testFormPost(req, res, next))
+  router.post('/test-form', (req, res) => controllers.home.testFormPost(req, res))
 
   router.get('/worktime', (req, res) => controllers.worktime.worktime(req, res))
 
-  router.post('/worktime', (req, res, next) => controllers.worktime.worktimePost(req, res, next))
+  router.post('/worktime', (req, res) => controllers.worktime.worktimePost(req, res))
 
   // Catch 404. Always last route in router
   router.use((_req, _res, next) => next(createError(404)))
