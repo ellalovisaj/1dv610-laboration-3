@@ -7,9 +7,11 @@ import morgan from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { HolidayService } from './models/HolidayService.js'
-import { CalendarController } from './controllers/CalendarController.js'
+import { HolidayService } from './models/calendar/HolidayService.js'
+import { HomeController } from './controllers/HomeController.js'
 import { createRouter } from './routes/router.js'
+import { WorktimeCalculator } from './models/worktime/WorktimeCalculator.js'
+import { WorktimeController } from './controllers/WorktimeController.js'
 
 try {
   const app = express()
@@ -42,8 +44,12 @@ try {
 
   // Add services and register router with services
   const holidayService = new HolidayService()
-  const calendarController = new CalendarController(holidayService)
-  const router = createRouter(calendarController)
+
+  const controllers = {
+    home: new HomeController(holidayService),
+    worktime: new WorktimeController(holidayService),
+  }
+  const router = createRouter(controllers)
   app.use('/', router)
 
   // Error handle
@@ -52,7 +58,7 @@ try {
     if (err.status === 404) {
       return res.status(404).sendFile(join(fullDirectoryName, 'views', 'errors', '404.html'))
     }
-    
+
     console.error(err)
 
     // If not 404 and not in development, send 500.html (without details).

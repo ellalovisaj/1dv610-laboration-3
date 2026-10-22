@@ -1,7 +1,7 @@
 /**
  *
  */
-export class CalendarController {
+export class HomeController {
   #holidayService
 
   constructor(holidayService) {
@@ -24,7 +24,7 @@ export class CalendarController {
   testFormPost(req, res) {
     const date = req.body.date
     const holiday = this.#holidayService.isHoliday(date)
-    console.log(holiday)
-    res.render('calendar/form', { date, holiday } )
+
+    res.render('calendar/form', { date, holiday })
   }
 }

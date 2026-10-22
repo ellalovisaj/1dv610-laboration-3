@@ -1,4 +1,4 @@
-import { HolidayCalendar } from "Holiday-Calendar";
+import { HolidayCalendar } from 'Holiday-Calendar'
 
 export class HolidayService {
   isHoliday(date) {
