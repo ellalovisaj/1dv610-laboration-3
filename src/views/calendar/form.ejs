@@ -1,0 +1,10 @@
+<form action="/test-form" method="post" id="form">
+  <input type="text" name="test" placeholder="Test" required>
+  <input type="date" id="date" name="date">
+</form>
+
+<% if (date) { %>
+
+  <p> Date is <%= date %>.
+
+<% } %>

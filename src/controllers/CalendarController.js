@@ -12,4 +12,13 @@ export class CalendarController {
   async index(_req, res, _next) {
     res.render('home/index')
   }
+
+  async testForm(_req, res, _next) {
+    res.render('calendar/form', {  })
+  }
+
+  async testFormPost(req, res, _next) {
+    const date = req.body.date
+    res.render('calendar/form', { date })
+  }
 }
