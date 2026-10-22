@@ -2,23 +2,29 @@
  *
  */
 export class CalendarController {
+  #holidayService
+
+  constructor(holidayService) {
+    this.#holidayService = holidayService
+  }
   /**
    * Renders home page.
    *
    * @param {object} _req - Express request object.
    * @param {object} res - Express response object.
-   * @param {object} _next - Express next middleware function.
    */
-  async index(_req, res, _next) {
+  index(_req, res) {
     res.render('home/index')
   }
 
-  async testForm(_req, res, _next) {
-    res.render('calendar/form', {  })
+  testForm(_req, res) {
+    res.render('calendar/form', { date: '', holiday: false })
   }
 
-  async testFormPost(req, res, _next) {
+  testFormPost(req, res) {
     const date = req.body.date
-    res.render('calendar/form', { date })
+    const holiday = this.#holidayService.isHoliday(date)
+    console.log(holiday)
+    res.render('calendar/form', { date, holiday } )
   }
 }

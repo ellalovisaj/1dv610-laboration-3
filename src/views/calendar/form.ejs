@@ -4,7 +4,9 @@
 </form>
 
 <% if (date) { %>
+  <p> Date is <%= date %>.</p>
+<% } %>
 
-  <p> Date is <%= date %>.
-
+<% if (holiday !== undefined) { %>
+  <p> Is a holiday? <%= holiday %>.</p>
 <% } %>

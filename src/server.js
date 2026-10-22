@@ -6,7 +6,10 @@ import morgan from 'morgan'
 
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { router } from './routes/router.js'
+
+import { HolidayService } from './models/HolidayService.js'
+import { CalendarController } from './controllers/CalendarController.js'
+import { createRouter } from './routes/router.js'
 
 try {
   const app = express()
@@ -37,16 +40,20 @@ try {
     next()
   })
 
-  // Register routes
+  // Add services and register router with services
+  const holidayService = new HolidayService()
+  const calendarController = new CalendarController(holidayService)
+  const router = createRouter(calendarController)
   app.use('/', router)
 
   // Error handle
   app.use((err, req, res, _next) => {
-    console.error(err)
     // If Status code is 404, send 404.html.
     if (err.status === 404) {
       return res.status(404).sendFile(join(fullDirectoryName, 'views', 'errors', '404.html'))
     }
+    
+    console.error(err)
 
     // If not 404 and not in development, send 500.html (without details).
     if (req.app.get('env') !== 'development') {
@@ -62,6 +69,7 @@ try {
     if (error) {
       console.error(error)
       process.exitCode = 1
+      return
     }
     console.log(`Server running at http://localhost:${port}`)
     console.log('Press Ctrl-C to terminate...')
