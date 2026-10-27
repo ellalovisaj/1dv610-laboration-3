@@ -1,0 +1,15 @@
+<form action="<%= baseURL %>worktime/selected-range" method="post" id="selected-range-form" class="mode-form">
+    <label for="start-date">Select start date</label>
+    <input type="date" id="start-date" name="start-date">
+
+    <label for="end-date">Select end date</label>
+    <input type="date" id="end-date" name="end-date">
+
+    <label for="selected-range-percentage">Percentage of full time</label>
+    <input type="number" name="selected-range-percentage" id="selected-range-percentage" max="100" min="0" step="5" value="100" required>
+
+    <label for="selected-range-salary">Salary per hour (optional)</label>
+    <input type="number" name="selected-range-salary" id="selected-range-salary" min="0" step=".01">
+
+    <button type="submit">OK</button>
+  </form>

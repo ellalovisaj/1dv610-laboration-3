@@ -12,7 +12,13 @@ export function createRouter(controllers) {
 
   router.get('/worktime', (req, res) => controllers.worktime.worktime(req, res))
 
-  router.post('/worktime', (req, res) => controllers.worktime.worktimePost(req, res))
+  router.get('/worktime/month', (req, res) => controllers.worktime.worktimeMonth(req, res))
+  
+  router.post('/worktime/month', (req, res) => controllers.worktime.worktimeMonthPost(req, res))
+
+  router.get('/worktime/selected-range', (req, res) => controllers.worktime.worktimeSelectedRange(req, res))
+  
+  router.post('/worktime/selected-range', (req, res) => controllers.worktime.worktimeSelectedRangePost(req, res))
 
   // Catch 404. Always last route in router
   router.use((_req, _res, next) => next(createError(404)))

@@ -1,0 +1,28 @@
+<h2>Select month or specific dates</h2>
+
+
+<form action="<%= baseURL %>worktime/month" method="post" id="month-form" class="mode-form">
+  <input type="month" name="month" placeholder="Month">
+
+  <label for="month-percentage">Percentage of full time</label>
+  <input type="number" name="month-percentage" id="month-percentage" max="100" min="0" step="5" value="100" required>
+
+  <label for="month-salary">Salary per hour (optional)</label>
+  <input type="number" name="month-salary" id="month-salary" min="0" step=".01">
+
+  <button type="submit">OK</button>
+</form>
+
+<div class="worktime-result">
+  <% if (input.month) { %>
+    <p> Month is  <%= input.month %>.</p>
+  <% } %>
+
+  <% if (input.percentage) { %>
+    <p> Percentage <%= input.percentage %>.</p>
+  <% } %>
+
+  <% if (input.salary) { %>
+    <p> Salary: <%= input.salary %>.</p>
+  <% } %>
+</div>
