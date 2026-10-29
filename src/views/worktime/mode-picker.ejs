@@ -1,4 +1,54 @@
+<style>
+  .mode-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+  }
+
+  .mode-picker h2 {
+    text-align: center;
+  }
+
+  .mode-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .mode-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16rem;
+    aspect-ratio: 1/1;
+    text-decoration: none;
+  }
+
+
+  /* ---------- tests ---------- */
+
+  .mode-links {
+    background-color: lightblue;
+    border: 1px solid red;
+  }
+
+  .mode-links a {
+    font-size: 2rem;
+    border: 1px solid black;
+    background-color: rgb(208, 229, 236);
+  }
+</style>
+
 <div class="mode-picker">
-  <a href="<%= process.env.BASE_URL %>worktime/month" name="mode" id="mode-month">Month</a>
-  <a href="<%= process.env.BASE_URL %>worktime/selected-range" name="mode" id="mode-selected-range">Select range</a>
+  <div class="mode-box">
+    <h2>Full month or your own range?</h2>
+
+    <div class="mode-links">
+      <a href="<%= process.env.BASE_URL %>worktime/month" name="mode" id="mode-month">Month</a>
+      <a href="<%= process.env.BASE_URL %>worktime/selected-range" name="mode" id="mode-selected-range">Select range</a>
+    </div>
+  </div>
+
+
 </div>

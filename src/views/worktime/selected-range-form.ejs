@@ -13,3 +13,17 @@
 
     <button type="submit">OK</button>
   </form>
+
+  <div class="worktime-result">
+  <% if (input.startDate && input.endDate) { %>
+    <p> From <%= input.startDate %> to <%= input.startDate %>.</p>
+  <% } %>
+
+  <% if (input.percentage) { %>
+    <p> Percentage <%= input.percentage %>.</p>
+  <% } %>
+
+  <% if (input.salary) { %>
+    <p> Salary: <%= input.salary %>.</p>
+  <% } %>
+</div>
