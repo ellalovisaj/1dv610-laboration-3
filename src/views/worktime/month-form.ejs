@@ -12,15 +12,15 @@
 </form>
 
 <div class="worktime-result">
-  <% if (input.month) { %>
-    <p> Month is  <%= input.month %>.</p>
+  <% if (result.workdays) { %>
+    <p> Amount of workdays: <%= result.workdays %></p>
   <% } %>
 
-  <% if (input.percentage) { %>
-    <p> Percentage <%= input.percentage %>.</p>
+  <% if (result.hours) { %>
+    <p> Work hours in period: <%= result.hours %></p>
   <% } %>
 
-  <% if (input.hourlyWage) { %>
-    <p> Salary: <%= input.hourlyWage %>.</p>
+  <% if (result.salary) { %>
+    <p> Salary: <%= result.salary %></p>
   <% } %>
 </div>
