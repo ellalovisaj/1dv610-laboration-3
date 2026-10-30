@@ -7,11 +7,21 @@ import morgan from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { HolidayService } from './models/calendar/HolidayService.js'
-import { HomeController } from './controllers/HomeController.js'
 import { createRouter } from './routes/router.js'
-import { WorktimeCalculator } from './models/worktime/WorktimeCalculator.js'
+
+// controllers
+import { HomeController } from './controllers/HomeController.js'
+import { VacationController } from './controllers/VacationController.js'
 import { WorktimeController } from './controllers/WorktimeController.js'
+
+// helpers
+import { WorktimeCalculator } from './models/worktime/WorktimeCalculator.js'
+import { VacationCalculator } from './models/vacation/VacationCalculator.js'
+
+// service layers
+import { HolidayService } from './models/calendar/HolidayService.js'
+
+
 
 try {
   const app = express()
@@ -45,10 +55,12 @@ try {
   // Add services and register router with services
   const holidayService = new HolidayService()
   const worktimeCalculator = new WorktimeCalculator(holidayService)
+  const vacationCalculator = new VacationCalculator(holidayService)
 
   const controllers = {
     home: new HomeController(holidayService),
     worktime: new WorktimeController(worktimeCalculator),
+    vacation: new VacationController(vacationCalculator)
   }
   const router = createRouter(controllers)
   app.use('/', router)
