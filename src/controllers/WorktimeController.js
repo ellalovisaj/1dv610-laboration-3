@@ -9,14 +9,14 @@ export class WorktimeController {
   }
 
   worktime(_req, res) {
-    res.render('worktime/mode-picker', { input: {} })
+    res.render('worktime/mode-picker')
   }
 
-  worktimeMonth(_req, res) {
-    res.render('worktime/month-form', { input: {} })
+  showMonthForm(_req, res) {
+    res.render('worktime/month-form', { result: {} })
   }
 
-  worktimeMonthPost(req, res) {
+  calculateMonth(req, res) {
     const input = {
       month: req.body.month,
       percentage: req.body['month-percentage'],
@@ -25,18 +25,15 @@ export class WorktimeController {
 
     // TODO: Validate
 
-    // TODO: Calculate
-    this.#worktimeCalculator.calculateMonthWorktime(input)
-
-    // Render
-    res.render('worktime/month-form', { input })
+    const result = this.#worktimeCalculator.calculateMonthWorktime(input)
+    res.render('worktime/month-form', { result })
   }
 
-  worktimeSelectedRange(_req, res) {
-    res.render('worktime/selected-range-form', { input: {} })
+  showRangeForm(_req, res) {
+    res.render('worktime/selected-range-form', { result: {} })
   }
 
-  worktimeSelectedRangePost(req, res) {
+  calculateRange(req, res) {
     const input = {
       startDate: req.body['start-date'],
       endDate: req.body['end-date'],
@@ -46,9 +43,7 @@ export class WorktimeController {
 
     // TODO: Validate
 
-    // TODO: Calculate
-
-    // Render
-    res.render('worktime/selected-range-form', { input })
+    const result = this.#worktimeCalculator.calculateSelectedRangeWorktime(input)
+    res.render('worktime/selected-range-form', { result })
   }
 }
