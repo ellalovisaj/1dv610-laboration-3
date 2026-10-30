@@ -1,60 +1,54 @@
+const HOURS_PER_FULL_TIME_DAY = 8
+
 export class WorktimeCalculator {
   #holidayService
+  
 
   constructor(holidayService) {
     this.#holidayService = holidayService
   }
 
-  // Selected Range
   calculateSelectedRangeWorktime(input) {
-    const workdays = this.#holidayService.workdaysBetween(input.startDate, input.endDate)
-    const hours = this.#calculateWorktimeHours(workdays, input.percentage)
-
-    if (this.#salaryInfoExists(input)) {
-      const salary = this.#calculateSalary(hours, input.hourlyWage)
-      return this.#compileWorktimeResult(workdays, hours, salary)
-    }
-
-    return this.#compileWorktimeResult(workdays, hours)
+    return this.#calculateWorktime(input)
   }
 
-  // Full month
   calculateMonthWorktime(input) {
-    const monthDates = this.#getMonthDates(input.month)
-    const workdays = this.#holidayService.workdaysBetween(monthDates.startDate, monthDates.endDate)
-    const hours = this.#calculateWorktimeHours(workdays, input.percentage)
-
-    if (this.#salaryInfoExists(input)) {
-      const salary = this.#calculateSalary(hours, input.hourlyWage)
-      return this.#compileWorktimeResult(workdays, hours, salary)
-    }
-
-    return this.#compileWorktimeResult(workdays, hours)
+    return this.#calculateWorktime({ ...input, ...this.#getMonthDates(input.month) })
   }
 
-  #calculateWorktimeHours(workdays, percentage) {
+  #calculateWorktime(input) {
+    console.log(input)
+    const workdays = this.#holidayService.workdaysBetween(input.startDate, input.endDate)
+    const hours = this.#compileWorktimeHours(workdays, input.percentage)
+    const salary = this.#calculateSalaryIfGiven(hours, input.hourlyWage)
+
+    return { workdays, hours, salary }
+  }
+
+  #compileWorktimeHours(workdays, percentage) {
     const fullTimeFraction = this.#toFullTimeFraction(percentage)
     const hoursPerDay = this.#calculateHoursPerDay(fullTimeFraction)
-    return this.#calculateWorktime(workdays, hoursPerDay)
+    return this.#calculateWorktimeHours(workdays, hoursPerDay)
   }
 
   #getMonthDates(month) {
     return {
-      startDate: this.#getStartDate(month),
-      endDate: this.#getEndDate(month),
+      startDate: this.#getFirstDayOfMonth(month),
+      endDate: this.#getLastDayOfMonth(month),
     }
   }
 
-  #getStartDate(month) {
-    const startDate = new Date(month)
-    console.log(startDate)
+  #getFirstDayOfMonth(month) {
+    console.log(new Date(month).toISOString().split('T')[0])
+    return new Date(month).toISOString().split('T')[0]
   }
 
-  #getEndDate(month) {
+  #getLastDayOfMonth(month) {
     const monthIndex = new Date(month).getUTCMonth()
     const year = new Date(month).getUTCFullYear()
 
-    return new Date(Date.UTC(year, monthIndex + 1, 0))
+    console.log(new Date(Date.UTC(year, monthIndex + 1, 0)).toISOString().split('T')[0])
+    return new Date(Date.UTC(year, monthIndex + 1, 0)).toISOString().split('T')[0]
   }
 
   #toFullTimeFraction(percentage) {
@@ -62,26 +56,14 @@ export class WorktimeCalculator {
   }
 
   #calculateHoursPerDay(fullTimeFraction) {
-    return 8 * fullTimeFraction
+    return HOURS_PER_FULL_TIME_DAY * fullTimeFraction
   }
 
-  #calculateWorktime(workdays, hoursPerDay) {
+  #calculateWorktimeHours(workdays, hoursPerDay) {
     return workdays * hoursPerDay
   }
 
-  #salaryInfoExists(input) {
-    return input.hourlyWage ? true : false
-  }
-
-  #calculateSalary(hours, hourlyWage) {
-    return hours * Number(hourlyWage)
-  }
-
-  #compileWorktimeResult(workdays, hours, salary) {
-    return {
-      workdays,
-      hours,
-      salary,
-    }
+  #calculateSalaryIfGiven(hours, hourlyWage) {
+    return hourlyWage ? hours * hourlyWage : undefined
   }
 }

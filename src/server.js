@@ -44,10 +44,11 @@ try {
 
   // Add services and register router with services
   const holidayService = new HolidayService()
+  const worktimeCalculator = new WorktimeCalculator(holidayService)
 
   const controllers = {
     home: new HomeController(holidayService),
-    worktime: new WorktimeController(holidayService),
+    worktime: new WorktimeController(worktimeCalculator),
   }
   const router = createRouter(controllers)
   app.use('/', router)

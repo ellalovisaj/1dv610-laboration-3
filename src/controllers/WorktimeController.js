@@ -20,12 +20,13 @@ export class WorktimeController {
     const input = {
       month: req.body.month,
       percentage: req.body['month-percentage'],
-      salary: req.body['month-salary'],
+      hourlyWage: req.body['month-salary'],
     }
 
     // TODO: Validate
 
     // TODO: Calculate
+    this.#worktimeCalculator.calculateMonthWorktime(input)
 
     // Render
     res.render('worktime/month-form', { input })
@@ -40,7 +41,7 @@ export class WorktimeController {
       startDate: req.body['start-date'],
       endDate: req.body['end-date'],
       percentage: req.body['selected-range-percentage'],
-      salary: req.body['selected-range-salary'],
+      hourlyWage: req.body['selected-range-salary'],
     }
 
     // TODO: Validate
