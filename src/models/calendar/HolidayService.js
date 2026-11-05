@@ -1,19 +1,33 @@
-import { HolidayCalendar } from "Holiday-Calendar"
+import { MultiYearCalendar } from 'Holiday-Calendar'
 
 export class HolidayService {
+  #calendar
+
+  constructor() {
+    this.#calendar = new MultiYearCalendar()
+  }
+
   isHoliday(date) {
-    return this.#createCalendar(this.#getYear(date)).isHoliday(date)
+    return this.#calendar.isHoliday(date)
   }
 
-  workdaysBetween(startDate, endDate) {
-    return this.#createCalendar(this.#getYear(startDate)).workdaysBetween(startDate, endDate)
+  isWorkdays(date) {
+    return this.#calendar.isWorkday(date)
   }
 
-  #getYear(date) {
-    return Number(date.slice(0, 4))
+  nextHolidayFrom(date) {
+    return this.#calendar.nextHolidayFrom(date)
   }
 
-  #createCalendar(year) {
-    return new HolidayCalendar(year)
-  }  
+  workdaysInPeriod(startDate, endDate) {
+    return this.#calendar.workdaysInPeriod(startDate, endDate)
+  }
+
+  workdaysAfterUntil(startDate, endDate) {
+    return this.#calendar.workdaysAfterUntil(startDate, endDate)
+  }
+
+  addWorkdays(date, workdays) {
+    return this.#calendar.addWorkdays(date, workdays)
+  }
 }
