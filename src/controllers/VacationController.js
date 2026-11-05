@@ -5,17 +5,25 @@ export class VacationController {
     this.#vacationCalculator = vacationCalculator
   }
 
-  vacation(_req, res) {
+  showForm(_req, res) {
     res.render('vacation/vacation', { result: {} })
   }
 
-  vacationPost(req, res) {
+  calculatePeriod(req, res) {
     const result = {
       vacationDayCount: req.body['vacation-days-count'],
       startDate: req.body['vacation-start-date'],
-      endDate: req.body['vacation-end-date'],
     }
 
+    res.render('vacation/vacation', { result })
+  }
+
+
+  calculateDays(req, res) {
+    const result = {
+      startDate: req.body['vacation-start-date'],
+      endDate: req.body['vacation-end-date'],
+    }
 
     res.render('vacation/vacation', { result })
   }
