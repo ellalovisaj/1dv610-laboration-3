@@ -50,7 +50,7 @@ export class EmployeeRegistry {
   }
 
   #createEmployeeId() {
-    // TODO: Randomize ID
+    return crypto.randomUUID()
   }
 
   #createResource(id, name) {
