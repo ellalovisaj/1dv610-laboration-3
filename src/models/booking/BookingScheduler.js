@@ -1,3 +1,19 @@
+/**
+ * Applies the application's rules for appointments, then lets
+ * BookingService do the booking.
+ *
+ * Validate:
+ * - Employee must be in EmployeeRegistry
+ * - Date must be a workday
+ * - Date cannot in the past
+ * - Date cannot be further ahead than the booking limit
+ * - The time must be within the employee's working hours
+ * 
+ * New bookings:
+ * - Gets the employee's id and working hours.
+ * - Gets form input data from user and passes it to BookingService.
+ * - Compiles data and passes it to BookingService that actually books.
+ */
 export class BookingScheduler {
   #holidayService
   #bookingService

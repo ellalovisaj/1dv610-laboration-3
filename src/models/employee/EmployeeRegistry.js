@@ -1,5 +1,12 @@
 import { Employee } from './Employee.js'
 
+/**
+ * Stores enployees. Will be connected to database if/when it is created.
+ * 
+ * - Registers new employees: creates the id and the Employee, and stores it.
+ * - Gets one employee or all employees.
+ * - Clears all employees (needed for demo data)
+ */
 export class EmployeeRegistry {
   #employees = new Map()
   #bookingService
