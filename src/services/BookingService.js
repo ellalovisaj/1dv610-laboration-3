@@ -1,11 +1,7 @@
-import { Booking, BookingCalendar, TimeSlot } from 'booking-module'
+import { Booking, BookingCalendar, TimeSlot, Resource } from 'booking-module'
 
 export class BookingService {
   #bookingCalendar = new BookingCalendar()
-
-  constructor() {}
-
-  
 
   /**
    * Takes date objects!
@@ -15,6 +11,10 @@ export class BookingService {
    */
   addTimeSlot(startTime, endTime) {
     return new TimeSlot(startTime, endTime)
+  }
+
+  createResource(id, name) {
+    return new Resource(id, name)
   }
 
   addBooking(id, resource, timeSlot) {
