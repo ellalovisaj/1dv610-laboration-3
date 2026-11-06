@@ -6,8 +6,8 @@ export class Employee {
 
   /**
    * @param {Resource} resource (contains id and name)
-   * @param {number} workdayStart 
-   * @param {number} workdayEnd 
+   * @param {string} workdayStart 
+   * @param {string} workdayEnd 
    * @param {number} vacationDaysPerYear 
    */
   constructor(resource, workdayStart, workdayEnd, vacationDaysPerYear) {
@@ -24,6 +24,10 @@ export class Employee {
   // TODO: Use case?
   getId() {
     return this.#resource.getId()
+  }
+
+  getResource() {
+    return this.#resource
   }
 
   getVacationDaysPerYear() {
