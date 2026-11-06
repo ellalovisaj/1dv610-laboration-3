@@ -19,9 +19,7 @@ import { WorktimeCalculator } from './models/worktime/WorktimeCalculator.js'
 import { VacationCalculator } from './models/vacation/VacationCalculator.js'
 
 // service layers
-import { HolidayService } from './models/calendar/HolidayService.js'
-
-
+import { HolidayService } from './models/services/HolidayService.js'
 
 try {
   const app = express()
@@ -60,7 +58,7 @@ try {
   const controllers = {
     home: new HomeController(holidayService),
     worktime: new WorktimeController(worktimeCalculator),
-    vacation: new VacationController(vacationCalculator)
+    vacation: new VacationController(vacationCalculator),
   }
   const router = createRouter(controllers)
   app.use('/', router)
