@@ -20,7 +20,7 @@
     "Ella-Lovisa Johansson <ej224xq@student.lnu.se>"
   ],
   "license": "Unlicense",
-  "private": false,
+  "private": true,
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@lnu/eslint-config": "^2.0.13",
