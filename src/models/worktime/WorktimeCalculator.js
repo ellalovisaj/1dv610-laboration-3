@@ -18,7 +18,7 @@ export class WorktimeCalculator {
 
   #calculateWorktime(input) {
     console.log(input)
-    const workdays = this.#holidayService.workdaysBetween(input.startDate, input.endDate)
+    const workdays = this.#holidayService.workdaysInPeriod(input.startDate, input.endDate)
     const hours = this.#compileWorktimeHours(workdays, input.percentage)
     const salary = this.#calculateSalaryIfGiven(hours, input.hourlyWage)
 
