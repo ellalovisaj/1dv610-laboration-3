@@ -24,15 +24,16 @@
 </form>
 
 <div class="vacation-result">
-  <% if (result.startDate) { %>
-    <p> Start: <%= result.startDate %></p>
+  <% if (vacationPeriod.firstDay) { %>
+    <p> Start: <%= vacationPeriod.firstDay %></p>
   <% } %>
 
-  <% if (result.endDate) { %>
-    <p> End: <%= result.endDate %></p>
+  <% if (vacationPeriod.lastDay) { %>
+    <p> Last day of vacation: <%= vacationPeriod.lastDay %></p>
+    <p> First day back: <%= vacationPeriod.backAtWork %></p>
   <% } %>
 
-  <% if (result.vacationDayCount) { %>
-    <p> Vacation days: <%= result.vacationDayCount %></p>
+  <% if (vacationPeriod.vacationDayCount) { %>
+    <p> Vacation days: <%= vacationPeriod.vacationDayCount %></p>
   <% } %>
 </div>

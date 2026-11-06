@@ -11,7 +11,7 @@ export class HolidayService {
     return this.#calendar.isHoliday(date)
   }
 
-  isWorkdays(date) {
+  isWorkday(date) {
     return this.#calendar.isWorkday(date)
   }
 

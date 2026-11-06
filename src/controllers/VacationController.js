@@ -1,30 +1,36 @@
 export class VacationController {
-  #vacationCalculator
+  #calculator
 
   constructor(vacationCalculator) {
-    this.#vacationCalculator = vacationCalculator
+    this.#calculator = vacationCalculator
   }
 
   showForm(_req, res) {
-    res.render('vacation/vacation', { result: {} })
+    res.render('vacation/vacation', { vacationPeriod: {} })
   }
 
+  // Takes start date and number of workdays
+  // Returns start and end date
   calculatePeriod(req, res) {
-    const result = {
+    const input = {
       vacationDayCount: req.body['vacation-days-count'],
       startDate: req.body['vacation-start-date'],
     }
 
-    res.render('vacation/vacation', { result })
+    const vacationPeriod = this.#calculator.calculateVacationPeriod(input)
+
+    res.render('vacation/vacation', { vacationPeriod })
   }
 
 
+  // Takes start and end date
+  // Returns how many vacation days needed
   calculateDays(req, res) {
-    const result = {
+    const vacationPeriod = {
       startDate: req.body['vacation-start-date'],
       endDate: req.body['vacation-end-date'],
     }
 
-    res.render('vacation/vacation', { result })
+    res.render('vacation/vacation', { vacationPeriod })
   }
 }
