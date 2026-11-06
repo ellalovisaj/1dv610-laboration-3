@@ -1,20 +1,11 @@
-import { Booking, BookingCalendar, Resource, TimeSlot } from 'booking-module'
+import { Booking, BookingCalendar, TimeSlot } from 'booking-module'
 
 export class BookingService {
   #bookingCalendar = new BookingCalendar()
 
   constructor() {}
 
-  /**
-   * 
-   * @param {number} id - Employee ID.
-   * @param {string} name - Employee name.
-   * @returns {Resource} - Employee Resource containing ID and name.
-   */
-  createEmployee(id, name) {
-    const employee = new Resource(id, name)
-    return employee
-  }
+  
 
   /**
    * Takes date objects!
