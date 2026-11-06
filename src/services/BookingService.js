@@ -21,7 +21,7 @@ export class BookingService {
    * of the available time slots.
    */
   getAvailableTimeSlots(resource, workingHours, date, minutes) {
-    const calendar = this.#createCalendar()
+    const calendar = this.#buildCalendar()
     // Create time slot
     const workday = this.#createWorkdayTimeSlot(date, workingHours)
 
@@ -32,8 +32,21 @@ export class BookingService {
     return this.#toTimeRanges(availableSlots)
   }
 
-  #createCalendar() {
-    return new BookingCalendar()
+  // TODO: FIX METHOD ACCORDING TO COMMENTS
+  #buildCalendar(employeeResource) {
+    // Get all saved bookings of employee and save in array:
+    const bookingData = []
+
+    // Create BookingCalendar
+    const calendar = new BookingCalendar()
+
+    // For every booking in bookingData
+    for (const booking of bookingData) {
+      // 1. Create new Booking object (will need employee resource?)
+      // 2. Add Booking to BookingCalendar -> calendar.addBooking(bookingObject)
+    }
+
+    // return calendar
   }
 
   #createWorkdayTimeSlot(date, workingHours) {
@@ -79,28 +92,29 @@ export class BookingService {
   }
 
   addBooking(id, resource, timeSlot) {
-    const calendar = this.#createCalendar()
+    const calendar = this.#buildCalendar()
     calendar.addBooking(new Booking(id, resource, timeSlot))
   }
 
   getBookingById(bookingId) {
-    const calendar = this.#createCalendar()
+    const calendar = this.#buildCalendar()
     return calendar.getBookingById(bookingId)
   }
 
   getAllBookingsForResource(resource) {
-    const calendar = this.#createCalendar()
+    const calendar = this.#buildCalendar()
     return calendar.getBookingsForResource(resource)
   }
 
   getAllBookingsOnDate(date) {
-    const calendar = this.#createCalendar()
+    const calendar = this.#buildCalendar()
     return calendar.getBookingsForDate(date)
   }
 
   getBookingsForResourceOnDate(resource, date) {
-    const calendar = this.#createCalendar()
+    const calendar = this.#buildCalendar()
     const allBookingsOnDate = this.getAllBookingsOnDate(date)
+
 
     // TODO: find a way to get bookings of resource and date
     // booking-module offers methods for finding bookings by Resources and
