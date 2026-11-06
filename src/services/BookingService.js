@@ -1,8 +1,6 @@
 import { Booking, BookingCalendar, TimeSlot, Resource } from 'booking-module'
 
 export class BookingService {
-  #bookingCalendar = new BookingCalendar()
-
   /**
    * @param {string} id - Employee ID
    * @param {string} name - Employee name
@@ -19,13 +17,23 @@ export class BookingService {
    * @param {{workdayStart: string, workdayEnd: string}} workingHours - 'HH:MM' format.
    * @param {string} date - 'YYYY-MM-DD' format
    * @param {number} minutes - Desired appointment duration.
-   * @returns {Array<TimeSlot>} The available appointment times in given workday.
+   * @returns {{startTime: string, endTime: string}[]} start and end times in 'HH:MM' format
+   * of the available time slots.
    */
   getAvailableTimeSlots(resource, workingHours, date, minutes) {
+    const calendar = this.#createCalendar()
     // Create time slot
     const workday = this.#createWorkdayTimeSlot(date, workingHours)
 
-    return this.#bookingCalendar.getAvailableTimeSlots(resource, workday, minutes)
+    // get available time slots
+    const availableSlots = calendar.getAvailableTimeSlots(resource, workday, minutes)
+
+    // return as array of time ranges
+    return this.#toTimeRanges(availableSlots)
+  }
+
+  #createCalendar() {
+    return new BookingCalendar()
   }
 
   #createWorkdayTimeSlot(date, workingHours) {
@@ -39,13 +47,22 @@ export class BookingService {
     return new Date(`${date}T${time}`)
   }
 
+  #toTimeRanges(TimeSlots) {
+    const timeRanges = []
+
+    for (const timeSlot of TimeSlots) {
+      timeRanges.push(this.#toTimeRange(timeSlot))
+    }
+    return timeRanges
+  }
+
   #toTimeRange(timeSlot) {
     return {
       startTime: this.#toTimeString(timeSlot.startTime),
       endTime: this.#toTimeString(timeSlot.endTime),
     }
   }
-
+  
   #toTimeString(dateTime) {
     return dateTime.toLocaleTimeString('sv-SE')
   }
@@ -62,22 +79,27 @@ export class BookingService {
   }
 
   addBooking(id, resource, timeSlot) {
-    this.#bookingCalendar().addBooking(new Booking(id, resource, timeSlot))
+    const calendar = this.#createCalendar()
+    calendar.addBooking(new Booking(id, resource, timeSlot))
   }
 
   getBookingById(bookingId) {
-    return this.#bookingCalendar.getBookingById(bookingId)
+    const calendar = this.#createCalendar()
+    return calendar.getBookingById(bookingId)
   }
 
   getAllBookingsForResource(resource) {
-    return this.#bookingCalendar.getBookingsForResource(resource)
+    const calendar = this.#createCalendar()
+    return calendar.getBookingsForResource(resource)
   }
 
   getAllBookingsOnDate(date) {
-    return this.#bookingCalendar.getBookingsForDate(date)
+    const calendar = this.#createCalendar()
+    return calendar.getBookingsForDate(date)
   }
 
   getBookingsForResourceOnDate(resource, date) {
+    const calendar = this.#createCalendar()
     const allBookingsOnDate = this.getAllBookingsOnDate(date)
 
     // TODO: find a way to get bookings of resource and date
