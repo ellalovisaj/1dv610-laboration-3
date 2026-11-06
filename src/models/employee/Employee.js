@@ -34,6 +34,9 @@ export class Employee {
     return this.#vacationDaysPerYear
   }
 
+  /**
+   * @returns {{workdayStart: string, workdayEnd: string}} strings in 'HH:MM' format.
+   */
   getWorkingHours() {
     return { 
       workdayStart: this.#workdayStart,

@@ -33,6 +33,20 @@ export class BookingScheduler {
     }
   }
 
+  /**
+   * 
+   * @param {string} employeeId - ID
+   * @param {number} minutes - Desired duration of time slot
+   * @param {string} date - 'YYYY-MM-DD' format
+   */
+  getAvailableTimeSlots(employeeId, minutes, date) {
+    // resource, start, end, minutes
+    const workingHours = this.#employees.getWorkingHours(employeeId)
+    const resource = this.#employees.getResource(employeeId)
+
+    this.#bookingService.getAvailableTimeSlots(resource, workingHours, date, minutes)
+  }
+
   convertToString(date) {
     return date.toISOString().split('T')[0]
   }
