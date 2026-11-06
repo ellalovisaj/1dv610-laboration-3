@@ -1,5 +1,23 @@
 import { Booking, BookingCalendar, TimeSlot, Resource } from 'booking-module'
 
+/**
+ * Responsibilities:
+ * 
+ * - Handles all communication with 'booking-module'. Nothing from the
+ *  module (except Resource) is used outside this class.
+ * 
+ * - Create Resource objects for new employees
+ * - Create and convert TimeSlots that are used to search in module
+ * 
+ * - Build BookingCalendars that gets saved bookings from BookingRegistry
+ *
+ * - Create booking ID:s
+ * - Create Booking objects
+ * - Convert Booking to and from generic objects.
+ * - Send Bookings to BookingRegistry that saves them
+ * - Get available times, bookings on a date and conflicts for a period.
+ * - Cancel bookings.
+ */
 export class BookingService {
   /**
    * @param {string} id - Employee ID
@@ -119,5 +137,9 @@ export class BookingService {
     // TODO: find a way to get bookings of resource and date
     // booking-module offers methods for finding bookings by Resources and
     // by Date but not both at the same time.
+  }
+
+  #createBookingId() {
+    return crypto.randomUUID()
   }
 }
