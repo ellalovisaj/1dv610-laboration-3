@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import { VacationCalculator } from '../src/models/vacation/VacationCalculator.js'
-import { HolidayService } from '../src/models/services/HolidayService.js'
+import { HolidayService } from '../src/services/HolidayService.js'
 
 describe('VacationCalculator', () => {
   const calculator = new VacationCalculator(new HolidayService())

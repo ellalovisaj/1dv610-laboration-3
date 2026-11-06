@@ -13,13 +13,18 @@ import { createRouter } from './routes/router.js'
 import { HomeController } from './controllers/HomeController.js'
 import { VacationController } from './controllers/VacationController.js'
 import { WorktimeController } from './controllers/WorktimeController.js'
+import { BookingController } from './controllers/BookingController.js'
 
 // helpers
 import { WorktimeCalculator } from './models/worktime/WorktimeCalculator.js'
 import { VacationCalculator } from './models/vacation/VacationCalculator.js'
+import { VacationPlanner } from './models/vacation/VacationPlanner.js'
+import { BookingScheduler } from './models/booking/BookingScheduler.js'
+import { EmployeeRegistry } from './models/employee/EmployeeRegistry.js'
 
 // service layers
-import { HolidayService } from './models/services/HolidayService.js'
+import { HolidayService } from './services/HolidayService.js'
+import { BookingService } from './services/BookingService.js'
 
 try {
   const app = express()
@@ -50,16 +55,27 @@ try {
     next()
   })
 
-  // Add services and register router with services
+  // Services and storage
   const holidayService = new HolidayService()
+  const bookingService = new BookingService()
+  const employeeRegistry = new EmployeeRegistry(bookingService)
+
+  // Helpers
   const worktimeCalculator = new WorktimeCalculator(holidayService)
   const vacationCalculator = new VacationCalculator(holidayService)
 
+  const vacationPlanner = new VacationPlanner(holidayService, bookingService, vacationCalculator, employeeRegistry)
+  const bookingScheduler = new BookingScheduler(holidayService, bookingService, employeeRegistry)
+
+  // Controllers
   const controllers = {
     home: new HomeController(holidayService),
     worktime: new WorktimeController(worktimeCalculator),
-    vacation: new VacationController(vacationCalculator),
+    vacation: new VacationController(vacationPlanner),
+    booking: new BookingController(bookingScheduler),
   }
+
+  // Router
   const router = createRouter(controllers)
   app.use('/', router)
 

@@ -1,6 +1,4 @@
-import { HolidayService } from '../services/HolidayService'
-import { BookingService } from '../services/BookingService'
+import { HolidayService } from '../../services/HolidayService'
+import { BookingService } from '../../services/BookingService'
 
-export class VacationPlanner {
-  
-}
+export class VacationPlanner {}

@@ -1,5 +1,6 @@
-import { HolidayService } from '../services/HolidayService'
-import { BookingService } from '../services/BookingService'
+import { HolidayService } from '../../services/HolidayService.js'
+import { BookingService } from '../../services/BookingService.js'
+import { EmployeeRegistry } from '../employee/EmployeeRegistry.js'
 
 export class BookingScheduler {
   #employees = new Map()
@@ -7,9 +8,9 @@ export class BookingScheduler {
   #holidayService = new HolidayService()
 
   /**
-   * 
-   * @param {number} id 
-   * @param {string} name 
+   *
+   * @param {number} id
+   * @param {string} name
    * @returns {Resource} ID and name
    */
   addEmployee(id, name) {
@@ -28,8 +29,6 @@ export class BookingScheduler {
       // TODO: Handle with flash instead
       throw new Error('Is not a workday')
     }
-
-    
   }
 
   convertToString(date) {
