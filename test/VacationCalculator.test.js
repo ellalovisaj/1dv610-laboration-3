@@ -69,10 +69,16 @@ describe('VacationCalculator', () => {
       expect(result.backAtWork).toBe('2026-08-03')
     })
 
-    test('should return the given start date unchanged', () => {
+    test('should return the start date as the first day when it is a workday', () => {
+      const result = calculator.calculateVacationPeriod({ startDate: '2026-11-05', vacationDayCount: 2 })
+
+      expect(result.firstDay).toBe('2026-11-05')
+    })
+
+    test('should return the next workday as the first day when the start date is a weekend', () => {
       const result = calculator.calculateVacationPeriod({ startDate: '2026-11-07', vacationDayCount: 2 })
 
-      expect(result.startDate).toBe('2026-11-07')
+      expect(result.firstDay).toBe('2026-11-09')
     })
 
     test('should throw error when the number of vacation days is 0', () => {
