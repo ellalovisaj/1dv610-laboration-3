@@ -16,15 +16,4 @@ export class HomeController {
   index(_req, res) {
     res.render('home/index')
   }
-
-  testForm(_req, res) {
-    res.render('calendar/form', { date: '', holiday: false })
-  }
-
-  testFormPost(req, res) {
-    const date = req.body.date
-    const holiday = this.#holidayService.isHoliday(date)
-
-    res.render('calendar/form', { date, holiday })
-  }
 }
