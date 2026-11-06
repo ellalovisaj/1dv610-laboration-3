@@ -17,7 +17,6 @@ export class WorktimeCalculator {
   }
 
   #calculateWorktime(input) {
-    console.log(input)
     const workdays = this.#holidayService.workdaysInPeriod(input.startDate, input.endDate)
     const hours = this.#compileWorktimeHours(workdays, input.percentage)
     const salary = this.#calculateSalaryIfGiven(hours, input.hourlyWage)
@@ -39,7 +38,6 @@ export class WorktimeCalculator {
   }
 
   #getFirstDayOfMonth(month) {
-    console.log(new Date(month).toISOString().split('T')[0])
     return new Date(month).toISOString().split('T')[0]
   }
 
@@ -47,7 +45,6 @@ export class WorktimeCalculator {
     const monthIndex = new Date(month).getUTCMonth()
     const year = new Date(month).getUTCFullYear()
 
-    console.log(new Date(Date.UTC(year, monthIndex + 1, 0)).toISOString().split('T')[0])
     return new Date(Date.UTC(year, monthIndex + 1, 0)).toISOString().split('T')[0]
   }
 
