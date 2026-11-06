@@ -1,11 +1,13 @@
-import { HolidayService } from '../../services/HolidayService.js'
-import { BookingService } from '../../services/BookingService.js'
-import { EmployeeRegistry } from '../employee/EmployeeRegistry.js'
-
 export class BookingScheduler {
-  #employees = new Map()
-  #bookingService = new BookingService()
-  #holidayService = new HolidayService()
+  #holidayService
+  #bookingService
+  #employees
+
+  constructor(holidayService, bookingService, employeeRegistry) {
+    this.#holidayService = holidayService
+    this.#bookingService = bookingService
+    this.#employees = employeeRegistry
+  }
 
   /**
    *
