@@ -21,8 +21,13 @@ export class Employee {
     return this.#resource.getName()
   }
 
+  // TODO: Use case?
   getId() {
     return this.#resource.getId()
+  }
+
+  getVacationDaysPerYear() {
+    return this.#vacationDaysPerYear
   }
 
   getWorkingHours() {
@@ -32,21 +37,12 @@ export class Employee {
     }
   }
 
-  getVacationDaysPerYear() {
-    return this.#vacationDaysPerYear
-  }
-
-  changeWorkinghours(newStartTime, newEndTime) {
+  editWorkinghours(newStartTime, newEndTime) {
     this.#workdayStart = newStartTime
     this.#workdayEnd = newEndTime
   }
 
-  // TODO: Move calculations outside of Employee
-  // changeVacationDaysPerYear(newDayCount) {
-  //   if (newDayCount < this.#vacationDaysSpentThisYear) {
-  //     throw new Error(`User has already spent too many vacation days. The new count must be greater than ${ this.#vacationDaysSpentThisYear }. `)
-  //   }
-  //   this.#vacationDaysPerYear = newDayCount - vacationDaysSpentThisYear
-
-  // }
+  editVacationDaysPerYear(newDayCount) {
+    this.#vacationDaysPerYear = newDayCount
+  }
 }
