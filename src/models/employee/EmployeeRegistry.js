@@ -8,6 +8,34 @@ export class EmployeeRegistry {
     this.#bookingService = bookingService
   }
 
+  // GETTERS ########################
+
+  getName(id) {
+    return this.#getEmployee(id).getName()
+  }
+
+  getResource(id) {
+    return this.#getEmployee(id).getResource()
+  }
+
+  getVacationDaysPerYear(id) {
+    return this.#getEmployee(id).vacationDaysPerYear()
+  }
+
+  /**
+   * @param {string} id 
+   * @returns {{workdayStart: string, workdayEnd: string}} strings in 'HH:MM' format.
+   */
+  getWorkingHours(id) {
+    return this.#getEmployee(id).getWorkingHours()
+  }
+
+  getEmployeesBookingsOnDate(id, date) {
+    const employee = this.#getEmployee(id)
+    return this.#bookingService.getBookingsForResourceOnDate(employee.getResource(), date)
+  }
+
+  // EDITORS AND REMOVERS ########################
   createEmployee(name, workdayStart, workdayEnd, vacationDaysPerYear) {
     const id = this.#createEmployeeId()
     const resource = this.#createResource(id, name)
@@ -15,18 +43,6 @@ export class EmployeeRegistry {
     const employee = new Employee((resource, workdayStart, workdayEnd, vacationDaysPerYear))
 
     this.#addEmployeeToRegistry(id, employee)
-  }
-
-  getName(id) {
-    return this.#getEmployee(id).getName()
-  }
-
-  getVacationDaysPerYear(id) {
-    return this.#getEmployee(id).vacationDaysPerYear()
-  }
-
-  getWorkingHours(id) {
-    return this.#getEmployee(id).getWorkingHours()
   }
 
   editWorkinghours(id, newStartTime, newEndTime) {
@@ -44,6 +60,13 @@ export class EmployeeRegistry {
     this.#getEmployee(id).editVacationDaysPerYear(newDayCount)
   }
 
+  deleteEmployee(id) {
+    this.#getEmployee(id)
+    this.#employees.delete(id)
+  }
+
+  // PRIVATE METHODS ########################
+
   #getEmployee(id) {
     this.#validateEmployeeId(id)
     this.#employees.get(id)
@@ -59,11 +82,6 @@ export class EmployeeRegistry {
 
   #addEmployeeToRegistry(id, employee) {
     this.#employees.set(id, employee)
-  }
-
-  deleteEmployee(id) {
-    this.#getEmployee(id)
-    this.#employees.delete(id)
   }
 
   #validateEmployeeId(id) {
