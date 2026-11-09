@@ -92,6 +92,11 @@ export class BookingService {
     return calendar
   }
 
+  /**
+   * @param {string} date - The date to create a TimeSlot in.
+   * @param {{workdayStart: string, workdayEnd: string}} workingHours - 'HH:MM' format.
+   * @returns {TimeSlot}
+   */
   #createWorkdayTimeSlot(date, workingHours) {
     return new TimeSlot(
       this.#toDateTime(date, workingHours.workdayStart),
@@ -136,11 +141,19 @@ export class BookingService {
     return booking.getId()
   }
 
+  /**
+   * Converts date and time strings into one Date object that contains
+   * both date and time.
+   * 
+   * @param {string} date - 'YYYY-MM-DD' format
+   * @param {string} time - 'HH:MM' format.
+   * @returns {Date} Date object containing both date and time.
+   */
   #toDateTime(date, time) {
     return new Date(`${date}T${time}`)
   }
 
-  // Converts from Dates to strings
+  // Converts an array of TimeSlots from Array of date strings
   #toTimeRanges(TimeSlots) {
     const timeRanges = []
 
@@ -150,11 +163,11 @@ export class BookingService {
     return timeRanges
   }
 
-  // Converts from Dates to strings
+  // Converts one TimeSlot object containing start and end date as strings
   #toTimeRange(timeSlot) {
     return {
-      startTime: this.#toTimeString(timeSlot.startTime),
-      endTime: this.#toTimeString(timeSlot.endTime),
+      startTime: this.#toTimeString(timeSlot.getStartTime()),
+      endTime: this.#toTimeString(timeSlot.getEndTime()),
     }
   }
 
@@ -165,7 +178,7 @@ export class BookingService {
 
   // Converts from Dates to strings
   #toTimeString(dateTime) {
-    return dateTime.toLocaleTimeString('sv-SE')
+    return dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   }
 
 
