@@ -16,13 +16,11 @@ export class BookingRegistry {
   /**
    * Checks if booking id is already in use and saves the booking
    * if not.
-   * 
+   *
    * @param {Object} booking - Object containing info about booking.
    */
   saveBooking(booking) {
-    // Check if booking is already saved by bookingId
     if (!this.#isBookingId(booking.id)) {
-      // Save to bookings
       this.#bookings.set(booking.id, booking)
     } else {
       throw new Error('Booking is already saved.')
@@ -34,11 +32,25 @@ export class BookingRegistry {
     return this.#bookings.get(id)
   }
 
-  getBookingsForEmployeeBetween(id, from, to) {
-    // TODO:
-    // Get bookings for a specific employee
-    // Only bookings between the dates given
-    // return array of bookings
+  /**
+   * Returns all bookings of given employee within given date range.
+   * 
+   * @param {string} employeeId
+   * @param {string} from - 'YYYY-MM-DD' format
+   * @param {string} to  - 'YYYY-MM-DD' format
+   * @returns
+   */
+  getBookingsForEmployeeBetween(employeeId, from, to) {
+    const periodStart = `${from}T00:00`
+    const periodEnd = `${to}T00:00`
+
+    const result = [...this.#bookings.values()].filter((booking) => 
+      booking.employeeId === employeeId &&
+      booking.start <= periodEnd &&
+      booking.end > periodStart
+    )
+
+    return result
   }
 
   deleteBooking(id) {
@@ -56,5 +68,8 @@ export class BookingRegistry {
   #isBookingId(id) {
     return this.#bookings.has(id)
   }
-}
 
+  deleteAllBookings() {
+    this.#bookings.clear()
+  }
+}
