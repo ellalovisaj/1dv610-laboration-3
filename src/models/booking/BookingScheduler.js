@@ -27,27 +27,6 @@ export class BookingScheduler {
     this.#employees = employeeRegistry
   }
 
-  /**
-   * @param {string} name - Employee's name.
-   * @param {string} workdayStart - 'HH:MM' format.
-   * @param {string} workdayEnd - 'HH:MM' format.
-   * @param {number} vacationDaysPerYear - Number of vacation days.
-   */
-  addEmployee(name, workdayStart, workdayEnd, vacationDaysPerYear) {
-    this.#employees.createEmployee(name, workdayStart, workdayEnd, vacationDaysPerYear)
-  }
-
-  /**
-   * New bookings:
-   * X Gets the employee's id and working hours.
-   * - Gets form input data from user and passes it to BookingService.
-   * - Compiles data and passes it to BookingService that actually books.
-   */
-
-  #getEmployeesWorkingHours(id) {
-    return this.#employees.getWorkingHours(id)
-  }
-
   // Booking in database will contain:
   // (id, { id, employeeId, type, customerName, start, end })
 
@@ -63,10 +42,10 @@ export class BookingScheduler {
     }
   }
 
-  #getEmployeeResource(id) {
-    return this.#employees.getResource(id)
-  }
-
+  /**
+   * Compiles formInput, validates input, call BookingService
+   * to add new booking.
+   */
   addBooking(formInput) {
     // Compile input into bookingInfo that contains:
     // id
@@ -96,13 +75,6 @@ export class BookingScheduler {
     return this.#bookingService.newBooking(resource, bookingInfo)
   }
 
-  // TODO: Edit to resemble addBooking and then move to VacationPlanner
-  addVacation(formInput) {
-    // Convert start and end to dates
-    const startDate = bookingInfo.start.split('T')[0]
-    const endDate = bookingInfo.end.split('T')[0]
-  }
-
   hasBookingConflict() {}
 
   /**
@@ -115,12 +87,15 @@ export class BookingScheduler {
    * in 'HH:MM' format of the available time slots.
    */
   getAvailableTimeSlots(employeeId, duration, date) {
-    const workingHours = this.#getEmployeesWorkingHours(employeeId)
-    const resource = this.#getEmployeeResource(employeeId)
+    const employee = this.#employees.getById(employeeId)
+
+    const workingHours = employee.getWorkingHours()
+    const resource = employee.getResource()
 
     return this.#bookingService.getAvailableTimeSlots(resource, workingHours, date, duration)
   }
 
+  // TODO: Time zone issue?
   convertToString(date) {
     return date.toISOString().split('T')[0]
   }
