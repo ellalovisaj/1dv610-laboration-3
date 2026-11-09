@@ -75,6 +75,7 @@ export class BookingScheduler {
     return this.#bookingService.newBooking(resource, bookingInfo)
   }
 
+  // TODO:
   hasBookingConflict() {}
 
   /**

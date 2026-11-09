@@ -21,6 +21,7 @@ import { VacationCalculator } from './models/vacation/VacationCalculator.js'
 import { VacationPlanner } from './models/vacation/VacationPlanner.js'
 import { BookingScheduler } from './models/booking/BookingScheduler.js'
 import { EmployeeRegistry } from './models/employee/EmployeeRegistry.js'
+import { BookingRegistry } from './models/booking/BookingRegistry.js'
 
 // service layers
 import { HolidayService } from './services/HolidayService.js'
@@ -56,10 +57,11 @@ try {
   })
 
   // Services and storage
+  const bookingRegistry = new BookingRegistry()
   const holidayService = new HolidayService()
-  const bookingService = new BookingService()
+  const bookingService = new BookingService(bookingRegistry)
   const employeeRegistry = new EmployeeRegistry(bookingService)
-
+  
   // Helpers
   const worktimeCalculator = new WorktimeCalculator(holidayService)
   const vacationCalculator = new VacationCalculator(holidayService)
