@@ -67,22 +67,20 @@ export class BookingScheduler {
     return this.#employees.getResource(id)
   }
 
-  // TODO: Edit to resemble addBooking and then move to VacationPlanner
-  addVacation(formInput) {
-    // Convert start and end to dates
-    const startDate = bookingInfo.start.split('T')[0]
-    const endDate = bookingInfo.end.split('T')[0]
-  }
-
   addBooking(formInput) {
-    // Compile input into bookingInfo
-
+    // Compile input into bookingInfo that contains:
+    // id
+    // employeeId
+    // type
+    // customerName
+    // start
+    // end
+    // duration
     const bookingInfo = this.#compileBookingInfo(formInput)
+
+    // get resource
     const employee = this.#employees.getById(bookingInfo.employeeId)
-
     const resource = employee.getResource()
-
-    const timeRange = this.#getTimeRange(bookingInfo.start, bookingInfo.end)
 
     // TODO: validate if date is:
     // - a workday (and if it's valid, in holiday-calendar)
@@ -96,6 +94,13 @@ export class BookingScheduler {
 
     // Create and save booking in BookingService
     return this.#bookingService.newBooking(resource, bookingInfo)
+  }
+
+  // TODO: Edit to resemble addBooking and then move to VacationPlanner
+  addVacation(formInput) {
+    // Convert start and end to dates
+    const startDate = bookingInfo.start.split('T')[0]
+    const endDate = bookingInfo.end.split('T')[0]
   }
 
   hasBookingConflict() {}

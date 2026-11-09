@@ -30,6 +30,14 @@ export class BookingRegistry {
     this.#bookings.get(id)
   }
 
+  getBookingsForEmployeeBetween(resource, from, to) {
+    // TODO:
+    // Get bookings for a specific employee
+    // Only bookings between the dates given
+
+    // return array of bookings
+  }
+
   deleteBooking(id) {
     this.#validateBookingId(id)
     this.#bookings.delete(id)

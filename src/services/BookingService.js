@@ -26,7 +26,7 @@ export class BookingService {
   constructor(bookingRegistry) {
     this.#bookingRegistry = bookingRegistry
   }
-  
+
   /**
    * @param {string} id - Employee ID
    * @param {string} name - Employee name
@@ -36,10 +36,21 @@ export class BookingService {
     return new Resource(id, name)
   }
 
-  #createBooking(id, resource, timeSlot) {
-    return new Booking(id, resource, timeSlot)
+
+  /**
+   * Creates a TimeSlot from start and end date in bookingInfo.
+   * Returns a Booking object.
+   * 
+   * @param {object} bookingInfo 
+   * @param {Resource} resource 
+   * @returns {Booking} A Booking object
+   */
+  #toBooking(bookingInfo, resource) {
+    const timeSlot = new TimeSlot(new Date(bookingInfo.start), new Date(bookingInfo.end))
+    return new Booking(bookingInfo.id, resource, timeSlot)
   }
 
+  // Builds cal, adds the booking and saves in storage
   #addBooking(booking, bookingInfo) {
     const calendar = this.#buildCalendar()
     calendar.addBooking(booking)
@@ -68,21 +79,24 @@ export class BookingService {
     return this.#toTimeRanges(availableSlots)
   }
 
-  // TODO: FIX METHOD ACCORDING TO COMMENTS
-  #buildCalendar(employeeResource) {
+  #buildCalendar(resource, startDate, endDate) {
     // Get all saved bookings of employee and save in array:
-    const bookingData = []
+    const bookingRecords = this.#bookingRegistry.getBookingsForEmployeeBetween(resource, startDate, endDate)
 
-    // Create BookingCalendar
+    // Create new BookingCalendar
     const calendar = new BookingCalendar()
 
-    // For every booking in bookingData
-    for (const booking of bookingData) {
-      // 1. Create new Booking object (will need employee resource?)
+    // For every bookingInfo in bookingRecords
+    for (const bookingInfo of bookingRecords) {
+      // 1. Create new Booking object
+      const bookingObject = this.#toBooking(bookingInfo, resource)
+
       // 2. Add Booking to BookingCalendar -> calendar.addBooking(bookingObject)
+      calendar.addBooking(bookingObject)
     }
 
-    // return calendar
+    // Return calendar with all bookings for given employee
+    return calendar
   }
 
   #createWorkdayTimeSlot(date, workingHours) {
@@ -110,11 +124,20 @@ export class BookingService {
    */
   newBooking(resource, bookingInfo) {
     bookingInfo.id = this.#createBookingId()
-
-    const timeSlot = new TimeSlot(new Date(bookingInfo.start), new Date(bookingInfo.end))
     
-    const booking = this.#createBooking(bookingInfo.id, resource, timeSlot)
+
+    // Create booking and add to storage
+    const booking = this.#toBooking(bookingInfo, resource)
     this.#addBooking(booking, bookingInfo)
+
+
+    const dateStart = this.#dateOf(bookingInfo.start)
+    const dateEnd = this.#dateOf(bookingInfo.end)
+
+    const calendar = this.#buildCalendar(resource, dateStart, dateEnd)
+
+    calendar.addBooking(new Booking(id, resource, timeSlot))
+
     return booking.getId()
   }
 
