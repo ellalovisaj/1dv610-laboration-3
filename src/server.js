@@ -14,7 +14,7 @@ import { HomeController } from './controllers/HomeController.js'
 import { VacationController } from './controllers/VacationController.js'
 import { WorktimeController } from './controllers/WorktimeController.js'
 import { BookingController } from './controllers/BookingController.js'
-
+import { EmployeeController } from './controllers/EmployeeController.js'
 import { DemoData } from './models/demo/DemoData.js'
 
 // helpers
@@ -66,7 +66,7 @@ try {
 
   // Demo
   const demoData = new DemoData(holidayService, bookingService, employeeRegistry, bookingRegistry)
-  
+
   demoData.addData()
 
   // Helpers
@@ -84,6 +84,7 @@ try {
     worktime: new WorktimeController(worktimeCalculator),
     vacation: new VacationController(vacationCalculator),
     booking: new BookingController(bookingScheduler),
+    employee: new EmployeeController(employeeRegistry, demoData),
   }
 
   // Router
