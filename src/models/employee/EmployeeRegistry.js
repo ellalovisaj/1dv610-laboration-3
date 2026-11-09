@@ -26,7 +26,7 @@ export class EmployeeRegistry {
   }
 
   getVacationDaysPerYear(id) {
-    return this.#getEmployee(id).vacationDaysPerYear()
+    return this.#getEmployee(id).getVacationDaysPerYear()
   }
 
   getById(id) {
@@ -41,11 +41,6 @@ export class EmployeeRegistry {
     return this.#getEmployee(id).getWorkingHours()
   }
 
-  getEmployeesBookingsOnDate(id, date) {
-    const employee = this.#getEmployee(id)
-    return this.#bookingService.getBookingsForResourceOnDate(employee.getResource(), date)
-  }
-
   // EDITORS AND REMOVERS ########################
   /**
    * @param {string} name 
@@ -57,9 +52,11 @@ export class EmployeeRegistry {
     const id = this.#createEmployeeId()
     const resource = this.#createResource(id, name)
 
-    const employee = new Employee((resource, workdayStart, workdayEnd, vacationDaysPerYear))
+    const employee = new Employee(resource, workdayStart, workdayEnd, vacationDaysPerYear)
 
     this.#addEmployeeToRegistry(id, employee)
+
+    return employee
   }
 
   editWorkinghours(id, newStartTime, newEndTime) {
@@ -86,7 +83,7 @@ export class EmployeeRegistry {
 
   #getEmployee(id) {
     this.#validateEmployeeId(id)
-    this.#employees.get(id)
+    return this.#employees.get(id)
   }
 
   #createEmployeeId() {
