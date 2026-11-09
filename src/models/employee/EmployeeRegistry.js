@@ -79,6 +79,10 @@ export class EmployeeRegistry {
     this.#employees.delete(id)
   }
 
+  deleteAllEmployees() {
+    this.#employees.clear()
+  }
+
   // PRIVATE METHODS ########################
 
   #getEmployee(id) {
