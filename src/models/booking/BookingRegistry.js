@@ -1,7 +1,7 @@
 /**
  * Stores bookings in Map:
  * (id, { id, employeeId, type, customerName, start, end })
- * 
+ *
  * Will be connected to bookings schema when/if database is introduced.
  * Does not recognize the 'booking-module' or any of its objects.
  *
@@ -13,41 +13,48 @@
 export class BookingRegistry {
   #bookings = new Map()
 
-  constructor(bookings) {
-    this.#bookings = bookings
-  }
-
-  saveBooking(employeeId, booking) {
+  /**
+   * Checks if booking id is already in use and saves the booking
+   * if not.
+   * 
+   * @param {Object} booking - Object containing info about booking.
+   */
+  saveBooking(booking) {
     // Check if booking is already saved by bookingId
-    if (this.#isBookingId(booking.id))
-
-    // Save to bookings
-    this.#bookings.set(employeeId, booking)
+    if (!this.#isBookingId(booking.id)) {
+      // Save to bookings
+      this.#bookings.set(booking.id, booking)
+    } else {
+      throw new Error('Booking is already saved.')
+    }
   }
 
   getBooking(id) {
     this.#validateBookingId(id)
-    this.#bookings.get(id)
+    return this.#bookings.get(id)
   }
 
   getBookingsForEmployeeBetween(id, from, to) {
     // TODO:
     // Get bookings for a specific employee
     // Only bookings between the dates given
-
     // return array of bookings
   }
 
   deleteBooking(id) {
     this.#validateBookingId(id)
     this.#bookings.delete(id)
+    return id
   }
 
   #validateBookingId(id) {
-    if (!this.#isBookingId(id)) throw new Error('Booking ID is not in registry')
+    if (!this.#isBookingId(id)) {
+      throw new Error('Booking ID is not in registry')
+    }
   }
 
   #isBookingId(id) {
     return this.#bookings.has(id)
   }
 }
+

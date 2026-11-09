@@ -116,8 +116,6 @@ export class BookingService {
    * @param {string} bookingInfo.customerName - Customer's name, blank when vacation.
    * @param {string} bookingInfo.start - Start time in 'YYYY-MM-DDTHH:MM' format.
    * @param {string} bookingInfo.end - End time in 'YYYY-MM-DDTHH:MM' format.
-   * @param {number} bookingInfo.duration - Duration of booking in minutes
-   *
    * @returns {string} - The ID of the new booking.
    */
   newBooking(resource, bookingInfo) {
@@ -137,6 +135,7 @@ export class BookingService {
 
     // Add booking to the new calendar
     calendar.addBooking(booking)
+    this.#bookingRegistry.saveBooking(bookingInfo)
 
     return booking.getId()
   }
