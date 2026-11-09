@@ -50,13 +50,6 @@ export class BookingService {
     return new Booking(bookingInfo.id, resource, timeSlot)
   }
 
-  // Builds cal, adds the booking and saves in storage
-  #addBooking(booking, bookingInfo) {
-    const calendar = this.#buildCalendar()
-    calendar.addBooking(booking)
-    this.#bookingRegistry.saveBooking(bookingInfo)
-  }
-
   /**
    * Get available times for appointments on given date with given employee.
    *
@@ -68,7 +61,7 @@ export class BookingService {
    * of the available time slots.
    */
   getAvailableTimeSlots(resource, workingHours, date, duration) {
-    const calendar = this.#buildCalendar(resource)
+    const calendar = this.#buildCalendar(resource, date, date)
     // Create time slot
     const workday = this.#createWorkdayTimeSlot(date, workingHours)
 
@@ -81,7 +74,7 @@ export class BookingService {
 
   #buildCalendar(resource, startDate, endDate) {
     // Get all saved bookings of employee and save in array:
-    const bookingRecords = this.#bookingRegistry.getBookingsForEmployeeBetween(resource, startDate, endDate)
+    const bookingRecords = this.#bookingRegistry.getBookingsForEmployeeBetween(resource.getId(), startDate, endDate)
 
     // Create new BookingCalendar
     const calendar = new BookingCalendar()
@@ -124,60 +117,23 @@ export class BookingService {
    */
   newBooking(resource, bookingInfo) {
     bookingInfo.id = this.#createBookingId()
-    
 
-    // Create booking and add to storage
+    // Create Booking object
     const booking = this.#toBooking(bookingInfo, resource)
-    this.#addBooking(booking, bookingInfo)
 
+    // Get start and end date for the calendar
+    const dateStart = this.#removeTimeFrom(bookingInfo.start)
+    const dateEnd = this.#removeTimeFrom(bookingInfo.end)
 
-    const dateStart = this.#dateOf(bookingInfo.start)
-    const dateEnd = this.#dateOf(bookingInfo.end)
-
+    // Build calendar for employee between start and end dates
     const calendar = this.#buildCalendar(resource, dateStart, dateEnd)
 
-    calendar.addBooking(new Booking(id, resource, timeSlot))
+    // TODO: Validate that time slot is available to book.
+
+    // Add booking to the new calendar
+    calendar.addBooking(booking)
 
     return booking.getId()
-  }
-
-  /**
-   * @param {string} date - Start time in 'YYYY-MM-DD' format.
-   * @param {{startTime: string, endTime: string}} timeRange - start and
-   * end times in 'HH:MM' format of the available time slots.
-   * @returns {TimeSlot} Vacation TimeSlot
-   */
-  #createBookingTimeSlot(date, timeRange) {
-    return new TimeSlot(this.#toDateTime(date, timeRange.startTime), this.#toDateTime(date, timeRange.endTime))
-  }
-
-  /**
-   * @param {string} start - Start time in 'YYYY-MM-DDTHH:MM' format.
-   * @param {string} end - End time in 'YYYY-MM-DDTHH:MM' format.
-   * @returns {TimeSlot} Vacation TimeSlot
-   */
-  #createVacationTimeSlot(start, end) {
-    // Convert to date strings without time
-    const startDateString = start.split('T')[0]
-    const endDateString = end.split('T')[0]
-
-    // Convert to Date objects without time (midnight to midnight)
-    const startDate = new Date(startDateString)
-    const endDate = new Date(endDateString)
-
-    // Return Vacation TimeSlot
-    return new TimeSlot(startDate, endDate)
-  }
-
-  #getTimeRange(startTime, endTime) {
-    return {
-      startTime,
-      endTime,
-    }
-  }
-
-  #toDate(dateTime) {
-    return new Date(dateTime)
   }
 
   #toDateTime(date, time) {
@@ -202,40 +158,32 @@ export class BookingService {
     }
   }
 
+  // Get date from dateTime string
+  #removeTimeFrom(dateTime) {
+    return dateTime.split('T')[0]
+  }
+
   // Converts from Dates to strings
   #toTimeString(dateTime) {
     return dateTime.toLocaleTimeString('sv-SE')
   }
 
-  getBookingById(bookingId) {
-    const calendar = this.#buildCalendar()
-    return calendar.getBookingById(bookingId)
-  }
 
-  getAllBookingsForResource(resource) {
-    const calendar = this.#buildCalendar()
-    return calendar.getBookingsForResource(resource)
-  }
+  hasBookingConflict(resource) {
+    // TODO: Create temporary Booking to search for conflicts?
+    const booking = this.#toBooking(resource)
 
-  getAllBookingsOnDate(date) {
-    const calendar = this.#buildCalendar()
-    return calendar.getBookingsForDate(date)
-  }
-
-  getBookingsForResourceOnDate(resource, date) {
-    const calendar = this.#buildCalendar()
-    const allBookingsOnDate = this.getAllBookingsOnDate(date)
-
-    // TODO: find a way to get bookings of resource and date
-    // booking-module offers methods for finding bookings by Resources and
-    // by Date but not both at the same time.
-  }
-
-  hasBookingConflict(resource, timeSlot) {
-    // TODO: issue when adding booking to "wrong" cal?
-    const booking = this.#createBooking(resource, timeSlot)
     const calendar = this.#buildCalendar()
     return calendar.hasBookingConflict(booking)
+  }
+
+  getBookingsOnDate(resource, date) {
+    const calendar = this.#buildCalendar(resource, date, date)
+    return calendar.getBookingsForDate(date)
+  }
+  
+  cancel(bookingId) {
+    this.#bookingRegistry.deleteBooking(bookingId)
   }
 
   #createBookingId() {

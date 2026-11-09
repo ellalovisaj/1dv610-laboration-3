@@ -125,10 +125,6 @@ export class BookingScheduler {
     return date.toISOString().split('T')[0]
   }
 
-  #removeTimeFrom(dateTime) {
-    return dateTime.split('T')[0]
-  }
-
   #validateDate(date) {
     if (!this.#isWorkday(date)) {
       throw new Error(`${date} is not a workday`)
