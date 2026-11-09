@@ -1,5 +1,4 @@
 export class DemoData {
-  #today = new Date()
   #holidayService
   #bookingService
   #employeeRegistry
@@ -36,10 +35,13 @@ export class DemoData {
     return this.#holidayService.addWorkdays(this.#today, 1)
   }
 
-  #createBooking(employee, customerName, date, start, end) {
+  #today() {
+    return new Date().toLocaleDateString('sv-SE')
+  }
+
+  #createBooking(employee, date, customerName, start, end) {
     this.#bookingService.newBooking(employee.getResource(), {
-      id: '',
-      employeeID: employee.getId(),
+      employeeId: employee.getId(),
       type: 'appointment',
       customerName,
       start: `${date}T${start}`,
@@ -50,5 +52,6 @@ export class DemoData {
   reset() {
     this.#bookingRegistry.deleteAllBookings()
     this.#employeeRegistry.deleteAllEmployees()
+    this.addData()
   }
 }
