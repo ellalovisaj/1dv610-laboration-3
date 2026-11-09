@@ -1,3 +1,9 @@
+/**
+ * An employee's information.
+ *
+ * - Holds the Resource, which carries the id and the name.
+ * - Holds the working hours and the vacation days per year.
+ */
 export class Employee {
   #resource
   #workdayStart

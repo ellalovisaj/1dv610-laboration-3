@@ -29,6 +29,10 @@ export class EmployeeRegistry {
     return this.#getEmployee(id).vacationDaysPerYear()
   }
 
+  getById(id) {
+    return this.#getEmployee(id)
+  }
+
   /**
    * @param {string} id 
    * @returns {{workdayStart: string, workdayEnd: string}} strings in 'HH:MM' format.
@@ -43,6 +47,12 @@ export class EmployeeRegistry {
   }
 
   // EDITORS AND REMOVERS ########################
+  /**
+   * @param {string} name 
+   * @param {string} workdayStart - 'HH:MM' format.
+   * @param {string} workdayEnd - 'HH:MM' format.
+   * @param {number} vacationDaysPerYear 
+   */
   createEmployee(name, workdayStart, workdayEnd, vacationDaysPerYear) {
     const id = this.#createEmployeeId()
     const resource = this.#createResource(id, name)
