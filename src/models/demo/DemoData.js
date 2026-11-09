@@ -12,7 +12,7 @@ export class DemoData {
     this.#bookingRegistry = bookingRegistry
   }
 
-  addDemoData() {
+  addData() {
     // Employees
     const emil = this.#createEmployee('Emil', '07:00', '16:00', 25)
     const ella = this.#createEmployee('Ella', '13:00', '21:00', 20)

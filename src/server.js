@@ -15,6 +15,8 @@ import { VacationController } from './controllers/VacationController.js'
 import { WorktimeController } from './controllers/WorktimeController.js'
 import { BookingController } from './controllers/BookingController.js'
 
+import { DemoData } from './models/demo/DemoData.js'
+
 // helpers
 import { WorktimeCalculator } from './models/worktime/WorktimeCalculator.js'
 import { VacationCalculator } from './models/vacation/VacationCalculator.js'
@@ -61,7 +63,12 @@ try {
   const holidayService = new HolidayService()
   const bookingService = new BookingService(bookingRegistry)
   const employeeRegistry = new EmployeeRegistry(bookingService)
+
+  // Demo
+  const demoData = new DemoData(holidayService, bookingService, employeeRegistry, bookingRegistry)
   
+  demoData.addData()
+
   // Helpers
   const worktimeCalculator = new WorktimeCalculator(holidayService)
   const vacationCalculator = new VacationCalculator(holidayService)
