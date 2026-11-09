@@ -32,7 +32,7 @@ export class DemoData {
   }
 
   #nextWorkday() {
-    return this.#holidayService.addWorkdays(this.#today, 1)
+    return this.#holidayService.addWorkdays(this.#today(), 1)
   }
 
   #today() {
