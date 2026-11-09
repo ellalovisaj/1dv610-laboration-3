@@ -18,7 +18,7 @@ import { BookingController } from './controllers/BookingController.js'
 // helpers
 import { WorktimeCalculator } from './models/worktime/WorktimeCalculator.js'
 import { VacationCalculator } from './models/vacation/VacationCalculator.js'
-import { VacationPlanner } from './models/vacation/VacationPlanner.js'
+// TODO: import { VacationPlanner } from './models/vacation/VacationPlanner.js'
 import { BookingScheduler } from './models/booking/BookingScheduler.js'
 import { EmployeeRegistry } from './models/employee/EmployeeRegistry.js'
 import { BookingRegistry } from './models/booking/BookingRegistry.js'
@@ -66,14 +66,16 @@ try {
   const worktimeCalculator = new WorktimeCalculator(holidayService)
   const vacationCalculator = new VacationCalculator(holidayService)
 
-  const vacationPlanner = new VacationPlanner(holidayService, bookingService, vacationCalculator, employeeRegistry)
+  // TODO: Uncomment and pass planner to VacationController
+  // TODO: When it's done
+  // const vacationPlanner = new VacationPlanner(holidayService, bookingService, vacationCalculator, employeeRegistry)
   const bookingScheduler = new BookingScheduler(holidayService, bookingService, employeeRegistry)
 
   // Controllers
   const controllers = {
     home: new HomeController(holidayService),
     worktime: new WorktimeController(worktimeCalculator),
-    vacation: new VacationController(vacationPlanner),
+    vacation: new VacationController(vacationCalculator),
     booking: new BookingController(bookingScheduler),
   }
 
