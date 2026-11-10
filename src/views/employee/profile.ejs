@@ -1,0 +1,21 @@
+<div>
+  <% if (employee) { %>
+    <p id="employee-name">
+      <%= employee.getName() %>
+    </p>
+    <p id="employee-id"> ID: <%= employee.getId() %>
+    </p>
+    <p id="employee-working-hours">
+      Working hours: <%= employee.getWorkingHours().workdayStart %> - <%= employee.getWorkingHours().workdayEnd %>
+    </p>
+    <p id="employee-vacation-days"> Vacation days: <%= employee.getVacationDaysPerYear() %>
+    </p>
+
+    <div class="button-box">
+      <a href="<%= baseURL %>employees" id="profile-employee-back-link" class="link-button-style secondary-button">Back</a>
+      <a href="<%= baseURL %>employees/<%= employee.getId() %>/edit" id="profile-edit-link" class="link-button-style main-button">Edit</a>
+    </div>
+  <% } else { %>
+    <p>No employee.</p>
+  <% } %>
+</div>
