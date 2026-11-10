@@ -7,25 +7,59 @@ export class EmployeeController {
     this.#demoData = demoData
   }
 
+  // get
   showList(_req, res) {
     const allEmployees = this.#employees.getAll()
 
-    res.render('employee/employee-list', { allEmployees })
+    res.render('employee/list', { allEmployees })
   }
 
-  showProfile(_req, res) {
-    // TODO: Render view
-    res.render('employee/profile', {})
-  }
-
+  // get
   showNewEmployeeForm(_req, res) {
-    res.render('employee/new-employee', {})
+    res.render('employee/create-form', {})
   }
 
-  addNew(_req, res) {
-    // TODO: Get input here
+  // post
+  addNew(req, res) {
+    const employeeInfo = req.body
+    const newEmployee = this.employeeRegistry.createEmployee(employeeInfo)
+
+    // TODO: Sucess flash
 
     // TODO: Render view
-    res.render('employee/employee-list', {})
+    res.render('employee/profile', { newEmployee })
+  }
+
+  // get
+  showProfile(req, res) {
+    const employyeId = req.params.id
+    const employee = this.#employees.getById(employyeId)
+
+    res.render('employee/profile', { employee })
+  }
+
+  // get
+  edit(req, res) {
+    const employyeId = req.params.id
+    const employee = this.#employees.getById(employyeId)
+
+    res.render('employee/edit-form', { employee })
+  }
+
+  // post
+  editPost(req, res) {
+    const input = {
+      start: req.body.workdayStart,
+      end: req.body.workdayEnd,
+      vacationDays: req.body.vacationDaysPerYear,
+    }
+
+    const id = req.params.id
+    const employee = this.#employees.getById(id)
+
+    this.#employees.editWorkinghours(id, input.start, input.end)
+    this.#employees.editVacationDaysPerYear(id, input.vacationDays)
+
+    res.render('employee/profile', { employee })
   }
 }
