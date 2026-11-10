@@ -1,0 +1,15 @@
+<form action="<%= baseURL %>employees/new" method="post">
+  <label for="new-employee-name">Employee name</label>
+  <input type="text" name="new-employee-name" id="new-employee-name" required>
+
+  <label for="new-employee-vacation-days">Vacation days per year</label>
+  <input type="number" name="new-employee-vacation-days" id="new-employee-vacation-days" max="100" min="0" step="1" value="25" required>
+
+  <label for="new-employee-workday-start">Start of workday</label>
+  <input type="time" name="new-employee-workday-start" value="07:00" step="900">
+
+  <label for="new-employee-workday-end">End of workday</label>
+  <input type="time" name="new-employee-workday-end" value="16:00" step="900">
+
+  <button type="submit">Add new employee</button>
+</form>

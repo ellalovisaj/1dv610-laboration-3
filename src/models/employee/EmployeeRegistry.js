@@ -17,6 +17,10 @@ export class EmployeeRegistry {
 
   // GETTERS ########################
 
+  getAll() {
+    return [...this.#employees.values()]
+  }
+
   getName(id) {
     return this.#getEmployee(id).getName()
   }

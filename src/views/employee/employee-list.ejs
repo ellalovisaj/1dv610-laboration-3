@@ -1,0 +1,70 @@
+<style>
+  .employees-header {
+    background-color: beige;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .employees-header h2 {
+    margin: 10px;
+  }
+
+  #employees-buttons {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #employees-buttons button {
+    width: 8rem;
+    margin: 5px;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  #employee-info {
+    margin: 5px;
+    list-style: none;
+    outline: solid 1px black
+  }
+
+  #employee-info p {
+    margin: 2px;
+  }
+
+  #employee-name {
+    font-weight: bold;
+  }
+</style>
+
+<div class="employees-header">
+  <h2>All Employees</h2>
+  <div id="employees-buttons">
+    <button id="employees-add-button">New Employee</button>
+    <button id="employees-reset-button">Reset Demo Data</button>
+  </div>
+</div>
+
+
+<div>
+  <% if (allEmployees) { %>
+    <ul>  
+      <% for (let employee of allEmployees) { %>
+        <li id="employee-info">
+          <p id="employee-name"><%= employee.getName() %></p>
+          <p id="employee-id"> ID: <%= employee.getId() %></p>
+          <p id="employee-working-hours">
+            Working hours: <%= employee.getWorkingHours().workdayStart %> - <%= employee.getWorkingHours().workdayEnd %>
+          </p>
+          <p id="employee-vacation-days"> Vacation days: <%= employee.getVacationDaysPerYear() %></p>
+        </li>
+      <% } %>
+    </ul>
+  <% } else { %>
+    <p>No employees available.</p>
+  <% } %>
+</div>
