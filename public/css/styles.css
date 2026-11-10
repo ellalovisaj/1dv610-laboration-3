@@ -79,8 +79,9 @@ fieldset {
 }
 
 .form-input-field {
-  height: 1.5rem;
-  font-size: 1em;
+  height: 2rem;
+  box-sizing: border-box;
+  font-size: 1rem;
   font-family: inherit;
 }
 
@@ -88,9 +89,8 @@ fieldset {
   width: 100%;
   box-sizing: border-box;
   height: 2rem;
-  padding: 1rem;
+  padding: 0.5rem 0.5rem;
   margin-bottom: 1rem;
-
   font-size: 1rem;
 }
 
@@ -151,7 +151,28 @@ button {
   box-shadow: -1px -1px 1px inset;
 }
 
-/* ---------- New Employee Form ---------- */
+.button-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-box a,
+.button-box button {
+  width: 46%;
+}
+
+/* ---------- New/Edit Employee Form ---------- */
+
+#edit-employee-header h2 {
+  margin-bottom: 0;
+}
+
+#edit-employee-header h3 {
+  color: rgb(98, 98, 98);;
+  margin-top: 5px;
+  font-weight: normal;
+  font-size: 22px;
+}
 
 #new-employee-form {
   width: 50%;
@@ -163,16 +184,46 @@ button {
   justify-content: space-between;
 }
 
-#new-employee-buttons {
+/* ---------- All Employees List ---------- */
+.employees-header {
+  width: 80%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#new-employee-form button,
-#new-employee-back-link {
-  width: 40%;
+#employees-buttons {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
+#employees-buttons button,
+#employees-buttons a {
+  font-size: small;
+  height: 1.5rem;
+  width: 6rem;
+}
+
+ul {
+  padding: 0;
+}
+
+#employee-info {
+  margin: 5px 0px;
+  list-style: none;
+  outline: solid 1px black
+}
+
+#employee-info p {
+  margin: 2px;
+}
+
+#employee-name {
+  font-weight: bold;
+}
 
 /* ---------- Worktime forms ---------- */
 
