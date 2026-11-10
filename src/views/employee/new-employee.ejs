@@ -1,15 +1,38 @@
-<form action="<%= baseURL %>employees/new" method="post">
-  <label for="new-employee-name">Employee name</label>
-  <input type="text" name="new-employee-name" id="new-employee-name" required>
+<h2>New Employee</h2>
 
-  <label for="new-employee-vacation-days">Vacation days per year</label>
-  <input type="number" name="new-employee-vacation-days" id="new-employee-vacation-days" max="100" min="0" step="1" value="25" required>
+<form action="<%= baseURL %>employees/new" method="post" id="new-employee-form">
+  <fieldset id="new-employee-name-fieldset">
+    <label for="new-employee-name">Name</label>
+    <input id="new-employee-name" class="large-text-input" type="text" placeholder="Full name">
 
-  <label for="new-employee-workday-start">Start of workday</label>
-  <input type="time" name="new-employee-workday-start" value="07:00" step="900">
+  </fieldset>
 
-  <label for="new-employee-workday-end">End of workday</label>
-  <input type="time" name="new-employee-workday-end" value="16:00" step="900">
+  <fieldset class="form-row">
 
-  <button type="submit">Add new employee</button>
+    <label for="new-employee-vacation-days">Vacation days per year</label>
+    <input type="number" id="new-employee-vacation-days" class="form-input-field" max="100" min="0" step="1" placeholder="25" required>
+
+  </fieldset>
+
+  <fieldset class="form-row">
+    <legend>Working Hours</legend>
+
+    <div id="new-employee-working-hours">
+
+      <label for="new-employee-workday-start" class="visually-hidden">Start</label>
+
+      <input type="time" id="new-employee-workday-start" class="form-input-field" name="workdayStart" value="07:00" step="900" required>
+
+      <span> to </span>
+      <label for="new-employee-workday-end" class="visually-hidden">End</label>
+      <input type="time" id="new-employee-workday-end" class="form-input-field" name="workdayEnd" value="16:00" step="900" required>
+
+    </div>
+
+  </fieldset>
+
+  <div id="new-employee-buttons">
+    <a href="<%= baseURL %>employees" id="new-employee-back-link" class="link-button-style secondary-button">Back</a>
+    <button type="submit" class="main-button">Save</button>
+  </div>
 </form>

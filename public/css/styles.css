@@ -12,10 +12,12 @@ body {
 
 main {
   margin: 20px 0px;
-  padding: 10px 0px;
+  padding: 0px;
   max-width: 800px;
   background-color: white;
   border-radius: 10px;
+  padding-bottom: 20%;
+
 }
 
 /* ---------- Layout ---------- */
@@ -36,11 +38,141 @@ header {
 
 main {
   grid-area: main;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: space-around
 }
 
 footer {
   grid-area: footer;
 }
+
+/* ---------- Forms ---------- */
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row legend {
+  float: left;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.form-input-field {
+  height: 1.5rem;
+  font-size: 1em;
+  font-family: inherit;
+}
+
+.large-text-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 2rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  font-size: 1rem;
+}
+
+/* ---------- Button Styling ---------- */
+
+.link-button-style {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 2em;
+
+  cursor: pointer;
+  border: solid 1px rgba(0, 0, 0, 0.334);
+  border-radius: 4px;
+}
+
+button {
+  all: unset;
+  height: 2em;
+
+  cursor: pointer;
+  border: solid 1px rgba(0, 0, 0, 0.334);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.main-button {
+  background-color: rgb(14, 92, 161);
+  border: solid 1px rgba(0, 0, 0, 0.334);
+  color: white;
+}
+
+.main-button:hover {
+  background-color: rgb(36, 107, 169);
+  border: solid 1px rgba(0, 0, 0, 0.334);
+}
+
+.main-button:active {
+  background-color: rgb(71, 149, 217);
+  border: solid 1px rgba(0, 0, 0, 0.334);
+  box-shadow: -1px -1px 1px rgb(27, 63, 94) inset;
+}
+
+.secondary-button {
+  background-color: rgb(198, 206, 212);
+  border: solid 1px rgb(132, 132, 133);
+  color: rgb(72, 72, 72);
+}
+
+.secondary-button:hover {
+  background-color: rgb(209, 215, 221);
+}
+
+.secondary-button:active {
+  background-color: rgb(217, 223, 227);
+  box-shadow: -1px -1px 1px inset;
+}
+
+/* ---------- New Employee Form ---------- */
+
+#new-employee-form {
+  width: 50%;
+}
+
+#new-employee-working-hours {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#new-employee-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+#new-employee-form button,
+#new-employee-back-link {
+  width: 40%;
+}
+
 
 /* ---------- Worktime forms ---------- */
 
