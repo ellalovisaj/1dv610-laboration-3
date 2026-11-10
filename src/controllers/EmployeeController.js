@@ -62,4 +62,11 @@ export class EmployeeController {
 
     res.render('employee/profile', { employee })
   }
+
+  resetDemo(_req, res) {
+    this.#demoData.reset()
+    const allEmployees = this.#employees.getAll()
+
+    res.render('employee/list', { allEmployees })
+  }
 }

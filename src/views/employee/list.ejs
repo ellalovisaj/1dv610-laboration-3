@@ -2,7 +2,9 @@
 <div class="employees-header">
   <h2>All Employees</h2>
   <div id="employees-buttons">
-    <button id="employees-reset-button" class="secondary-button">Reset Demo</button>
+    <form action="<%= baseURL %>demo/reset" method="post">
+    <button type="submit" id="employees-reset-button" class="secondary-button">Reset Demo</button>
+    </form>
     <a href="<%= baseURL %>employees/new" id="employees-new-link" class="link-button-style main-button">New Employee</a>
   </div>
 </div>

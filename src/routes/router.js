@@ -23,6 +23,7 @@ export function createRouter(controllers) {
 
   // Employees
   router.get('/employees', (req, res) => controllers.employee.showList(req, res))
+  router.post('/demo/reset', (req, res) => controllers.employee.resetDemo(req, res))
 
   // Add new
   router.get('/employees/new', (req, res) => controllers.employee.showNewEmployeeForm(req, res))
