@@ -23,9 +23,17 @@ export function createRouter(controllers) {
 
   // Employees
   router.get('/employees', (req, res) => controllers.employee.showList(req, res))
+
+  // Add new
   router.get('/employees/new', (req, res) => controllers.employee.showNewEmployeeForm(req, res))
   router.post('/employees/new', (req, res) => controllers.employee.addNew(req, res))
+
+  // Show Profile
   router.get('/employees/:id', (req, res) => controllers.employee.showProfile(req, res))
+
+  // Edit profile
+  router.post('/employees/:id', (req, res) => controllers.employee.editPost(req, res))
+  router.get('/employees/:id/edit', (req, res) => controllers.employee.edit(req, res))
 
   // Catch 404. Always last route in router
   router.use((_req, _res, next) => next(createError(404)))
