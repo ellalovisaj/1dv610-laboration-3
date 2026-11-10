@@ -3,14 +3,14 @@
 <form action="<%= baseURL %>employees/new" method="post" id="new-employee-form">
   <fieldset id="new-employee-name-fieldset">
     <label for="new-employee-name">Name</label>
-    <input id="new-employee-name" class="large-text-input" type="text" placeholder="Full name">
+    <input id="new-employee-name" class="large-text-input" name="name" type="text" placeholder="Full name">
 
   </fieldset>
 
   <fieldset class="form-row">
 
     <label for="new-employee-vacation-days">Vacation days per year</label>
-    <input type="number" id="new-employee-vacation-days" class="form-input-field" max="100" min="0" step="1" placeholder="25" required>
+    <input type="number" id="new-employee-vacation-days" name="vacationDaysPerYear" class="form-input-field" max="100" min="0" step="1" placeholder="25" required>
 
   </fieldset>
 

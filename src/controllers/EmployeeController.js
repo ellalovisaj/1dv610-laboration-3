@@ -21,8 +21,14 @@ export class EmployeeController {
 
   // post
   addNew(req, res) {
-    const employeeInfo = req.body
-    const newEmployee = this.employeeRegistry.createEmployee(employeeInfo)
+    const input = {
+      name: req.body.name,
+      start: req.body.workdayStart,
+      end: req.body.workdayEnd,
+      vacationDays: req.body.vacationDaysPerYear,
+    }
+
+    const newEmployee = this.#employees.createEmployee(input.name, input.start, input.end, input.vacationDays)
 
     // TODO: Sucess flash
 
