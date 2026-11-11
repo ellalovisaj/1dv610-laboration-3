@@ -1,0 +1,34 @@
+<h2>New Booking</h2>
+
+<form action="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new" method="post" class="booking-forms">
+  <h3 class="name-header"><%= employeeInfo.name %></h3>
+  <div>
+    <label for="customer-name">Customer Name</label>
+    <input id="customer-name" class="large-text-input" name="name" type="text" placeholder="Full name" required>
+  </div>
+
+  <div class="form-row">
+    <label for="new-appointment-date">Date</label>
+    <input type="date" id="new-appointment-date" name="date" class="form-input-field" value="2026-11-12" required>
+  </div>
+
+
+  <div class="form-row">
+    <label for="new-appointment-start">Start time</label>
+    <input type="time" id="new-appointment-start" class="form-input-field" name="start" value="10:00" step="1800" required>
+  </div>
+
+  <div class="form-row">
+    <label for="new-appointment-duration">Duration</label>
+    <select name="duration" id="new-appointment-duration" class="form-input-field" required>
+      <option value="" disabled selected>Select</option>
+      <option value="30">30 minutes</option>
+      <option value="60">60 minutes</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <a href="<%= baseURL %>employees/<%= employeeInfo.id %>" class="link-button-style secondary-button">Back</a>
+    <button type="submit" class="main-button">Save</button>
+  </div>
+</form>
