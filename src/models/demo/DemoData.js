@@ -13,10 +13,10 @@ export class DemoData {
 
   addData() {
     // Employees
-    const emil = this.#createEmployee('Emil', '07:00', '16:00', 25)
-    const ella = this.#createEmployee('Ella', '13:00', '21:00', 20)
-    const arvid = this.#createEmployee('Arvid', '05:00', '12:00', 2)
-    const christopher = this.#createEmployee('Christopher', '07:00', '16:00', 45)
+    const emil = this.#createEmployee('Emil', '07:00', '16:00', '25')
+    const ella = this.#createEmployee('Ella', '13:00', '21:00', '20')
+    const arvid = this.#createEmployee('Arvid', '05:00', '12:00', '2')
+    const christopher = this.#createEmployee('Christopher', '07:00', '16:00', '45')
 
     // Next workday
     const nextWorkday = this.#nextWorkday()

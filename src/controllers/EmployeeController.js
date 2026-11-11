@@ -28,12 +28,12 @@ export class EmployeeController {
       vacationDays: req.body.vacationDaysPerYear,
     }
 
-    const newEmployee = this.#employees.createEmployee(input.name, input.start, input.end, input.vacationDays)
+    const employee = this.#employees.createEmployee(input.name, input.start, input.end, input.vacationDays)
 
     // TODO: Sucess flash
 
     // TODO: Render view
-    res.render('employee/profile', { newEmployee })
+    res.render('employee/profile', { employee })
   }
 
   // get

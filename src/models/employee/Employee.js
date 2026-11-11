@@ -14,7 +14,7 @@ export class Employee {
    * @param {Resource} resource (contains id and name)
    * @param {string} workdayStart 
    * @param {string} workdayEnd 
-   * @param {number} vacationDaysPerYear 
+   * @param {string} vacationDaysPerYear 
    */
   constructor(resource, workdayStart, workdayEnd, vacationDaysPerYear) {
     this.#resource = resource
