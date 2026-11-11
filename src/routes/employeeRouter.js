@@ -7,8 +7,8 @@ export function createEmployeeRouter(controller) {
   router.get('/', (req, res, next) => controller.showList(req, res, next))
 
   // Add new
-  router.get('/new', (req, res, next) => controller.showNewEmployeeForm(req, res, next))
-  router.post('/new', (req, res, next) => controller.addNew(req, res, next))
+  router.get('/new', (req, res, next) => controller.showCreateForm(req, res, next))
+  router.post('/new', (req, res, next) => controller.createNew(req, res, next))
 
   // Show Profile
   router.get('/:id', (req, res, next) => controller.showProfile(req, res, next))

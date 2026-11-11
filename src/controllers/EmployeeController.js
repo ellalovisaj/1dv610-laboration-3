@@ -26,12 +26,12 @@ export class EmployeeController {
   }
 
   // get
-  showNewEmployeeForm(_req, res) {
+  showCreateForm(_req, res) {
     res.render('employee/create-form', {})
   }
 
   // post
-  addNew(req, res) {
+  createNew(req, res) {
     const input = {
       name: req.body.name,
       start: req.body.workdayStart,
@@ -41,7 +41,7 @@ export class EmployeeController {
 
     const employee = this.#employees.createEmployee(input.name, input.start, input.end, input.vacationDays)
 
-    // TODO: Sucess flash
+    // TODO: Success flash
 
     res.redirect(`./${employee.getId()}`)
   }
