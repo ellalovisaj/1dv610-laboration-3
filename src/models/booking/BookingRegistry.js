@@ -42,7 +42,7 @@ export class BookingRegistry {
    */
   getBookingsForEmployeeBetween(employeeId, from, to) {
     const periodStart = `${from}T00:00`
-    const periodEnd = `${to}T00:00`
+    const periodEnd = `${to}T23:59`
 
     const result = [...this.#bookings.values()].filter((booking) => 
       booking.employeeId === employeeId &&
