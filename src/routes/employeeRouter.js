@@ -1,22 +1,21 @@
 import express from 'express'
 
-export function createEmployeeRouter(controllers) {
+export function createEmployeeRouter(controller) {
   const router = express.Router()
 
   // Employees
-  router.get('/employees', (req, res) => controllers.employee.showList(req, res))
-  router.post('/demo/reset', (req, res) => controllers.employee.resetDemo(req, res))
+  router.get('/', (req, res, next) => controller.showList(req, res, next))
 
   // Add new
-  router.get('/employees/new', (req, res) => controllers.employee.showNewEmployeeForm(req, res))
-  router.post('/employees/new', (req, res) => controllers.employee.addNew(req, res))
+  router.get('/new', (req, res, next) => controller.showNewEmployeeForm(req, res, next))
+  router.post('/new', (req, res, next) => controller.addNew(req, res, next))
 
   // Show Profile
-  router.get('/employees/:id', (req, res) => controllers.employee.showProfile(req, res))
+  router.get('/:id', (req, res, next) => controller.showProfile(req, res, next))
+  router.get('/:id/edit', (req, res, next) => controller.edit(req, res, next))
 
   // Edit profile
-  router.post('/employees/:id', (req, res) => controllers.employee.editPost(req, res))
-  router.get('/employees/:id/edit', (req, res) => controllers.employee.edit(req, res))
+  router.post('/:id', (req, res, next) => controller.editPost(req, res, next))
 
   return router
 }
