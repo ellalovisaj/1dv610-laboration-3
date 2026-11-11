@@ -89,7 +89,7 @@ export class BookingScheduler {
 
     const bookingInfo = this.#compileBookingInfo(formInput)
     
-    this.#bookingService.editBooking(
+    return this.#bookingService.editBooking(
       employee.getResource(),
       formInput.id,
       bookingInfo

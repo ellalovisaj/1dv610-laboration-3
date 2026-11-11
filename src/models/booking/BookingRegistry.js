@@ -59,6 +59,17 @@ export class BookingRegistry {
     return id
   }
 
+  // TODO: Same as save booking except return? Keep both?
+  editBooking(booking) {
+    if (!this.#isBookingId(booking.id)) {
+      this.#bookings.set(booking.id, booking)
+    } else {
+      throw new Error('Booking is already saved.')
+    }
+
+    return booking.id
+  }
+
   #validateBookingId(id) {
     if (!this.#isBookingId(id)) {
       throw new Error('Booking ID is not in registry')

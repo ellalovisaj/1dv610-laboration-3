@@ -21,10 +21,10 @@ import { Booking, BookingCalendar, TimeSlot, Resource } from 'booking-module'
  * - Cancel bookings.
  */
 export class BookingService {
-  #bookingRegistry
+  #registry
 
   constructor(bookingRegistry) {
-    this.#bookingRegistry = bookingRegistry
+    this.#registry = bookingRegistry
   }
 
   /**
@@ -36,13 +36,12 @@ export class BookingService {
     return new Resource(id, name)
   }
 
-
   /**
    * Creates a TimeSlot from start and end date in bookingInfo.
    * Returns a Booking object.
-   * 
-   * @param {object} bookingInfo 
-   * @param {Resource} resource 
+   *
+   * @param {object} bookingInfo
+   * @param {Resource} resource
    * @returns {Booking} A Booking object
    */
   #toBooking(bookingInfo, resource) {
@@ -74,7 +73,7 @@ export class BookingService {
 
   #buildCalendar(resource, startDate, endDate) {
     // Get all saved bookings of employee and save in array:
-    const bookingRecords = this.#bookingRegistry.getBookingsForEmployeeBetween(resource.getId(), startDate, endDate)
+    const bookingRecords = this.#registry.getBookingsForEmployeeBetween(resource.getId(), startDate, endDate)
 
     // Create new BookingCalendar
     const calendar = new BookingCalendar()
@@ -117,25 +116,24 @@ export class BookingService {
    * @returns {string} - The ID of the new booking.
    */
   newBooking(resource, bookingInput) {
-
     const id = this.#createBookingId()
     const bookingData = {
       id,
       employeeId: resource.getId(),
-      ...bookingInput
+      ...bookingInput,
     }
-  
+
     // Create Booking object
     const booking = this.#toBooking(bookingData, resource)
-    
+
     // Get start and end date for the calendar
     const dateStart = this.#removeTimeFrom(bookingData.start)
     const dateEnd = this.#removeTimeFrom(bookingData.end)
 
     // Build calendar for employee between start and end dates
     const calendar = this.#buildCalendar(resource, dateStart, dateEnd)
-    
-    this.#hasBookingConflict(calendar, booking)    
+
+    this.#hasBookingConflict(calendar, booking)
 
     // Add booking to the new calendar and save to registry
     this.#saveBooking(calendar, booking, bookingData)
@@ -144,33 +142,36 @@ export class BookingService {
   }
 
   editBooking(resource, id, bookingInfo) {
-    // TODO: Write method according to comments:
-    // get booking
+    const oldBooking = this.#registry.getBooking(id)
+    const employeeId = resource.getId()
 
-    // check if booking matches employee id
+    if (oldBooking.employeeId !== employeeId) {
+      throw new Error("Booking doesn't match the Employee.")
+    }
 
-    // Compile info
+    const bookingData = {
+      id,
+      ...bookingInfo,
+    }
 
-    // Build temporary cal
+    const calendar = this.#buildCalendar(resource, bookingInfo.date, bookingInfo.date)
+    calendar.cancelBooking(oldBooking.id)
 
-    // Delete old booking from temporary cal
-
-    // Check if new booking time have conflicts
+    // TODO: Check if new booking time have conflicts
 
     // Update booking in registry
-
-    return id
+    return this.#registry.editBooking(bookingData)
   }
 
   #saveBooking(calendar, booking, bookingData) {
     calendar.addBooking(booking)
-    this.#bookingRegistry.saveBooking(bookingData)
+    this.#registry.saveBooking(bookingData)
   }
 
   /**
    * Converts date and time strings into one Date object that contains
    * both date and time.
-   * 
+   *
    * @param {string} date - 'YYYY-MM-DD' format
    * @param {string} time - 'HH:MM' format.
    * @returns {Date} Date object containing both date and time.
@@ -204,22 +205,20 @@ export class BookingService {
 
   // Converts from Dates to strings
   #toTimeString(dateTime) {
-    return dateTime.toLocaleTimeString('sv-SE', { hour: "2-digit", minute: "2-digit" })
+    return dateTime.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })
   }
 
   #hasBookingConflict(calendar, booking) {
     return calendar.hasBookingConflict(booking)
   }
 
-
-
   getBookingsOnDate(resource, date) {
     const calendar = this.#buildCalendar(resource, date, date)
     return calendar.getBookingsForDate(date)
   }
-  
+
   cancel(bookingId) {
-    this.#bookingRegistry.deleteBooking(bookingId)
+    this.#registry.deleteBooking(bookingId)
   }
 
   #createBookingId() {

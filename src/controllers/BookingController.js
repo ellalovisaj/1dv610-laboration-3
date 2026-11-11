@@ -41,7 +41,10 @@ export class BookingController {
       start: req.body.bookingStart,
       end: req.body.bookingEnd,
     }
-    res.redirect(`./${input.id}`)
+
+    const bookingId = this.#scheduler.editBooking(input)
+
+    res.redirect(`./${bookingId}`)
 
   }
 
