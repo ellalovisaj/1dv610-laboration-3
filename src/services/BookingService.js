@@ -109,29 +109,28 @@ export class BookingService {
    *
    * @param {Resource} - Employee resouce.
    *
-   * @param {Object} bookingInfo
-   * @param {string} bookingInfo.type - Booking type, 'apointment' or 'vacation'.
-   * @param {string} bookingInfo.customerName - Customer's name, blank when vacation.
-   * @param {string} bookingInfo.start - Start time in 'YYYY-MM-DDTHH:MM' format.
-   * @param {string} bookingInfo.end - End time in 'YYYY-MM-DDTHH:MM' format.
+   * @param {Object} bookingInput
+   * @param {string} bookingInput.type - Booking type, 'apointment' or 'vacation'.
+   * @param {string} bookingInput.customerName - Customer's name, blank when vacation.
+   * @param {string} bookingInput.start - Start time in 'YYYY-MM-DDTHH:MM' format.
+   * @param {string} bookingInput.end - End time in 'YYYY-MM-DDTHH:MM' format.
    * @returns {string} - The ID of the new booking.
    */
-  newBooking(resource, bookingInfo) {
+  newBooking(resource, bookingInput) {
 
     const id = this.#createBookingId()
-    const record = {
+    const bookingData = {
       id,
       employeeId: resource.getId(),
-      ...bookingInfo
+      ...bookingInput
     }
-
   
     // Create Booking object
-    const booking = this.#toBooking(bookingInfo, resource)
+    const booking = this.#toBooking(bookingData, resource)
     
     // Get start and end date for the calendar
-    const dateStart = this.#removeTimeFrom(bookingInfo.start)
-    const dateEnd = this.#removeTimeFrom(bookingInfo.end)
+    const dateStart = this.#removeTimeFrom(bookingData.start)
+    const dateEnd = this.#removeTimeFrom(bookingData.end)
 
     // Build calendar for employee between start and end dates
     const calendar = this.#buildCalendar(resource, dateStart, dateEnd)
@@ -139,14 +138,14 @@ export class BookingService {
     this.#hasBookingConflict(calendar, booking)    
 
     // Add booking to the new calendar and save to registry
-    this.#saveBooking(calendar, booking, bookingInfo)
+    this.#saveBooking(calendar, booking, bookingData)
 
     return booking.getId()
   }
 
-  #saveBooking(calendar, booking, bookingInfo) {
+  #saveBooking(calendar, booking, bookingData) {
     calendar.addBooking(booking)
-    this.#bookingRegistry.saveBooking(bookingInfo)
+    this.#bookingRegistry.saveBooking(bookingData)
   }
 
   /**
