@@ -30,6 +30,36 @@ export class BookingScheduler {
   // Booking in database will contain:
   // (id, { id, employeeId, type, customerName, start, end })
 
+  getBookingsForEmployeeOnDate(employeeId, date) {
+    const employee = this.#employees.getById(employeeId)
+    const resource = employee.getResource(employeeId)
+
+    return this.#bookingService.getBookingsOnDate(resource, date)
+  }
+
+  getBooking(id) {
+    return this.#bookingService.getBooking(id)
+  }
+
+
+  /**
+   * Returns:
+   * id
+   * name
+   * vacationDays
+   * workStart
+   * workEnd
+   */
+  getEmployeeInfo(employeeId) {
+    return {
+      id: employeeId,
+      name: this.#employees.getName(employeeId),
+      vacationDays: this.#employees.getVacationDaysPerYear(employeeId),
+      workStart: this.#employees.getWorkingHours(employeeId).workdayStart,
+      workEnd: this.#employees.getWorkingHours(employeeId).workdayEnd,
+    }
+  }
+
   #compileBookingInfo(formInput) {
     return {
       employeeId: formInput.employeeId,
@@ -88,12 +118,8 @@ export class BookingScheduler {
     // - tiden finns bland de lediga tiderna för dagen
 
     const bookingInfo = this.#compileBookingInfo(formInput)
-    
-    return this.#bookingService.editBooking(
-      employee.getResource(),
-      formInput.id,
-      bookingInfo
-    )
+
+    return this.#bookingService.editBooking(employee.getResource(), formInput.id, bookingInfo)
   }
 
   // TODO:

@@ -212,6 +212,10 @@ export class BookingService {
     return calendar.hasBookingConflict(booking)
   }
 
+  getBooking(id) {
+    return this.#registry.getBooking(id)
+  }
+
   getBookingsOnDate(resource, date) {
     const calendar = this.#buildCalendar(resource, date, date)
     return calendar.getBookingsForDate(date)
