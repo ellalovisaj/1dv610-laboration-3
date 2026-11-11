@@ -15,13 +15,13 @@
     <ul>  
       <% for (let employee of allEmployees) { %>
         <li class="employee-info">
-          <a href="<%= baseURL %>employees/<%= employee.getId() %>">Link</a>
-          <p class="employee-name"><%= employee.getName() %></p>
-          <p class="employee-id"> ID: <%= employee.getId() %></p>
+          <a href="<%= baseURL %>employees/<%= employee.id %>">Link</a>
+          <p class="employee-name"><%= employee.name %></p>
+          <p class="employee-id"> ID: <%= employee.id %></p>
           <p class="employee-working-hours">
-            Working hours: <%= employee.getWorkingHours().workdayStart %> - <%= employee.getWorkingHours().workdayEnd %>
+            Working hours: <%= employee.start %> - <%= employee.end %>
           </p>
-          <p class="employee-vacation-days"> Vacation days: <%= employee.getVacationDaysPerYear() %></p>
+          <p class="employee-vacation-days"> Vacation days: <%= employee.vacation %></p>
         </li>
       <% } %>
     </ul>

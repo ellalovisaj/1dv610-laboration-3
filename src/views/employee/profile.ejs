@@ -1,19 +1,19 @@
 <div class="emloyee-profile">
   <% if (employee) { %>
     <h3 class="name-header">
-      <%= employee.getName() %>
+      <%= employee.name %>
     </h3>
-    <p id="employee-id"> ID: <%= employee.getId() %>
+    <p id="employee-id"> ID: <%= employee.id %>
     </p>
     <p id="employee-working-hours">
-      Working hours: <%= employee.getWorkingHours().workdayStart %> - <%= employee.getWorkingHours().workdayEnd %>
+      Working hours: <%= employee.start %> - <%= employee.end %>
     </p>
-    <p id="employee-vacation-days"> Vacation days: <%= employee.getVacationDaysPerYear() %>
+    <p id="employee-vacation-days"> Vacation days: <%= employee.vacation %>
     </p>
 
     <div class="form-row">
       <a href="<%= baseURL %>employees" id="profile-employee-back-link" class="link-button-style secondary-button">Back</a>
-      <a href="<%= baseURL %>employees/<%= employee.getId() %>/edit" id="profile-edit-link" class="link-button-style main-button">Edit</a>
+      <a href="<%= baseURL %>employees/<%= employee.id %>/edit" id="profile-edit-link" class="link-button-style main-button">Edit</a>
     </div>
   <% } else { %>
     <p>No employee.</p>

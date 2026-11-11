@@ -9,7 +9,18 @@ export class EmployeeController {
 
   // get
   showList(_req, res) {
-    const allEmployees = this.#employees.getAll()
+    const allEmployeeObjects = this.#employees.getAll()
+
+    const allEmployees = []
+    for (const employeeObject of allEmployeeObjects) {
+      allEmployees.push({
+        id: employeeObject.getId(),
+        name: employeeObject.getName(),
+        start: employeeObject.getWorkingHours().workdayStart,
+        end: employeeObject.getWorkingHours().workdayEnd,
+        vacation: employeeObject.getVacationDaysPerYear(),
+      })
+    }
 
     res.render('employee/list', { allEmployees })
   }
@@ -38,7 +49,15 @@ export class EmployeeController {
   // get
   showProfile(req, res) {
     const employyeId = req.params.id
-    const employee = this.#employees.getById(employyeId)
+    const employeeObject = this.#employees.getById(employyeId)
+
+    const employee = {
+      id: employeeObject.getId(),
+      name: employeeObject.getName(),
+      start: employeeObject.getWorkingHours().workdayStart,
+      end: employeeObject.getWorkingHours().workdayEnd,
+      vacation: employeeObject.getVacationDaysPerYear(),
+    }
 
     res.render('employee/profile', { employee })
   }
@@ -46,7 +65,15 @@ export class EmployeeController {
   // get
   edit(req, res) {
     const employyeId = req.params.id
-    const employee = this.#employees.getById(employyeId)
+    const employeeObject = this.#employees.getById(employyeId)
+
+    const employee = {
+      id: employeeObject.getId(),
+      name: employeeObject.getName(),
+      start: employeeObject.getWorkingHours().workdayStart,
+      end: employeeObject.getWorkingHours().workdayEnd,
+      vacation: employeeObject.getVacationDaysPerYear(),
+    }
 
     res.render('employee/edit-form', { employee })
   }
