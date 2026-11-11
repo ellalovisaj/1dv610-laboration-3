@@ -15,7 +15,7 @@ export function createRouter(controllers) {
   })
 
   router.use('/employees', createEmployeeRouter(controllers.employee))
-  router.use('/employees/:id/bookings', createBookingRouter(controllers.booking))
+  router.use('/employees/:id/booking', createBookingRouter(controllers.booking))
   router.use('/vacation', createVacationRouter(controllers.vacation))
   router.post('/demo/reset', (req, res, next) => controllers.employee.resetDemo(req, res, next))
 
