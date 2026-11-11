@@ -28,8 +28,8 @@ export class BookingController {
       employeeId: req.params.id,
       customerName: req.body.customerName,
       date: req.body.date,
-      start: req.body.bookingStart,
-      end: req.body.bookingEnd,
+      start: req.body.start,
+      duration: req.body.duration,
     }
 
     const bookingId = this.#scheduler.addBooking(input)

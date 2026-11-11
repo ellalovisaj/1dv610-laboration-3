@@ -66,9 +66,13 @@ export class BookingScheduler {
       type: 'appointment',
       customerName: formInput.customerName,
       date: formInput.date,
-      start: formInput.bookingStart,
-      end: formInput.bookingEnd,
+      start: formInput.start,
+      duration: formInput.duration
     }
+  }
+
+  #compileDateTime(date, time) {
+    return `${date}T${time}`
   }
 
   /**
@@ -82,7 +86,7 @@ export class BookingScheduler {
     // customerName
     // date
     // start
-    // end
+    // duration
 
     const bookingInfo = this.#compileBookingInfo(formInput)
 
@@ -101,7 +105,7 @@ export class BookingScheduler {
     // - tiden finns bland de lediga tiderna för dagen
 
     // Create and save booking in BookingService
-    return this.#bookingService.newBooking(resource, bookingInfo)
+    return this.#bookingService.bookAppointment(resource, bookingInfo)
   }
 
   editBooking(formInput) {

@@ -103,69 +103,19 @@ export class BookingService {
     )
   }
 
+  #getBookingDates(date, startTime, duration) {
+    const start = this.#toDateTime(date, startTime)
+    const end = this.#addMinutes(start, Number(duration))
+    return { start, end }
+  }
+
   /**
-   * Public method for creating and saving a new booking.
-   *
-   * @param {Resource} - Employee resouce.
-   *
-   * @param {Object} bookingInput
-   * @param {string} bookingInput.type - Booking type, 'apointment' or 'vacation'.
-   * @param {string} bookingInput.customerName - Customer's name, blank when vacation.
-   * @param {string} bookingInput.start - Start time in 'YYYY-MM-DDTHH:MM' format.
-   * @param {string} bookingInput.end - End time in 'YYYY-MM-DDTHH:MM' format.
-   * @returns {string} - The ID of the new booking.
+   * @param {Date} date - Date object with both date and time.
+   * @param {number} minutes - Minutes to add.
+   * @returns {Date} The date and time with given minutes added.
    */
-  newBooking(resource, bookingInput) {
-    const id = this.#createBookingId()
-    const bookingData = {
-      id,
-      employeeId: resource.getId(),
-      ...bookingInput,
-    }
-
-    // Create Booking object
-    const booking = this.#toBooking(bookingData, resource)
-
-    // Get start and end date for the calendar
-    const dateStart = this.#removeTimeFrom(bookingData.start)
-    const dateEnd = this.#removeTimeFrom(bookingData.end)
-
-    // Build calendar for employee between start and end dates
-    const calendar = this.#buildCalendar(resource, dateStart, dateEnd)
-
-    this.#hasBookingConflict(calendar, booking)
-
-    // Add booking to the new calendar and save to registry
-    this.#saveBooking(calendar, booking, bookingData)
-
-    return booking.getId()
-  }
-
-  editBooking(resource, id, bookingInfo) {
-    const oldBooking = this.#registry.getBooking(id)
-    const employeeId = resource.getId()
-
-    if (oldBooking.employeeId !== employeeId) {
-      throw new Error("Booking doesn't match the Employee.")
-    }
-
-    const bookingData = {
-      id,
-      ...bookingInfo,
-    }
-
-    const calendar = this.#buildCalendar(resource, bookingInfo.date, bookingInfo.date)
-    calendar.cancelBooking(oldBooking.id)
-
-    // TODO: Check if new booking time have conflicts
-
-    // Update booking in registry
-    return this.#registry.editBooking(bookingData)
-  }
-
-  #saveBooking(calendar, booking, bookingData) {
-    calendar.addBooking(booking)
-    this.#registry.saveBooking(bookingData)
+  #addMinutes(date, minutes) {
+    return new Date(date.getTime() + Number(minutes) * 60000)
   }
 
   /**
@@ -180,14 +130,13 @@ export class BookingService {
     return new Date(`${date}T${time}`)
   }
 
-  // Converts an array of TimeSlots from Array of date strings
-  #toTimeRanges(TimeSlots) {
-    const timeRanges = []
-
-    for (const timeSlot of TimeSlots) {
-      timeRanges.push(this.#toTimeRange(timeSlot))
-    }
-    return timeRanges
+  /**
+   *
+   * @param {Date} dateTime
+   * @returns {string} date time string in 'YYYY-MM-DDTHH:MM' format
+   */
+  #toDateTimeString(dateTime) {
+    return `${dateTime.toLocaleDateString('sv-SE')}T${this.#toTimeString(dateTime)}`
   }
 
   // Converts one TimeSlot object containing start and end date as strings
@@ -196,6 +145,85 @@ export class BookingService {
       startTime: this.#toTimeString(timeSlot.getStartTime()),
       endTime: this.#toTimeString(timeSlot.getEndTime()),
     }
+  }
+
+  /**
+   * Public method for creating and saving a new booking.
+   *
+   * @param {Resource} resource - Employee resouce.
+   *
+   * @param {Object} appointment
+   * @param {string} appointment.customerName - Customer's name, blank when vacation.
+   * @param {string} appointment.date - 'YYYY-MM-DD' format.
+   * @param {string} appointment.start - 'HH:MM' format.
+   * @param {string} appointment.duration - Duration in minutes as a string.
+   * @returns {string} - The ID of the new booking.
+   */
+  bookAppointment(resource, appointment) {
+    const startTime = this.#toDateTime(appointment.date, appointment.start)
+    const endTime = this.#addMinutes(startTime, appointment.duration)
+
+    const record = {
+      id: this.#createBookingId(),
+      employeeId: resource.getId(),
+      type: 'appointment',
+      customerName: appointment.customerName,
+      start: this.#toDateTimeString(startTime),
+      end: this.#toDateTimeString(endTime),
+    }
+
+    // Create Booking object
+    const booking = this.#toBooking(record, resource)
+
+    // Add booking to the new calendar and save to registry
+
+    return this.#saveIfNoConflict(booking, record, resource, appointment.date)
+  }
+
+  editBooking(resource, id, bookingInfo) {
+    const oldBooking = this.#registry.getBooking(id)
+    const employeeId = resource.getId()
+
+    if (oldBooking.employeeId !== employeeId) {
+      throw new Error("Booking doesn't match the Employee.")
+    }
+
+    const record = {
+      id,
+      ...bookingInfo,
+    }
+
+    const booking = this.#toBooking(record, resource)
+
+    const calendar = this.#buildCalendar(resource, record.date, record.date)
+
+    calendar.cancelBooking(oldBooking.id)
+
+    // Update booking in registry
+    return this.#saveIfNoConflict(booking, record, resource, record.date)
+  }
+
+  #saveIfNoConflict(booking, record, resource, date) {
+    const calendar = this.#buildCalendar(resource, date, date)
+    if (this.#hasBookingConflict(calendar, booking)) {
+      throw new Error('The time is already booked.')
+    }
+    return this.#saveBooking(calendar, booking, record)
+  }
+
+  #saveBooking(calendar, booking, record) {
+    calendar.addBooking(booking)
+    return this.#registry.saveBooking(record)
+  }
+
+  // Converts an array of TimeSlots from Array of date strings
+  #toTimeRanges(TimeSlots) {
+    const timeRanges = []
+
+    for (const timeSlot of TimeSlots) {
+      timeRanges.push(this.#toTimeRange(timeSlot))
+    }
+    return timeRanges
   }
 
   // Get date from dateTime string

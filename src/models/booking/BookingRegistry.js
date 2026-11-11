@@ -22,9 +22,9 @@ export class BookingRegistry {
   saveBooking(booking) {
     if (!this.#isBookingId(booking.id)) {
       this.#bookings.set(booking.id, booking)
-    } else {
-      throw new Error('Booking is already saved.')
+      return booking.id
     }
+    throw new Error('Booking is already saved.')
   }
 
   getBooking(id) {
@@ -34,7 +34,7 @@ export class BookingRegistry {
 
   /**
    * Returns all bookings of given employee within given date range.
-   * 
+   *
    * @param {string} employeeId
    * @param {string} from - 'YYYY-MM-DD' format
    * @param {string} to  - 'YYYY-MM-DD' format
@@ -44,10 +44,8 @@ export class BookingRegistry {
     const periodStart = `${from}T00:00`
     const periodEnd = `${to}T23:59`
 
-    const result = [...this.#bookings.values()].filter((booking) => 
-      booking.employeeId === employeeId &&
-      booking.start <= periodEnd &&
-      booking.end > periodStart
+    const result = [...this.#bookings.values()].filter(
+      (booking) => booking.employeeId === employeeId && booking.start <= periodEnd && booking.end > periodStart
     )
 
     return result

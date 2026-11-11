@@ -21,10 +21,10 @@ export class DemoData {
     // Next workday
     const nextWorkday = this.#nextWorkday()
 
-    this.#createBooking(christopher, nextWorkday, 'Anders Eriksson', '12:30', '13:00')
-    this.#createBooking(emil, nextWorkday, 'Kalle Karlsson', '08:30', '09:30')
-    this.#createBooking(ella, nextWorkday, 'Anna Svensson', '15:00', '16:00')
-    this.#createBooking(arvid, nextWorkday, 'Erik Larsson', '10:00', '10:30')
+    this.#createBooking(christopher, nextWorkday, 'Anders Eriksson', '12:30', '30')
+    this.#createBooking(emil, nextWorkday, 'Kalle Karlsson', '08:30', '60')
+    this.#createBooking(ella, nextWorkday, 'Anna Svensson', '15:00', '60')
+    this.#createBooking(arvid, nextWorkday, 'Erik Larsson', '10:00', '30')
   }
 
   #createEmployee(name, workdayStart, workdayEnd, vacationDaysPerYear) {
@@ -39,13 +39,12 @@ export class DemoData {
     return new Date().toLocaleDateString('sv-SE')
   }
 
-  #createBooking(employee, date, customerName, start, end) {
-    this.#bookingService.newBooking(employee.getResource(), {
-      employeeId: employee.getId(),
-      type: 'appointment',
+  #createBooking(employee, date, customerName, start, duration) {
+    this.#bookingService.bookAppointment(employee.getResource(), {
       customerName,
-      start: `${date}T${start}`,
-      end: `${date}T${end}`
+      date,
+      start,
+      duration
     })
   }
 
