@@ -1,8 +1,8 @@
-<div>
+<div class="emloyee-profile">
   <% if (employee) { %>
-    <p id="employee-name">
+    <h3 class="name-header">
       <%= employee.getName() %>
-    </p>
+    </h3>
     <p id="employee-id"> ID: <%= employee.getId() %>
     </p>
     <p id="employee-working-hours">
@@ -11,7 +11,7 @@
     <p id="employee-vacation-days"> Vacation days: <%= employee.getVacationDaysPerYear() %>
     </p>
 
-    <div class="button-box">
+    <div class="form-row">
       <a href="<%= baseURL %>employees" id="profile-employee-back-link" class="link-button-style secondary-button">Back</a>
       <a href="<%= baseURL %>employees/<%= employee.getId() %>/edit" id="profile-edit-link" class="link-button-style main-button">Edit</a>
     </div>

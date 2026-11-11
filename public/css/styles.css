@@ -161,20 +161,21 @@ button {
   width: 46%;
 }
 
-/* ---------- New/Edit Employee Form ---------- */
+/* ---------- Employees ---------- */
 
-#edit-employee-header h2 {
-  margin-bottom: 0;
-}
-
-#edit-employee-header h3 {
+.name-header {
   color: rgb(98, 98, 98);;
   margin-top: 5px;
   font-weight: normal;
   font-size: 22px;
 }
 
-#new-employee-form {
+#edit-employee-header h2 {
+  margin-bottom: 0;
+}
+
+.employee-forms,
+.emloyee-profile {
   width: 50%;
 }
 

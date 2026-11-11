@@ -1,44 +1,43 @@
-<div>
-  <% if (employee) { %>
-    <div id="edit-employee-header">
-      <h2>Edit Employee</h2>
-      <h3><%= employee.getName() %></h3>
-    </div>
 
-    <form action="<%= baseURL %>employees/<%= employee.getId() %>" method="post" id="edit-employee-form">
-      <fieldset class="form-row">
+<% if (employee) { %>
+  <div id="edit-employee-header">
+    <h2>Edit Employee</h2>
+    <h3 class="name-header">
+      <%= employee.getName() %>
+    </h3>
+  </div>
 
-        <label for="edit-employee-vacation-days">Vacation days per year</label>
-        <input type="number" id="edit-employee-vacation-days"
-        name="vacationDaysPerYear" class="form-input-field" max="100" min="0" step="1" value="<%= employee.getVacationDaysPerYear() %>" required>
+  <form action="<%= baseURL %>employees/<%= employee.getId() %>" method="post" class="employee-forms">
+    <fieldset class="form-row">
 
-      </fieldset>
+      <label for="edit-employee-vacation-days">Vacation days per year</label>
+      <input type="number" id="edit-employee-vacation-days"
+      name="vacationDaysPerYear" class="form-input-field" max="100" min="0" step="1" value="<%= employee.getVacationDaysPerYear() %>" required>
 
-      <fieldset class="form-row">
-        <legend>Working Hours</legend>
+    </fieldset>
 
-        <div id="edit-employee-working-hours">
+    <fieldset class="form-row">
+      <legend>Working Hours</legend>
 
-          <label for="edit-employee-workday-start" class="visually-hidden">Start</label>
+      <div class="form-working-hours">
+        <label for="edit-employee-workday-start" class="visually-hidden">Start time</label>
+        <input type="time" id="edit-employee-workday-start" class="form-input-field" name="workdayStart" value="<%= employee.getWorkingHours().workdayStart %>" step="900" required>
 
-          <input type="time" id="edit-employee-workday-start" class="form-input-field" name="workdayStart" value="<%= employee.getWorkingHours().workdayStart %>" step="900" required>
+        <span> to </span>
 
-          <span> to </span>
-
-          <label for="edit-employee-workday-end" class="visually-hidden">End</label>
-          <input type="time" id="edit-employee-workday-end" class="form-input-field" name="workdayEnd" value="<%= employee.getWorkingHours().workdayEnd %>" step="900" required>
-
-        </div>
-
-      </fieldset>
-
-      <div class="button-box">
-        <a href="<%= baseURL %>employees" id="edit-employee-back-link" class="link-button-style secondary-button">Back</a>
-        <button type="submit" class="main-button">Save changes</button>
+        <label for="edit-employee-workday-end" class="visually-hidden">End time</label>
+        <input type="time" id="edit-employee-workday-end" class="form-input-field" name="workdayEnd" value="<%= employee.getWorkingHours().workdayEnd %>" step="900" required>
       </div>
-    </form>
-  <% } else { %>
-    <p>No employee.</p>
-  <% } %>
-</div>
+
+    </fieldset>
+
+    <div class="form-row">
+      <a href="<%= baseURL %>employees" id="edit-employee-back-link" class="link-button-style secondary-button">Back</a>
+      <button type="submit" class="main-button">Save changes</button>
+    </div>
+  </form>
+<% } else { %>
+  <p>No employee.</p>
+<% } %>
+
 

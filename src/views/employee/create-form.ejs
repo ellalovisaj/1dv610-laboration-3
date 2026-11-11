@@ -1,37 +1,32 @@
 <h2>New Employee</h2>
 
-<form action="<%= baseURL %>employees/new" method="post" id="new-employee-form">
-  <fieldset id="new-employee-name-fieldset">
+<form action="<%= baseURL %>employees/new" method="post" class="employee-forms">
+  <div>
     <label for="new-employee-name">Name</label>
     <input id="new-employee-name" class="large-text-input" name="name" type="text" placeholder="Full name" required>
+  </div>
 
-  </fieldset>
-
-  <fieldset class="form-row">
-
+  <div class="form-row">
     <label for="new-employee-vacation-days">Vacation days per year</label>
     <input type="number" id="new-employee-vacation-days" name="vacationDaysPerYear" class="form-input-field" max="100" min="0" step="1" placeholder="25" required>
-
-  </fieldset>
+  </div>
 
   <fieldset class="form-row">
     <legend>Working Hours</legend>
 
-    <div id="new-employee-working-hours">
-
-      <label for="new-employee-workday-start" class="visually-hidden">Start</label>
-
+    <div class="form-working-hours">
+      <label for="new-employee-workday-start" class="visually-hidden">Start time</label>
       <input type="time" id="new-employee-workday-start" class="form-input-field" name="workdayStart" value="07:00" step="900" required>
 
       <span> to </span>
-      <label for="new-employee-workday-end" class="visually-hidden">End</label>
-      <input type="time" id="new-employee-workday-end" class="form-input-field" name="workdayEnd" value="16:00" step="900" required>
 
+      <label for="new-employee-workday-end" class="visually-hidden">End time</label>
+      <input type="time" id="new-employee-workday-end" class="form-input-field" name="workdayEnd" value="16:00" step="900" required>
     </div>
 
   </fieldset>
 
-  <div  class="button-box">
+  <div class="form-row">
     <a href="<%= baseURL %>employees" id="new-employee-back-link" class="link-button-style secondary-button">Back</a>
     <button type="submit" class="main-button">Save</button>
   </div>
