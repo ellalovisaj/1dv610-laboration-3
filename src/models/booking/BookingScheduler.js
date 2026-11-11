@@ -32,13 +32,11 @@ export class BookingScheduler {
 
   #compileBookingInfo(formInput) {
     return {
-      id: '',
       employeeId: formInput.employeeId,
-      type: formInput.bookingType,
+      type: 'appointment',
       customerName: formInput.customerName,
       start: formInput.bookingStart,
       end: formInput.bookingEnd,
-      duration: formInput.bookingDuration,
     }
   }
 
@@ -48,13 +46,12 @@ export class BookingScheduler {
    */
   addBooking(formInput) {
     // Compile input into bookingInfo that contains:
-    // id
     // employeeId
     // type
     // customerName
     // start
     // end
-    // duration
+
     const bookingInfo = this.#compileBookingInfo(formInput)
 
     // get resource

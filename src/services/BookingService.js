@@ -110,8 +110,6 @@ export class BookingService {
    * @param {Resource} - Employee resouce.
    *
    * @param {Object} bookingInfo
-   * @param {string} bookingInfo.id - Booking ID
-   * @param {string} bookingInfo.employeeId - Employee ID
    * @param {string} bookingInfo.type - Booking type, 'apointment' or 'vacation'.
    * @param {string} bookingInfo.customerName - Customer's name, blank when vacation.
    * @param {string} bookingInfo.start - Start time in 'YYYY-MM-DDTHH:MM' format.
@@ -119,25 +117,36 @@ export class BookingService {
    * @returns {string} - The ID of the new booking.
    */
   newBooking(resource, bookingInfo) {
-    bookingInfo.id = this.#createBookingId()
 
+    const id = this.#createBookingId()
+    const record = {
+      id,
+      employeeId: resource.getId(),
+      ...bookingInfo
+    }
+
+  
     // Create Booking object
     const booking = this.#toBooking(bookingInfo, resource)
-
+    
     // Get start and end date for the calendar
     const dateStart = this.#removeTimeFrom(bookingInfo.start)
     const dateEnd = this.#removeTimeFrom(bookingInfo.end)
 
     // Build calendar for employee between start and end dates
     const calendar = this.#buildCalendar(resource, dateStart, dateEnd)
+    
+    this.#hasBookingConflict(calendar, booking)    
 
-    // TODO: Validate that time slot is available to book.
-
-    // Add booking to the new calendar
-    calendar.addBooking(booking)
-    this.#bookingRegistry.saveBooking(bookingInfo)
+    // Add booking to the new calendar and save to registry
+    this.#saveBooking(calendar, booking, bookingInfo)
 
     return booking.getId()
+  }
+
+  #saveBooking(calendar, booking, bookingInfo) {
+    calendar.addBooking(booking)
+    this.#bookingRegistry.saveBooking(bookingInfo)
   }
 
   /**
@@ -177,15 +186,10 @@ export class BookingService {
 
   // Converts from Dates to strings
   #toTimeString(dateTime) {
-    return dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    return dateTime.toLocaleTimeString('sv-SE', { hour: "2-digit", minute: "2-digit" })
   }
 
-
-  hasBookingConflict(resource) {
-    // TODO: Create temporary Booking to search for conflicts?
-    const booking = this.#toBooking(resource)
-
-    const calendar = this.#buildCalendar()
+  #hasBookingConflict(calendar, booking) {
     return calendar.hasBookingConflict(booking)
   }
 
