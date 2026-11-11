@@ -27,7 +27,6 @@ export class Employee {
     return this.#resource.getName()
   }
 
-  // TODO: Use case?
   getId() {
     return this.#resource.getId()
   }

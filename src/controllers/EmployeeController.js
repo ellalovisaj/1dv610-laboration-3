@@ -32,8 +32,7 @@ export class EmployeeController {
 
     // TODO: Sucess flash
 
-    // TODO: Render view
-    res.render('employee/profile', { employee })
+    res.redirect(`./${employee.getId()}`)
   }
 
   // get
@@ -61,18 +60,15 @@ export class EmployeeController {
     }
 
     const id = req.params.id
-    const employee = this.#employees.getById(id)
 
     this.#employees.editWorkinghours(id, input.start, input.end)
     this.#employees.editVacationDaysPerYear(id, input.vacationDays)
 
-    res.render('employee/profile', { employee })
+    res.redirect(`./${id}`)
   }
 
   resetDemo(_req, res) {
     this.#demoData.reset()
-    const allEmployees = this.#employees.getAll()
-
-    res.render('employee/list', { allEmployees })
+    res.redirect(`../`)
   }
 }
