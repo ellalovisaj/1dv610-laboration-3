@@ -35,6 +35,7 @@ export class BookingScheduler {
       employeeId: formInput.employeeId,
       type: 'appointment',
       customerName: formInput.customerName,
+      date: formInput.date,
       start: formInput.bookingStart,
       end: formInput.bookingEnd,
     }
@@ -49,6 +50,7 @@ export class BookingScheduler {
     // employeeId
     // type
     // customerName
+    // date
     // start
     // end
 
@@ -70,6 +72,28 @@ export class BookingScheduler {
 
     // Create and save booking in BookingService
     return this.#bookingService.newBooking(resource, bookingInfo)
+  }
+
+  editBooking(formInput) {
+    const employee = this.#employees.getById(formInput.employeeId)
+
+    // TODO: validate if date is:
+    // - a workday (and if it's valid, in holiday-calendar)
+    // - not earlier than today
+    // - not later than limit set
+
+    // TODO: validate if time is:
+    // - within workingHours
+    // - time is one of the available slots of the day
+    // - tiden finns bland de lediga tiderna för dagen
+
+    const bookingInfo = this.#compileBookingInfo(formInput)
+    
+    this.#bookingService.editBooking(
+      employee.getResource(),
+      formInput.id,
+      bookingInfo
+    )
   }
 
   // TODO:

@@ -143,6 +143,25 @@ export class BookingService {
     return booking.getId()
   }
 
+  editBooking(resource, id, bookingInfo) {
+    // TODO: Write method according to comments:
+    // get booking
+
+    // check if booking matches employee id
+
+    // Compile info
+
+    // Build temporary cal
+
+    // Delete old booking from temporary cal
+
+    // Check if new booking time have conflicts
+
+    // Update booking in registry
+
+    return id
+  }
+
   #saveBooking(calendar, booking, bookingData) {
     calendar.addBooking(booking)
     this.#bookingRegistry.saveBooking(bookingData)
@@ -191,6 +210,8 @@ export class BookingService {
   #hasBookingConflict(calendar, booking) {
     return calendar.hasBookingConflict(booking)
   }
+
+
 
   getBookingsOnDate(resource, date) {
     const calendar = this.#buildCalendar(resource, date, date)
