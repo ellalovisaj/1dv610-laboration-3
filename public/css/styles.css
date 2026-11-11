@@ -211,17 +211,17 @@ ul {
   padding: 0;
 }
 
-#employee-info {
+.employee-info {
   margin: 5px 0px;
   list-style: none;
   outline: solid 1px black
 }
 
-#employee-info p {
+.employee-info p {
   margin: 2px;
 }
 
-#employee-name {
+.employee-name {
   font-weight: bold;
 }
 

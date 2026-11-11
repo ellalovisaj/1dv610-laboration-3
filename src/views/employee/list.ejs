@@ -14,14 +14,14 @@
   <% if (allEmployees) { %>
     <ul>  
       <% for (let employee of allEmployees) { %>
-        <li id="employee-info">
+        <li class="employee-info">
           <a href="<%= baseURL %>employees/<%= employee.getId() %>">Link</a>
-          <p id="employee-name"><%= employee.getName() %></p>
-          <p id="employee-id"> ID: <%= employee.getId() %></p>
-          <p id="employee-working-hours">
+          <p class="employee-name"><%= employee.getName() %></p>
+          <p class="employee-id"> ID: <%= employee.getId() %></p>
+          <p class="employee-working-hours">
             Working hours: <%= employee.getWorkingHours().workdayStart %> - <%= employee.getWorkingHours().workdayEnd %>
           </p>
-          <p id="employee-vacation-days"> Vacation days: <%= employee.getVacationDaysPerYear() %></p>
+          <p class="employee-vacation-days"> Vacation days: <%= employee.getVacationDaysPerYear() %></p>
         </li>
       <% } %>
     </ul>
