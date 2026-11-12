@@ -106,26 +106,22 @@ export class BookingService {
     return this.#registry.saveBooking(record)
   }
 
-  editAppointment(resource, id, bookingInfo) {
-    const oldBooking = this.#registry.getBooking(id)
-    const employeeId = resource.getId()
-
-    if (oldBooking.employeeId !== employeeId) {
-      throw new Error("Booking doesn't match the Employee.")
-    }
-
+  editAppointment(resource, id, updatedAppointment) {
+    // 1. Get previous records of appointment
+    // 2. Update name
+    // 3. Calculate new start and end
     const record = {
-      id,
-      ...bookingInfo,
+      ...this.#getEmployeesRecord(resource, id),
+      customerName: updatedAppointment.customerName,
+      ...this.#calculateStartAndEnd(updatedAppointment)
     }
 
-    const calendar = this.#buildCalendar(resource, record.date, record.date)
-
+    const calendar = this.#buildCalendar(resource, updatedAppointment.date, updatedAppointment.date)
     this.#removeFromCalendar(calendar, id)
 
     // Update booking in registry
     this.#validateNoConflict(calendar, record, resource)
-    return this.#registry.saveBooking(record)
+    return this.#registry.editBooking(record)
   }
 
   cancel(bookingId) {

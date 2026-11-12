@@ -59,12 +59,8 @@ export class BookingRegistry {
 
   // TODO: Same as save booking except return? Keep both?
   editBooking(booking) {
-    if (!this.#isBookingId(booking.id)) {
-      this.#bookings.set(booking.id, booking)
-    } else {
-      throw new Error('Booking is already saved.')
-    }
-
+    this.#validateBookingId(booking.id)
+    this.#bookings.set(booking.id, booking)
     return booking.id
   }
 
