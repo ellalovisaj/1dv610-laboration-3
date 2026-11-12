@@ -123,7 +123,7 @@ export class BookingScheduler {
 
     const bookingInfo = this.#compileBookingInfo(formInput)
 
-    return this.#bookingService.editBooking(employee.getResource(), formInput.id, bookingInfo)
+    return this.#bookingService.editAppointment(employee.getResource(), formInput.id, bookingInfo)
   }
 
   // TODO:
