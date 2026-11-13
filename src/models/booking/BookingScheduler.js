@@ -16,7 +16,9 @@
  * - Gets form input data from user and passes it to BookingService.
  * - Compiles data and passes it to BookingService that actually books.
  */
+
 export class BookingScheduler {
+
   #holidayService
   #bookingService
   #employees
@@ -80,6 +82,26 @@ export class BookingScheduler {
       workStart: this.#employees.getWorkingHours(employeeId).workdayStart,
       workEnd: this.#employees.getWorkingHours(employeeId).workdayEnd,
     }
+  }
+
+  /**
+   * Returns all bookings for a given employee the next workday.
+   * 
+   * @param {string} employeeId 
+   * @returns {object[]} - The bookings in an array of plain objects
+   */
+  getUpcomingBookingsFor(employeeId) {
+    const resource = this.#employees.getResource(employeeId)
+    const today = new Date().toLocaleDateString('sv-SE')
+    
+    const nextWorkday = this.#getNextWorkdayFrom(today)
+
+    return this.#bookingService.getBookingsOnDate(resource, nextWorkday)
+  }
+
+  // TODO: Add a workdaysInPeriod in Module that returns the dates, not just how many days there are?
+  #getNextWorkdayFrom(date) {
+    return this.#holidayService.isWorkday(date) ? date : this.#holidayService.addWorkdays(date, 1)
   }
 
   #compileBookingInfo(formInput) {

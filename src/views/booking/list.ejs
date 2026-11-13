@@ -1,0 +1,20 @@
+<h2>List</h2>
+
+<% if (bookings) { %>
+  <ul>  
+    <% for (const booking of bookings) { %>
+      <a href="<%= baseURL %>employees/<%= employee.id %>/booking/<%= booking.id %>">
+        <li class="booking-info">
+          <p class="booking-customer-name"><%= booking.customerName %></p>
+          <p class="booking-id"> ID: <%= booking.id %></p>
+          <p class="booking-date"> Date: <%= booking.date %></p>
+          <p class="booking-working-hours">
+            Time: <%= booking.start %> - <%= booking.end %>
+          </p>
+        </li>
+      </a>
+    <% } %>
+  </ul>
+<% } else { %>
+  <p>No Bookings</p>
+<% } %>
