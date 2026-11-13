@@ -232,8 +232,10 @@ export class BookingService {
    * end
    */
   #toBookingSummary(record) {
+    const duration = this.#minutesBetween(record.start, record.end) 
     const [date, start] = record.start.split('T')
     const end = record.end.split('T').pop()
+    
 
     return {
       id: record.id,
@@ -243,7 +245,13 @@ export class BookingService {
       date,
       start,
       end,
+      duration
     }
+  }
+
+  #minutesBetween(start, end) {
+    const millisecondsBetween = new Date(end) - new Date(start)
+    return millisecondsBetween / 60000
   }
 
   // Converts one TimeSlot object containing start and end date as strings

@@ -62,8 +62,8 @@ export class BookingController {
       type: 'appointment',
       customerName: req.body.customerName,
       date: req.body.date,
-      start: req.body.bookingStart,
-      end: req.body.bookingEnd,
+      start: req.body.start,
+      end: req.body.end,
     }
 
     const bookingId = this.#scheduler.editBooking(input)

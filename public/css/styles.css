@@ -161,7 +161,7 @@ button {
   width: 46%;
 }
 
-/* ---------- Employees ---------- */
+/* ---------- Forms ---------- */
 
 .name-header {
   color: rgb(98, 98, 98);;
@@ -175,7 +175,8 @@ h2 {
 }
 
 .employee-forms,
-.emloyee-profile {
+.emloyee-profile,
+.forms {
   width: 50%;
 }
 

@@ -1,0 +1,64 @@
+
+<h2>Booking Edit form</h2>
+
+
+
+
+<% if (booking) { %>
+  <div>
+    <h2>Edit Booking</h2>
+    <h3 class="name-header">
+      For <%= booking.employeeName %>
+    </h3>
+  </div>
+
+  <form action="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>" method="post" class="forms">
+    <h3 class="name-header"><%= booking.name %></h3>
+    <div>
+      <label for="customer-name">Customer Name</label>
+      <input id="customer-name" class="large-text-input" name="customerName" type="text" value="<%= booking.customerName %>" required>
+    </div>
+
+    <div class="form-row">
+      <label for="edit-appointment-date">Date</label>
+      <input type="date" id="edit-appointment-date" name="date" class="form-input-field" value="<%= booking.date %>" required>
+    </div>
+
+    <fieldset class="form-row">
+      <legend>Appointment time</legend>
+
+      <div>
+        <label for="edit-appointment-start" class="visually-hidden">Start time</label>
+        <input type="time" id="edit-appointment-start" class="form-input-field" name="start" value="<%= booking.start %>" step="1800" required>
+        
+        <span>to</span>
+        
+        <label for="edit-appointment-end" class="visually-hidden">End time</label>
+        <input type="time" id="edit-appointment-end" class="form-input-field" name="end" value="<%= booking.end %>" step="1800" disabled>
+      </div>
+    </fieldset>
+
+    <div class="form-row">
+      <label for="edit-appointment-duration">Duration</label>
+      <select name="duration" id="edit-appointment-duration" class="form-input-field" required>
+      <% if (booking.duration === 30) { %>
+        <option value="" disabled>Select</option>
+        <option value="30" selected>30 minutes</option>
+        <option value="60">60 minutes</option>
+      <% } else { %>
+        <option value="" disabled>Select</option>
+        <option value="30">30 minutes</option>
+        <option value="60" selected>60 minutes</option>
+      <% } %>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <a href="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>" class="link-button-style secondary-button">Back</a>
+      <button type="submit" class="main-button">Save changes</button>
+    </div>
+  </form>
+<% } else { %>
+  <p>No booking.</p>
+<% } %>
+
