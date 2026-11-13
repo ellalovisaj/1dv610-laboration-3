@@ -1,6 +1,6 @@
 <h2>Booking Details</h2>
 
-<div class="booking-details">
+<div class=".details">
   <% if (booking) { %>
     <h3 class="name-header">
       <%= booking.employeeName %>
@@ -11,6 +11,7 @@
     <span id="booking-customer-name"> Customer Name: <%= booking.customerName %></span>
     <span id="booking-date"> Date: <%= booking.date %></span>
     <span id="booking-times"> Time: <%= booking.start %> - <%= booking.end %></span>
+    <span id="booking-duration"> Time: <%= booking.duration %> minutes</span>
 
     <div class="form-row">
       <a href="<%= baseURL %>employees/<%= booking.employeeId %>" id="booking-back-link" class="link-button-style secondary-button">Back</a>

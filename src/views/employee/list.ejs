@@ -1,4 +1,3 @@
-
 <div class="employees-header">
   <h2>All Employees</h2>
   <div id="employees-buttons">
@@ -13,16 +12,17 @@
 <div>
   <% if (allEmployees) { %>
     <ul>  
-      <% for (let employee of allEmployees) { %>
-        <li class="employee-info">
-          <a href="<%= baseURL %>employees/<%= employee.id %>">Link</a>
-          <p class="employee-name"><%= employee.name %></p>
-          <p class="employee-id"> ID: <%= employee.id %></p>
-          <p class="employee-working-hours">
-            Working hours: <%= employee.start %> - <%= employee.end %>
-          </p>
-          <p class="employee-vacation-days"> Vacation days: <%= employee.vacation %></p>
-        </li>
+      <% for (const employee of allEmployees) { %>
+        <a href="<%= baseURL %>employees/<%= employee.id %>">
+          <li class="employee-info">
+            <p class="employee-name"><%= employee.name %></p>
+            <p class="employee-id"> ID: <%= employee.id %></p>
+            <p class="employee-working-hours">
+              Working hours: <%= employee.start %> - <%= employee.end %>
+            </p>
+            <p class="employee-vacation-days"> Vacation days: <%= employee.vacation %></p>
+          </li>
+        </a>
       <% } %>
     </ul>
   <% } else { %>

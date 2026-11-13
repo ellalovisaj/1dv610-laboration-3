@@ -20,6 +20,10 @@ main {
 
 }
 
+.page-content {
+  width: 50%;
+}
+
 /* ---------- Layout ---------- */
 
 body {
@@ -174,21 +178,8 @@ h2 {
   margin-bottom: 0;
 }
 
-.employee-forms,
-.emloyee-profile,
-.forms {
-  width: 50%;
-}
-
-#new-employee-working-hours {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 /* ---------- All Employees List ---------- */
 .employees-header {
-  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -213,10 +204,16 @@ ul {
   padding: 0;
 }
 
-.employee-info {
+.details,
+li {
   margin: 5px 0px;
   list-style: none;
   outline: solid 1px black
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .employee-info p {
@@ -225,6 +222,19 @@ ul {
 
 .employee-name {
   font-weight: bold;
+}
+
+.employee-details {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.details-id {
+  font-size: small;
+  padding-bottom: 5px;
 }
 
 /* ---------- Worktime forms ---------- */
