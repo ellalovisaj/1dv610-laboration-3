@@ -1,0 +1,22 @@
+<h2>Booking Details</h2>
+
+<div class="booking-details">
+  <% if (booking) { %>
+    <h3 class="name-header">
+      <%= booking.employeeName %>
+    </h3>
+    <span id="booking-employee-id"> Employee ID: <%= booking.employeeId %></span>
+    <span id="booking-booking-id"> Booking ID: <%= booking.id %></span>
+    <span id="booking-employee-name"> Employee Name: <%= booking.employeeName %></span>
+    <span id="booking-customer-name"> Customer Name: <%= booking.customerName %></span>
+    <span id="booking-date"> Date: <%= booking.date %></span>
+    <span id="booking-times"> Time: <%= booking.start %> - <%= booking.end %></span>
+
+    <div class="form-row">
+      <a href="<%= baseURL %>employees/<%= booking.employeeId %>" id="booking-back-link" class="link-button-style secondary-button">Back</a>
+      <a href="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>/edit" id="booking-edit-link" class="link-button-style main-button">Edit</a>
+    </div>
+  <% } else { %>
+    <p>No employee.</p>
+  <% } %>
+</div>

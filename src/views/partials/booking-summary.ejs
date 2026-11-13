@@ -1,0 +1,8 @@
+<div id="booking-summary">
+  <span>Employee: <%= employeeInfo.name %></span>
+  <% if (bookingInfo) { %>
+    <span>Customer: <%= bookingInfo.name %></span>
+    <span>Date: <%= bookingInfo.date %></span>
+    <span>Time: <%= bookingInfo.start %> - <%= bookingInfo.end %></span>
+  <% } %>
+</div>
