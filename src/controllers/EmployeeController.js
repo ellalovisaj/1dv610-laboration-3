@@ -1,10 +1,13 @@
 export class EmployeeController {
   #employees
   #demoData
+  #scheduler
 
-  constructor(employeeRegistry, demoData) {
+  constructor(employeeRegistry, scheduler, demoData) {
     this.#employees = employeeRegistry
+    this.#scheduler = scheduler
     this.#demoData = demoData
+    
   }
 
   // get
@@ -48,9 +51,11 @@ export class EmployeeController {
 
   // get
   showProfile(req, res) {
-    const employyeId = req.params.id
-    const employeeObject = this.#employees.getById(employyeId)
+    const employeeId = req.params.id
+    const employeeObject = this.#employees.getById(employeeId)
+    const bookings = this.#scheduler.getUpcomingBookingsFor(employeeId)
 
+    // TODO: Shorten with spread? [...]
     const employee = {
       id: employeeObject.getId(),
       name: employeeObject.getName(),
@@ -59,7 +64,7 @@ export class EmployeeController {
       vacation: employeeObject.getVacationDaysPerYear(),
     }
 
-    res.render('employee/profile', { employee })
+    res.render('employee/profile', { employee, bookings })
   }
 
   // get

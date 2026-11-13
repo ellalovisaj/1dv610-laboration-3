@@ -84,7 +84,7 @@ try {
     worktime: new WorktimeController(worktimeCalculator),
     vacation: new VacationController(vacationCalculator),
     booking: new BookingController(bookingScheduler),
-    employee: new EmployeeController(employeeRegistry, demoData),
+    employee: new EmployeeController(employeeRegistry, bookingScheduler, demoData),
   }
 
   // Router
