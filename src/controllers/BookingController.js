@@ -40,25 +40,17 @@ export class BookingController {
   }
 
   showDetails(req, res) {
+    const employeeId = req.params.id
     const bookingId = req.params.bookingId
-    const bookingData = this.#scheduler.getBooking(bookingId)
+    const booking = this.#scheduler.getBookingDetails(employeeId, bookingId)
 
-    res.render('booking/details', { bookingData })
+    res.render('booking/details', { booking })
   }
 
   edit(req, res) {
     const employeeId = req.params.id
     const bookingId = req.params.bookingId
-    const bookingObject = this.#scheduler.getBooking(bookingId)
-
-    const booking = {
-      id: bookingId,
-      employeeId,
-      customerName: bookingObject.customerName,
-      date: bookingObject.date,
-      start: bookingObject.start,
-      end: bookingObject.end,
-    }
+    const booking = this.#scheduler.getBookingDetails(employeeId, bookingId)
 
     res.render('booking/edit-form', { booking })
   }

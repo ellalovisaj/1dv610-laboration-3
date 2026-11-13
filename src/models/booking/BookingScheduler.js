@@ -38,9 +38,31 @@ export class BookingScheduler {
   }
 
   getBooking(id) {
-    return this.#bookingService.getBooking(id)
+    return this.#bookingService.getBookingSummary(id)
   }
 
+  /**
+   * @returns 
+   * id, 
+   * employeeId, 
+   * employeeName, 
+   * type, 
+   * customerName, 
+   * date, 
+   * startTime, 
+   * endTime
+   */
+  getBookingDetails(employeeId, bookingId) {
+    const employee = this.#employees.getById(employeeId)
+    const booking = this.#bookingService.getBookingSummary(employee.getResource(), bookingId)
+
+    const details = {
+      ...booking,
+      employeeName: employee.getName()
+    }
+
+    return details
+  }
 
   /**
    * Returns:

@@ -69,8 +69,21 @@ export class BookingService {
     return bookings
   }
 
-  getBooking(id) {
-    return this.#registry.getBooking(id)
+  /**
+   * @returns 
+   * id, 
+   * employeeId, 
+   * type, 
+   * customerName, 
+   * date, 
+   * startTime, 
+   * endTime
+   */
+  getBookingSummary(resource, bookingId) {
+    const record = this.#getEmployeesRecord(resource, bookingId)
+    const summary = this.#toBookingSummary(record)
+
+    return summary
   }
 
   /**
@@ -228,8 +241,8 @@ export class BookingService {
       type: record.type,
       customerName: record.customerName,
       date,
-      startTime: start,
-      endTime: end,
+      start,
+      end,
     }
   }
 
