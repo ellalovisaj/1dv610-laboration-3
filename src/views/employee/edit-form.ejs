@@ -1,11 +1,13 @@
 
 <% if (employee) { %>
-  <div id="edit-employee-header">
+  <div class="page-header">
+    <a href="<%= baseURL %>employees/<%= employee.id %>" id="edit-employee-back-link" class="link-button-style secondary-button">Back</a>
     <h2>Edit Employee</h2>
-    <h3 class="name-header">
-      <%= employee.name %>
-    </h3>
   </div>
+
+  <h3 class="name-header">
+    <%= employee.name %>
+  </h3>
 
   <form action="<%= baseURL %>employees/<%= employee.id %>" method="post" class="employee-forms">
     <fieldset class="form-row">
@@ -32,7 +34,7 @@
     </fieldset>
 
     <div class="form-row">
-      <a href="<%= baseURL %>employees/<%= employee.id %>" id="edit-employee-back-link" class="link-button-style secondary-button">Back</a>
+      <a href="<%= baseURL %>employees/<%= employee.id %>/delete" class="link-button-style warning-button">Delete Employee</a>
       <button type="submit" class="main-button">Save changes</button>
     </div>
   </form>

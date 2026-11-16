@@ -1,27 +1,33 @@
-
-
 <div class=".details">
   <% if (employee) { %>
 
-    <div class="employees-header">
-      <h3 class="name-header">
-        <%= employee.name %>
-      </h3>
-
-      <div id="employees-buttons" class="form-row">
-        <a href="<%= baseURL %>employees" id="profile-employee-back-link" class="link-button-style secondary-button">Back</a>
-        <a href="<%= baseURL %>employees/<%= employee.id %>/edit" id="profile-edit-link" class="link-button-style secondary-button">Edit Employee</a>
-      </div>
+    <div class="page-header">
+      <a href="<%= baseURL %>employees" id="profile-employee-back-link" class="link-button-style secondary-button">Back</a>
+      <h2>Profile</h2>
     </div>
-    
+
+    <h3 class="name-header">
+      <%= employee.name %>
+    </h3>
+
+    <a href="<%= baseURL %>employees/<%= employee.id %>/edit" id="profile-edit-link" class="link-button-style secondary-button">Edit Employee</a>
+
+
     <p class="details-id"> ID: <%= employee.id %><p>
+      
     <div class="employee-details">
       <span class="details-title">Working hours:</span>
-      <span class="details-data"><%= employee.start %> - <%= employee.end %></span>
+      <span class="details-data">
+        <%= employee.start %> - <%= employee.end %>
+      </span>
       <span class="details-title"> Vacation days:</span>
-      <span class="details-data"> <%= employee.vacation %></span>      
+      <span class="details-data">
+        <%= employee.vacation %>
+      </span>
     </div>
 
+    <hr>
+    
     <%- include('../booking/list', { employee, bookings }) %>
 
   <% } else { %>

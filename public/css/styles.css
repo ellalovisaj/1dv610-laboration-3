@@ -24,6 +24,10 @@ main {
   width: 50%;
 }
 
+hr {
+  margin: 40px 0px;
+}
+
 /* ---------- Layout ---------- */
 
 body {
@@ -123,6 +127,7 @@ button {
   text-align: center;
 }
 
+/* Main buttons */
 .main-button {
   background-color: rgb(14, 92, 161);
   border: solid 1px rgba(0, 0, 0, 0.334);
@@ -140,6 +145,7 @@ button {
   box-shadow: -1px -1px 1px rgb(27, 63, 94) inset;
 }
 
+/* Secondary buttons */
 .secondary-button {
   background-color: rgb(198, 206, 212);
   border: solid 1px rgb(132, 132, 133);
@@ -152,6 +158,22 @@ button {
 
 .secondary-button:active {
   background-color: rgb(217, 223, 227);
+  box-shadow: -1px -1px 1px inset;
+}
+
+/* Warning buttons */
+.warning-button {
+  background-color: rgb(237 129 129);
+  border: solid 1px rgb(171 71 71);
+  color: rgb(50 16 16);
+}
+
+.warning-button:hover {
+  background-color: rgb(242, 145, 145);
+}
+
+.warning-button:active {
+  background-color: rgb(208, 106, 106);
   box-shadow: -1px -1px 1px inset;
 }
 
@@ -175,7 +197,7 @@ button {
 }
 
 h2 {
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .bookings-header {
@@ -184,7 +206,8 @@ h2 {
   align-items: end;
 }
 
-.bookings-header a {
+.bookings-header a,
+#edit-employee-header a {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -193,6 +216,23 @@ h2 {
 
 
 /* ---------- All Employees List ---------- */
+.page-header {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+
+  margin: 10px 0px;
+}
+
+.page-header a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 5px;
+}
+
 .employees-header {
   display: flex;
   justify-content: space-between;
