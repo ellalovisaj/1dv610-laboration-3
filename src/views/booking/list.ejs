@@ -1,6 +1,6 @@
-<h2>List</h2>
+<h2>Upcoming Bookings</h2>
 
-<% if (bookings) { %>
+<% if (bookings.length > 0) { %>
   <ul>  
     <% for (const booking of bookings) { %>
       <a href="<%= baseURL %>employees/<%= employee.id %>/booking/<%= booking.id %>">

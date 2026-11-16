@@ -51,8 +51,8 @@ export class BookingScheduler {
    * type, 
    * customerName, 
    * date, 
-   * startTime, 
-   * endTime
+   * start, 
+   * end
    */
   getBookingDetails(employeeId, bookingId) {
     const employee = this.#employees.getById(employeeId)
@@ -179,7 +179,7 @@ export class BookingScheduler {
    * @param {number} duration - Desired duration in minutes.
    * @param {string} date - 'YYYY-MM-DD' format
    *
-   * @returns {{startTime: string, endTime: string}[]} start and end times
+   * @returns {{start: string, end: string}[]} start and end times
    * in 'HH:MM' format of the available time slots.
    */
   getAvailableTimeSlots(employeeId, duration, date) {
