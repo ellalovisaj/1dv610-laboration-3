@@ -43,7 +43,7 @@ export class BookingService {
    * @param {{workdayStart: string, workdayEnd: string}} workingHours - 'HH:MM' format.
    * @param {string} date - 'YYYY-MM-DD' format
    * @param {number} duration - Length of an appointment in minutes.
-   * @returns {{startTime: string, endTime: string}[]} start and end times in 'HH:MM' format
+   * @returns {{start: string, end: string}[]} start and end times in 'HH:MM' format
    * of the available time slots.
    */
   getAvailableTimeSlots(resource, workingHours, date, duration) {
@@ -64,9 +64,9 @@ export class BookingService {
    */
   getBookingsOnDate(resource, date) {
     const bookings = this.#registry.getBookingsForEmployeeBetween(resource.getId(), date, date)
-
-    // TODO: sort bookings
-    return bookings
+    
+    // Exchange booking records to summaries needed for the views
+    return bookings.map((record) => this.#toBookingSummary(record))
   }
 
   /**
@@ -76,8 +76,8 @@ export class BookingService {
    * type, 
    * customerName, 
    * date, 
-   * startTime, 
-   * endTime
+   * start, 
+   * end
    */
   getBookingSummary(resource, bookingId) {
     const record = this.#getEmployeesRecord(resource, bookingId)
@@ -99,16 +99,12 @@ export class BookingService {
    * @returns {string} - The ID of the new booking.
    */
   bookAppointment(resource, appointment) {
-    const startTime = this.#toDateTime(appointment.date, appointment.start)
-    const endTime = this.#addMinutes(startTime, appointment.duration)
-
     const record = {
       id: this.#createBookingId(),
       employeeId: resource.getId(),
       type: 'appointment',
       customerName: appointment.customerName,
-      start: this.#toDateTimeString(startTime),
-      end: this.#toDateTimeString(endTime),
+      ...this.#calculateStartAndEnd(appointment)
     }
 
     const calendar = this.#buildCalendar(resource, appointment.date, appointment.date)
@@ -180,8 +176,8 @@ export class BookingService {
   }
 
   #calculateStartAndEnd(appointment) {
-    const startTime = this.#toDateTime(appointment.date, appointment.startTime)
-    const endTime = this.#addMinutes(startTime, appointment.durationInMinutes)
+    const startTime = this.#toDateTime(appointment.date, appointment.start)
+    const endTime = this.#addMinutes(startTime, appointment.duration)
 
     return {
       start: this.#toDateTimeString(startTime),
@@ -257,8 +253,8 @@ export class BookingService {
   // Converts one TimeSlot object containing start and end date as strings
   #toTimeRange(timeSlot) {
     return {
-      startTime: this.#toTimeString(timeSlot.getStartTime()),
-      endTime: this.#toTimeString(timeSlot.getEndTime()),
+      start: this.#toTimeString(timeSlot.getStartTime()),
+      end: this.#toTimeString(timeSlot.getEndTime()),
     }
   }
 
