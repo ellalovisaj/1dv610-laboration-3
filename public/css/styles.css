@@ -178,6 +178,20 @@ h2 {
   margin-bottom: 0;
 }
 
+.bookings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.bookings-header a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 5px;
+}
+
+
 /* ---------- All Employees List ---------- */
 .employees-header {
   display: flex;
@@ -204,7 +218,6 @@ ul {
   padding: 0;
 }
 
-.details,
 li {
   margin: 5px 0px;
   list-style: none;
@@ -224,6 +237,7 @@ a {
   font-weight: bold;
 }
 
+.booking-details,
 .employee-details {
   display: grid;
   grid-template-columns: 2fr 3fr;
@@ -234,7 +248,7 @@ a {
 
 .details-id {
   font-size: small;
-  padding-bottom: 5px;
+  padding: 10px 0px;
 }
 
 /* ---------- Worktime forms ---------- */
