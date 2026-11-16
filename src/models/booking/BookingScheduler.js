@@ -92,11 +92,14 @@ export class BookingScheduler {
    */
   getUpcomingBookingsFor(employeeId) {
     const resource = this.#employees.getResource(employeeId)
-    const today = new Date().toLocaleDateString('sv-SE')
-    
-    const nextWorkday = this.#getNextWorkdayFrom(today)
+    const nextWorkday = this.getNextWorkday()
 
     return this.#bookingService.getBookingsOnDate(resource, nextWorkday)
+  }
+
+  getNextWorkday() {
+    const today = new Date().toLocaleDateString('sv-SE')
+    return this.#getNextWorkdayFrom(today)
   }
 
   // TODO: Add a workdaysInPeriod in Module that returns the dates, not just how many days there are?

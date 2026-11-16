@@ -19,8 +19,9 @@ export class BookingController {
   showCreateForm(req, res) {
     const employeeId = req.params.id
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
+    const nextWorkday = this.#scheduler.getNextWorkday()
 
-    res.render('booking/create-form', { employeeInfo })
+    res.render('booking/create-form', { employeeInfo, nextWorkday })
   }
 
   createNew(req, res) {
