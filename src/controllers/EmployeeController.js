@@ -99,6 +99,11 @@ export class EmployeeController {
     res.redirect(`./${id}`)
   }
 
+  delete(req, res) {
+    this.#employees.deleteEmployee(req.params.id)
+    res.redirect(`../`)
+  }
+
   resetDemo(_req, res) {
     this.#demoData.reset()
     res.redirect(`../`)
