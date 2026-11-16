@@ -1,45 +1,44 @@
-
-<% if (employee) { %>
-  <div class="page-header">
-    <a href="<%= baseURL %>employees/<%= employee.id %>" id="edit-employee-back-link" class="link-button-style secondary-button">Back</a>
-    <h2>Edit Employee</h2>
-  </div>
-
-  <h3 class="name-header">
-    <%= employee.name %>
-  </h3>
-
-  <form action="<%= baseURL %>employees/<%= employee.id %>" method="post" class="employee-forms">
-    <fieldset class="form-row">
-
-      <label for="edit-employee-vacation-days">Vacation days per year</label>
-      <input type="number" id="edit-employee-vacation-days"
-      name="vacationDaysPerYear" class="form-input-field" max="100" min="0" step="1" value="<%= employee.vacation %>" required>
-
-    </fieldset>
-
-    <fieldset class="form-row">
-      <legend>Working Hours</legend>
-
-      <div class="form-working-hours">
-        <label for="edit-employee-workday-start" class="visually-hidden">Start time</label>
-        <input type="time" id="edit-employee-workday-start" class="form-input-field" name="workdayStart" value="<%= employee.start %>" step="900" required>
-
-        <span> to </span>
-
-        <label for="edit-employee-workday-end" class="visually-hidden">End time</label>
-        <input type="time" id="edit-employee-workday-end" class="form-input-field" name="workdayEnd" value="<%= employee.end %>" step="900" required>
-      </div>
-
-    </fieldset>
-
-    <div class="form-row">
-      <a href="<%= baseURL %>employees/<%= employee.id %>/delete" class="link-button-style warning-button">Delete Employee</a>
-      <button type="submit" class="main-button">Save changes</button>
+<div class="form-page">
+  <% if (employee) { %>
+    <div class="page-header">
+      <h2>Edit Employee</h2>
     </div>
-  </form>
-<% } else { %>
-  <p>No employee.</p>
-<% } %>
 
+    <h3 class="name-header">
+      <%= employee.name %>
+    </h3>
+
+    <form action="<%= baseURL %>employees/<%= employee.id %>" method="post" class="employee-forms">
+      <fieldset class="form-row">
+
+        <label for="edit-employee-vacation-days">Vacation days per year</label>
+        <input type="number" id="edit-employee-vacation-days"
+        name="vacationDaysPerYear" class="form-input-field" max="100" min="0" step="1" value="<%= employee.vacation %>" required>
+
+      </fieldset>
+
+      <fieldset class="form-row">
+        <legend>Working Hours</legend>
+
+        <div class="form-working-hours">
+          <label for="edit-employee-workday-start" class="visually-hidden">Start time</label>
+          <input type="time" id="edit-employee-workday-start" class="form-input-field" name="workdayStart" value="<%= employee.start %>" step="900" required>
+
+          <span> to </span>
+
+          <label for="edit-employee-workday-end" class="visually-hidden">End time</label>
+          <input type="time" id="edit-employee-workday-end" class="form-input-field" name="workdayEnd" value="<%= employee.end %>" step="900" required>
+        </div>
+
+      </fieldset>
+
+      <div class="form-row">
+        <a href="<%= baseURL %>employees/<%= employee.id %>/delete" class="link-button-style warning-button">Delete Employee</a>
+        <button type="submit" class="main-button">Save changes</button>
+      </div>
+    </form>
+  <% } else { %>
+    <p>No employee.</p>
+  <% } %>
+</div>
 

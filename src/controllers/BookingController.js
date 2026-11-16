@@ -21,7 +21,7 @@ export class BookingController {
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
     const nextWorkday = this.#scheduler.getNextWorkday()
 
-    res.render('booking/create-form', { employeeInfo, nextWorkday })
+    res.render('booking/create-form', { employeeInfo, nextWorkday, backURL: `${res.locals.baseURL}employees/${employeeId}`})
   }
 
   createNew(req, res) {
@@ -45,7 +45,7 @@ export class BookingController {
     const bookingId = req.params.bookingId
     const booking = this.#scheduler.getBookingDetails(employeeId, bookingId)
 
-    res.render('booking/details', { booking })
+    res.render('booking/details', { booking, backURL: `${res.locals.baseURL}employees/${employeeId}` })
   }
 
   edit(req, res) {
@@ -53,7 +53,7 @@ export class BookingController {
     const bookingId = req.params.bookingId
     const booking = this.#scheduler.getBookingDetails(employeeId, bookingId)
 
-    res.render('booking/edit-form', { booking })
+    res.render('booking/edit-form', { booking, backURL: `${res.locals.baseURL}employees/${employeeId}/booking/${bookingId}` })
   }
 
   editPost(req, res) {

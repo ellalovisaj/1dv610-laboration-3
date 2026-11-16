@@ -30,7 +30,7 @@ export class EmployeeController {
 
   // get
   showCreateForm(_req, res) {
-    res.render('employee/create-form', {})
+    res.render('employee/create-form', { backURL: `${res.locals.baseURL}employees` })
   }
 
   // post
@@ -64,13 +64,13 @@ export class EmployeeController {
       vacation: employeeObject.getVacationDaysPerYear(),
     }
 
-    res.render('employee/profile', { employee, bookings })
+    res.render('employee/profile', { employee, bookings, backURL: `${res.locals.baseURL}employees`})
   }
 
   // get
   edit(req, res) {
-    const employyeId = req.params.id
-    const employeeObject = this.#employees.getById(employyeId)
+    const employeeId = req.params.id
+    const employeeObject = this.#employees.getById(employeeId)
 
     const employee = {
       id: employeeObject.getId(),
@@ -80,7 +80,10 @@ export class EmployeeController {
       vacation: employeeObject.getVacationDaysPerYear(),
     }
 
-    res.render('employee/edit-form', { employee })
+    res.render('employee/edit-form', {
+      employee,
+      backURL: `${res.locals.baseURL}employees/${employeeId}`
+    })
   }
 
   // post

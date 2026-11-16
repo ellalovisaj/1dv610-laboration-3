@@ -1,31 +1,33 @@
-<div class="employees-header">
-  <h2>All Employees</h2>
-  <div id="employees-buttons">
-    <form action="<%= baseURL %>demo/reset" method="post">
-    <button type="submit" id="employees-reset-button" class="secondary-button">Reset Demo</button>
-    </form>
-    <a href="<%= baseURL %>employees/new" id="employees-new-link" class="link-button-style main-button">New Employee</a>
+<div class="list-page">
+  <div class="page-header">
+    <h2>All Employees</h2>
+    <div id="employees-buttons">
+      <form action="<%= baseURL %>demo/reset" method="post">
+        <button type="submit" id="employees-reset-button" class="secondary-button">Reset Demo</button>
+      </form>
+      <a href="<%= baseURL %>employees/new" id="employees-new-link" class="link-button-style main-button">New Employee</a>
+    </div>
   </div>
-</div>
 
 
-<div>
-  <% if (allEmployees) { %>
-    <ul>  
-      <% for (const employee of allEmployees) { %>
-        <a href="<%= baseURL %>employees/<%= employee.id %>">
-          <li class="employee-info">
-            <p class="employee-name"><%= employee.name %></p>
-            <p class="employee-id"> ID: <%= employee.id %></p>
-            <p class="employee-working-hours">
-              Working hours: <%= employee.start %> - <%= employee.end %>
-            </p>
-            <p class="employee-vacation-days"> Vacation days: <%= employee.vacation %></p>
-          </li>
-        </a>
-      <% } %>
-    </ul>
-  <% } else { %>
-    <p>No employees available.</p>
-  <% } %>
+  <div>
+    <% if (allEmployees) { %>
+      <ul>  
+        <% for (const employee of allEmployees) { %>
+          <a href="<%= baseURL %>employees/<%= employee.id %>">
+            <li class="employee-info">
+              <p class="employee-name"><%= employee.name %></p>
+              <p class="employee-id"> ID: <%= employee.id %></p>
+              <p class="employee-working-hours">
+                Working hours: <%= employee.start %> - <%= employee.end %>
+              </p>
+              <p class="employee-vacation-days"> Vacation days: <%= employee.vacation %></p>
+            </li>
+          </a>
+        <% } %>
+      </ul>
+    <% } else { %>
+      <p>No employees available.</p>
+    <% } %>
+  </div>
 </div>

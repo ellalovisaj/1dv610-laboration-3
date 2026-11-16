@@ -15,6 +15,10 @@
   </header>
 
   <main>
+    <% if (locals.backURL) { %>
+      <a href="<%= backURL %>" class="link-button-style secondary-button back-link">Back</a>
+    <% } %>
+
     <div class="page-content">
       <%- body %>
     </div>
