@@ -173,6 +173,10 @@ export class BookingScheduler {
     return this.#bookingService.editAppointment(employee.getResource(), formInput.id, bookingInfo)
   }
 
+  deleteBooking(id) {
+    this.#bookingService.cancel(id)
+  }
+
   // TODO:
   hasBookingConflict() {}
 

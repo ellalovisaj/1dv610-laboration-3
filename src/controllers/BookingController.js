@@ -71,4 +71,12 @@ export class BookingController {
 
     res.redirect(`./${bookingId}`)
   }
+
+  delete(req, res) {
+    const bookingId = req.params.bookingId
+
+    this.#scheduler.deleteBooking(bookingId)
+
+    res.redirect(`../../`)
+  }
 }
