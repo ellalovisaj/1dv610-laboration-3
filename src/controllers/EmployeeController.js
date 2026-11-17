@@ -104,7 +104,7 @@ export class EmployeeController {
 
   delete(req, res) {
     this.#employees.deleteEmployee(req.params.id)
-    res.redirect(`../../`)
+    res.redirect(`../../../`)
   }
 
   resetDemo(_req, res) {
