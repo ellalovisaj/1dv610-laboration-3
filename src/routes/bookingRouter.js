@@ -5,7 +5,9 @@ export function createBookingRouter(controller) {
 
   // path baseURL/employee/:id/booking
 
-  router.get('/', (req, res, next) => controller.showList(req, res, next))
+  router.get('/', (_req, res) => {
+    res.redirect('../')
+  })
 
   router.get('/new', (req, res, next) => controller.showCreateForm(req, res, next))
   router.post('/new', (req, res, next) => controller.createNew(req, res, next))

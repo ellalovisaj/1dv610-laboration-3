@@ -5,17 +5,6 @@ export class BookingController {
     this.#scheduler = bookingScheduler
   }
 
-  showList(req, res) {
-    const employeeId = req.params.id
-
-    // TODO: Add date as query in view
-    // const date = req.query.date
-    const date = '2027-01-05'
-    const bookings = this.#scheduler.getBookingsForEmployeeOnDate(employeeId, date)
-
-    res.render('booking/list', { bookings })
-  }
-
   showCreateForm(req, res) {
     const employeeId = req.params.id
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
@@ -30,7 +19,7 @@ export class BookingController {
       customerName: req.body.customerName,
       date: req.body.date,
       start: req.body.start,
-      duration: req.body.duration,
+      duration: Number(req.body.duration),
     }
 
     const bookingId = this.#scheduler.addBooking(input)
@@ -64,7 +53,7 @@ export class BookingController {
       customerName: req.body.customerName,
       date: req.body.date,
       start: req.body.start,
-      duration: req.body.duration,
+      duration: Number(req.body.duration),
     }
 
     const bookingId = this.#scheduler.editBooking(input)

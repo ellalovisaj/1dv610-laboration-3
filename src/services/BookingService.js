@@ -227,6 +227,7 @@ export class BookingService {
    * date
    * start
    * end
+   * duration
    */
   #toBookingSummary(record) {
     const duration = this.#minutesBetween(record.start, record.end) 
@@ -286,7 +287,7 @@ export class BookingService {
    * @returns {Date} The date and time with given minutes added.
    */
   #addMinutes(date, minutes) {
-    return new Date(date.getTime() + Number(minutes) * 60000)
+    return new Date(date.getTime() + minutes * 60000)
   }
 
   // Converts from Dates to strings

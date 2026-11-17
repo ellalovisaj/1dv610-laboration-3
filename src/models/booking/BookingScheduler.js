@@ -34,13 +34,9 @@ export class BookingScheduler {
 
   getBookingsForEmployeeOnDate(employeeId, date) {
     const employee = this.#employees.getById(employeeId)
-    const resource = employee.getResource(employeeId)
+    const resource = employee.getResource()
 
     return this.#bookingService.getBookingsOnDate(resource, date)
-  }
-
-  getBooking(id) {
-    return this.#bookingService.getBookingSummary(id)
   }
 
   /**
@@ -110,16 +106,11 @@ export class BookingScheduler {
   #compileBookingInfo(formInput) {
     return {
       employeeId: formInput.employeeId,
-      type: 'appointment',
       customerName: formInput.customerName,
       date: formInput.date,
       start: formInput.start,
       duration: formInput.duration
     }
-  }
-
-  #compileDateTime(date, time) {
-    return `${date}T${time}`
   }
 
   /**
@@ -177,9 +168,6 @@ export class BookingScheduler {
     const resource = this.#employees.getResource(employeeId)
     this.#bookingService.cancel(resource, bookingId)
   }
-
-  // TODO:
-  hasBookingConflict() {}
 
   /**
    *
