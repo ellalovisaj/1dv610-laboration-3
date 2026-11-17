@@ -35,10 +35,12 @@
       </fieldset>
 
       <div class="form-row">
-        <a href="<%= baseURL %>employees/<%= employee.id %>/delete" class="link-button-style warning-button">Delete Employee</a>
+        <button type="submit" for="delete-employee-form" class="warning-button">Delete Employee</button>
         <button type="submit" class="main-button">Save changes</button>
       </div>
     </form>
+
+    <form action="<%= baseURL %>employees/<%= employee.id %>/delete" id="delete-employee-form" method="post"></form>
   <% } else { %>
     <p>No employee.</p>
   <% } %>

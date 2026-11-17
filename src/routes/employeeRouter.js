@@ -12,7 +12,7 @@ export function createEmployeeRouter(controller) {
   router.get('/:id/edit', (req, res, next) => controller.edit(req, res, next))
 
   router.post('/:id', (req, res, next) => controller.editPost(req, res, next))
-  router.get('/:id/delete', (req, res, next) => controller.delete(req, res, next))
+  router.post('/:id/delete', (req, res, next) => controller.delete(req, res, next))
 
   return router
 }

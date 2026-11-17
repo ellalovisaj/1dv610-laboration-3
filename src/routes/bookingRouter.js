@@ -14,7 +14,7 @@ export function createBookingRouter(controller) {
 
 
   router.get('/:bookingId/edit', (req, res, next) => controller.edit(req, res, next))
-  router.get('/:bookingId/delete', (req, res, next) => controller.delete(req, res, next))
+  router.post('/:bookingId/delete', (req, res, next) => controller.delete(req, res, next))
 
   router.post('/:bookingId', (req, res, next) => controller.editPost(req, res, next))
   router.get('/:bookingId', (req, res, next) => controller.showDetails(req, res, next))
