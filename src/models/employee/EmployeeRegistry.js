@@ -50,7 +50,7 @@ export class EmployeeRegistry {
    * @param {string} name 
    * @param {string} workdayStart - 'HH:MM' format.
    * @param {string} workdayEnd - 'HH:MM' format.
-   * @param {string} vacationDaysPerYear - number of days as a string
+   * @param {number} vacationDaysPerYear - vacation days per year.
    */
   createEmployee(name, workdayStart, workdayEnd, vacationDaysPerYear) {
     const id = this.#createEmployeeId()

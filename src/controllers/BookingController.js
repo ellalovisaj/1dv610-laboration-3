@@ -32,7 +32,7 @@ export class BookingController {
 
     // TODO: Success flash
 
-    res.redirect(`./${bookingId}`)
+    res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
   }
 
   showDetails(req, res) {
@@ -64,7 +64,7 @@ export class BookingController {
 
     const bookingId = this.#scheduler.editBooking(input)
 
-    res.redirect(`./${bookingId}`)
+    res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
   }
 
   delete(req, res) {
@@ -73,6 +73,6 @@ export class BookingController {
 
     this.#scheduler.deleteBooking(bookingId, employeeId)
 
-    res.redirect(`../../`)
+    res.redirect(`${res.locals.baseURL}employees/${employeeId}`)
   }
 }

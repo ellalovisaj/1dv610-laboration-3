@@ -12,18 +12,7 @@ export class EmployeeController {
 
   // get
   showList(_req, res) {
-    const allEmployeeObjects = this.#employees.getAll()
-
-    const allEmployees = []
-    for (const employeeObject of allEmployeeObjects) {
-      allEmployees.push({
-        id: employeeObject.getId(),
-        name: employeeObject.getName(),
-        start: employeeObject.getWorkingHours().workdayStart,
-        end: employeeObject.getWorkingHours().workdayEnd,
-        vacation: employeeObject.getVacationDaysPerYear(),
-      })
-    }
+    const allEmployees = this.#employees.getAll().map((employee) => this.#toEmployeeView(employee))
 
     res.render('employee/list', { allEmployees })
   }
@@ -39,30 +28,21 @@ export class EmployeeController {
       name: req.body.name,
       start: req.body.workdayStart,
       end: req.body.workdayEnd,
-      vacationDays: req.body.vacationDaysPerYear,
+      vacationDays: Number(req.body.vacationDaysPerYear),
     }
 
     const employee = this.#employees.createEmployee(input.name, input.start, input.end, input.vacationDays)
 
     // TODO: Success flash
 
-    res.redirect(`./${employee.getId()}`)
+    res.redirect(`${res.locals.baseURL}employees/${employee.getId()}`)
   }
 
   // get
   showProfile(req, res) {
     const employeeId = req.params.id
-    const employeeObject = this.#employees.getById(employeeId)
+    const employee = this.#toEmployeeView(this.#employees.getById(employeeId))
     const bookings = this.#scheduler.getUpcomingBookingsFor(employeeId)
-
-    // TODO: Shorten with spread? [...]
-    const employee = {
-      id: employeeObject.getId(),
-      name: employeeObject.getName(),
-      start: employeeObject.getWorkingHours().workdayStart,
-      end: employeeObject.getWorkingHours().workdayEnd,
-      vacation: employeeObject.getVacationDaysPerYear(),
-    }
 
     res.render('employee/profile', { employee, bookings, backURL: `${res.locals.baseURL}employees`})
   }
@@ -70,15 +50,7 @@ export class EmployeeController {
   // get
   edit(req, res) {
     const employeeId = req.params.id
-    const employeeObject = this.#employees.getById(employeeId)
-
-    const employee = {
-      id: employeeObject.getId(),
-      name: employeeObject.getName(),
-      start: employeeObject.getWorkingHours().workdayStart,
-      end: employeeObject.getWorkingHours().workdayEnd,
-      vacation: employeeObject.getVacationDaysPerYear(),
-    }
+    const employee = this.#toEmployeeView(this.#employees.getById(employeeId))
 
     res.render('employee/edit-form', {
       employee,
@@ -91,7 +63,7 @@ export class EmployeeController {
     const input = {
       start: req.body.workdayStart,
       end: req.body.workdayEnd,
-      vacationDays: req.body.vacationDaysPerYear,
+      vacationDays: Number(req.body.vacationDaysPerYear),
     }
 
     const id = req.params.id
@@ -99,24 +71,31 @@ export class EmployeeController {
     this.#employees.editWorkinghours(id, input.start, input.end)
     this.#employees.editVacationDaysPerYear(id, input.vacationDays)
 
-    res.redirect(`./${id}`)
+    res.redirect(`${res.locals.baseURL}employees/${id}`)
   }
 
   delete(req, res) {
     const employeeId = req.params.id
     // TODO: Ask before, especially if there are bookings
 
-    // TODO: Delete all bookings of employee
     this.#scheduler.deleteAllBookingsFor(employeeId)
-
     this.#employees.deleteEmployee(employeeId)
     
-
-    res.redirect(`../../../`)
+    res.redirect(`${res.locals.baseURL}employees`)
   }
 
   resetDemo(_req, res) {
     this.#demoData.reset()
-    res.redirect(`../`)
+    res.redirect(`${res.locals.baseURL}employees`)
+  }
+
+  #toEmployeeView(employee) {
+    return {
+      id: employee.getId(),
+      name: employee.getName(),
+      start: employee.getWorkingHours().workdayStart,
+      end: employee.getWorkingHours().workdayEnd,
+      vacation: employee.getVacationDaysPerYear(),
+    }
   }
 }
