@@ -175,6 +175,11 @@ export class BookingScheduler {
     this.#bookingService.cancel(resource, bookingId)
   }
 
+  deleteAllBookingsFor(employeeId) {
+    const resource = this.#employees.getResource(employeeId)
+    this.#bookingService.cancelAllBookingsFor(resource)
+  }
+
   /**
    *
    * @param {string} employeeId - ID

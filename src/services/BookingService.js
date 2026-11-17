@@ -144,6 +144,13 @@ export class BookingService {
     this.#registry.deleteBooking(bookingId)
   }
 
+  cancelAllBookingsFor(resource) {
+    const employeeId = resource.getId()
+    const allBookings = this.#registry.getAllBookingsFor(employeeId)
+    
+    allBookings.map((booking) => this.cancel(resource, booking.id))
+  }
+
   #removeFromCalendar(calendar, id) {
     if (calendar.getBookingById(id)) {
       calendar.cancelBooking(id)

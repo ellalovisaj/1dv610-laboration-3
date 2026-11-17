@@ -35,7 +35,11 @@ export class BookingRegistry {
   getAllBookings() {
     return [...this.#bookings.values()]
   }
-  
+
+  getAllBookingsFor(employeeId) {
+    return [...this.#bookings.values()].filter((booking) => booking.employeeId === employeeId)
+  }
+
   /**
    * Returns all bookings of given employee within given date range.
    *

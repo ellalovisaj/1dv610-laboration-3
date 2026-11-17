@@ -103,7 +103,15 @@ export class EmployeeController {
   }
 
   delete(req, res) {
-    this.#employees.deleteEmployee(req.params.id)
+    const employeeId = req.params.id
+    // TODO: Ask before, especially if there are bookings
+
+    // TODO: Delete all bookings of employee
+    this.#scheduler.deleteAllBookingsFor(employeeId)
+
+    this.#employees.deleteEmployee(employeeId)
+    
+
     res.redirect(`../../../`)
   }
 
