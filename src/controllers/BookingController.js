@@ -74,8 +74,9 @@ export class BookingController {
 
   delete(req, res) {
     const bookingId = req.params.bookingId
+    const employeeId = req.params.id
 
-    this.#scheduler.deleteBooking(bookingId)
+    this.#scheduler.deleteBooking(bookingId, employeeId)
 
     res.redirect(`../../`)
   }

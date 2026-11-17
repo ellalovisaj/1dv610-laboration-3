@@ -173,8 +173,9 @@ export class BookingScheduler {
     return this.#bookingService.editAppointment(employee.getResource(), formInput.id, bookingInfo)
   }
 
-  deleteBooking(id) {
-    this.#bookingService.cancel(id)
+  deleteBooking(bookingId, employeeId) {
+    const resource = this.#employees.getResource(employeeId)
+    this.#bookingService.cancel(resource, bookingId)
   }
 
   // TODO:

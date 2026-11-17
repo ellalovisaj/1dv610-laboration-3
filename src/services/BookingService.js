@@ -89,7 +89,7 @@ export class BookingService {
   /**
    * Public method for creating and saving a new booking.
    *
-   * @param {Resource} resource - Employee resouce.
+   * @param {Resource} resource - Employee resource.
    *
    * @param {Object} appointment
    * @param {string} appointment.customerName - Customer's name, blank when vacation.
@@ -133,7 +133,8 @@ export class BookingService {
     return this.#registry.editBooking(record)
   }
 
-  cancel(bookingId) {
+  cancel(resource, bookingId) {
+    this.#getEmployeesRecord(resource, bookingId)
     this.#registry.deleteBooking(bookingId)
   }
 
