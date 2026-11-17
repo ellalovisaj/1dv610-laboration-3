@@ -19,10 +19,6 @@ main {
   padding-bottom: 20%;
 }
 
-hr {
-  margin: 40px 0px;
-}
-
 /* ---------- Layout ---------- */
 
 body {
@@ -61,50 +57,42 @@ footer {
   grid-area: footer;
 }
 
-/* ---------- Forms ---------- */
+/* ---------- Universal rules ---------- */
 
-fieldset {
-  border: none;
-  margin: 0;
-  padding: 0;
-  min-width: 0;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.page-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 10px;
+  text-align: center;
+
+  margin: 40px 0px 20px 0px;
 }
 
-.form-row legend {
-  float: left;
+.page-header a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 5px;
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+h3 {
+  color: rgb(98, 98, 98);
+  margin: 5px 0px;
+  font-weight: normal;
+  font-size: 22px;
 }
 
-.form-input-field {
-  height: 2rem;
-  box-sizing: border-box;
-  font-size: 1rem;
-  font-family: inherit;
+h2 {
+  color: rgb(98, 98, 98);
+  margin: 5px 0px;
+  font-weight: normal;
+  font-size: 28px;
 }
 
-.large-text-input {
-  width: 100%;
-  box-sizing: border-box;
-  height: 2rem;
-  padding: 0.5rem 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 1rem;
+a {
+  text-decoration: none;
+  color: black;
 }
 
 /* ---------- Button Styling ---------- */
@@ -137,6 +125,21 @@ button {
   padding: 0px 10px;
   min-width: 55px;
   max-width: 84px;
+}
+
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  font-size: small;
+  height: 34px;
+  gap: 1em;
+}
+
+.button-box a,
+.button-box button {
+  font-size: small;
+  height: 34px;
+  width: 6rem;
 }
 
 /* Main buttons */
@@ -189,120 +192,13 @@ button {
   box-shadow: -1px -1px 1px inset;
 }
 
-.button-box {
-  display: flex;
-  justify-content: space-between;
-}
-
-.button-box a,
-.button-box button {
-  width: 46%;
-}
-
-/* ---------- Forms ---------- */
-
-.name-header {
-  color: rgb(98, 98, 98);;
-  margin: 5px 0px;
-  font-weight: normal;
-  font-size: 22px;
-}
-
-h2 {
-  margin: 0;
-}
-
-.bookings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-}
-
-.bookings-header a,
-#edit-employee-header a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 5px;
-}
-
-.form-page {
-  width: 400px;
-}
+/* ---------- Details pages ---------- */
 
 .details-page {
   width: 500px;
 }
 
-.list-page {
-  width: 500px;
-}
-
-
-/* ---------- All Employees List ---------- */
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  text-align: center;
-
-  margin: 40px 0px 20px 0px;
-}
-
-.page-header a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 5px;
-}
-
-.employees-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#employees-buttons {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-#employees-buttons button,
-#employees-buttons a {
-  font-size: small;
-  height: 34px;
-  width: 6rem;
-}
-
-ul {
-  padding: 0;
-}
-
-li {
-  margin: 5px 0px;
-  list-style: none;
-  outline: solid 1px black
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-.employee-info p {
-  margin: 2px;
-}
-
-.employee-name {
-  font-weight: bold;
-}
-
-.booking-details,
-.employee-details {
+.details {
   display: grid;
   grid-template-columns: 2fr 3fr;
   align-items: center;
@@ -310,34 +206,114 @@ a {
   margin: 1rem 0rem;
 }
 
+#profile-hr {
+  border: none;
+  height: 1px;
+  background-color: rgb(180, 180, 180);
+  color: rgb(180, 180, 180);
+  margin: 40px 0px;
+}
+
+/* ---------- List pages ---------- */
+
+.list-page {
+  width: 500px;
+}
+
+.list-page ul {
+  padding: 0;
+}
+
+.list-page li {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0px;
+  list-style: none;
+  padding: 5px;
+}
+
+.list-page .employee-name {
+  color: rgb(98, 98, 98);
+  font-size: 20px;
+  margin: 4px 0px;
+}
+
+.list-page hr {
+  border: none;
+  height: 1px;
+  background-color: rgb(180, 180, 180);
+  color: rgb(180, 180, 180);
+}
+
+.upcoming-bookings-header {
+  margin-top: 60px;
+}
+
+
+/* ---------- Form pages ---------- */
+
+.form-page {
+  width: 400px;
+}
+
+.edit-form .page-header,
+.details-page .page-header {
+  margin-bottom: 0px;
+}
+
 .details-id {
   font-size: small;
   padding: 0px;
-  margin: 0px;
+  margin: 0px 0px 20px 0px;
 }
 
-/* ---------- Worktime forms ---------- */
-
-.mode-picker input {
-  width: 100px;
-  height: 100px;
+.upcoming-bookings-header h3 {
+  color: rgb(98, 98, 98);
+  margin: 5px 0px;
+  font-weight: normal;
+  font-size: 22px;
 }
 
-.mode-picker {
-  display: flex;
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.mode-picker input {
+.form-row legend {
+  float: left;
+}
+
+.visually-hidden {
   position: absolute;
-  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.mode-picker label {
-  padding-top: auto;
-  border: 2px solid steelblue;
-  border-radius: 6px;
-  text-align: center;
-  cursor: pointer;
-  min-width: 10rem;
+.form-input-field {
+  height: 2rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.large-text-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 2rem;
+  padding: 0.5rem 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
 }

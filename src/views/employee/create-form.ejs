@@ -3,7 +3,7 @@
     <h2>New Employee</h2>
   </div>
 
-  <form action="<%= baseURL %>employees/new" method="post" class="forms">
+  <form action="<%= baseURL %>employees/new" method="post">
     <div>
       <label for="new-employee-name">Name</label>
       <input id="new-employee-name" class="large-text-input" name="name" type="text" placeholder="Full name" required>
@@ -17,7 +17,7 @@
     <fieldset class="form-row">
       <legend>Working Hours</legend>
 
-      <div class="form-working-hours">
+      <div>
         <label for="new-employee-workday-start" class="visually-hidden">Start time</label>
         <input type="time" id="new-employee-workday-start" class="form-input-field" name="workdayStart" value="07:00" step="900" required>
 

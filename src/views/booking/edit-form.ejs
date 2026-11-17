@@ -1,15 +1,20 @@
-<div class="form-page">
+<div class="form-page edit-form">
   <% if (booking) { %>
     <div class="page-header">
-      <h2>Edit Booking</h2>
+      <h2>
+        Edit booking for <%= booking.employeeName %>
+      </h2>
     </div>
 
-    <h3 class="name-header">
-        For <%= booking.employeeName %>
-    </h3>
+    <div class="details-id">
+      <span> Booking ID: <%= booking.id %></span>
+    </div>
+    
+
+    
 
     <form action="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>" method="post" class="forms">
-      <h3 class="name-header"><%= booking.name %></h3>
+      <h3><%= booking.name %></h3>
       <div>
         <label for="customer-name">Customer Name</label>
         <input id="customer-name" class="large-text-input" name="customerName" type="text" value="<%= booking.customerName %>" required>

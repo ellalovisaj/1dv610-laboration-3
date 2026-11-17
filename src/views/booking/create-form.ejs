@@ -3,8 +3,8 @@
     <h2>New Booking</h2>
   </div>
 
-  <form action="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new" method="post" class="booking-forms">
-    <h3 class="name-header"><%= employeeInfo.name %></h3>
+  <form action="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new" method="post">
+    <h3><%= employeeInfo.name %></h3>
     <div>
       <label for="customer-name">Customer Name</label>
       <input id="customer-name" class="large-text-input" name="customerName" type="text" placeholder="Full name" required>

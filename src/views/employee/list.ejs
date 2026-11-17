@@ -1,11 +1,11 @@
 <div class="list-page">
   <div class="page-header">
     <h2>All Employees</h2>
-    <div id="employees-buttons">
+    <div class="button-box">
       <form action="<%= baseURL %>demo/reset" method="post">
-        <button type="submit" id="employees-reset-button" class="secondary-button">Reset Demo</button>
+        <button type="submit" class="secondary-button">Reset Demo</button>
       </form>
-      <a href="<%= baseURL %>employees/new" id="employees-new-link" class="link-button-style main-button">New Employee</a>
+      <a href="<%= baseURL %>employees/new" class="link-button-style main-button">New Employee</a>
     </div>
   </div>
 
@@ -15,14 +15,15 @@
       <ul>  
         <% for (const employee of allEmployees) { %>
           <a href="<%= baseURL %>employees/<%= employee.id %>">
-            <li class="employee-info">
-              <p class="employee-name"><%= employee.name %></p>
-              <p class="employee-id"> ID: <%= employee.id %></p>
-              <p class="employee-working-hours">
-                Working hours: <%= employee.start %> - <%= employee.end %>
-              </p>
-              <p class="employee-vacation-days"> Vacation days: <%= employee.vacation %></p>
+            <li>
+              <span class="employee-name"><%= employee.name %></span>
+              <span><%= employee.start %> - <%= employee.end %></span>
+              <div>
+                <span> Vacation: </span>
+                <span><%= employee.vacation %> days</span>
+              </div>
             </li>
+            <hr>
           </a>
         <% } %>
       </ul>

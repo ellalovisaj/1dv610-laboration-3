@@ -4,11 +4,13 @@
       <h2>Edit Employee</h2>
     </div>
 
-    <h3 class="name-header">
+    <h3>
       <%= employee.name %>
     </h3>
 
-    <form action="<%= baseURL %>employees/<%= employee.id %>" method="post" class="employee-forms">
+    <p class="details-id"> ID: <%= employee.id %><p></p>
+
+    <form action="<%= baseURL %>employees/<%= employee.id %>" method="post">
       <fieldset class="form-row">
 
         <label for="edit-employee-vacation-days">Vacation days per year</label>
@@ -20,7 +22,7 @@
       <fieldset class="form-row">
         <legend>Working Hours</legend>
 
-        <div class="form-working-hours">
+        <div>
           <label for="edit-employee-workday-start" class="visually-hidden">Start time</label>
           <input type="time" id="edit-employee-workday-start" class="form-input-field" name="workdayStart" value="<%= employee.start %>" step="900" required>
 

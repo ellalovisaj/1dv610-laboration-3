@@ -1,31 +1,31 @@
 
 <div class="details-page">
-
   <% if (booking) { %>
     <div class="page-header">
-      <h2>Booking Details</h2>
+      <h2>
+        Booking <%= booking.date %>
+      </h2>
     </div>
-    <h3 class="name-header">
-      <%= booking.employeeName %>
-    </h3>
 
     <div class="details-id">
       <span> Booking ID: <%= booking.id %></span>
     </div>
 
-    <div class="booking-details">
-      <span id="booking-customer-name"> Customer Name: </span>
+    <h3>
+      <%= booking.employeeName %>
+    </h3>
+
+    <div class="details">
+      <span> Customer Name: </span>
       <span><%= booking.customerName %></span>
-      <span id="booking-date"> Date: </span>
-      <span><%= booking.date %></span>
-      <span id="booking-times"> Time: </span>
+      <span> Time: </span>
       <span><%= booking.start %> - <%= booking.end %></span>
-      <span id="booking-duration"> Duration: </span>
+      <span> Duration: </span>
       <span><%= booking.duration %> minutes</span>
     </div>
 
     <div>
-      <a href="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>/edit" id="booking-edit-link" class="link-button-style main-button">Edit</a>
+      <a href="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>/edit" class="link-button-style main-button">Edit</a>
     </div>
 
   <% } else { %>

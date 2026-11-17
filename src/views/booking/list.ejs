@@ -1,20 +1,18 @@
 <div class="list-page">
-  <div class="page-header">
-    <h2>Upcoming Bookings</h2>
-    <a href="<%= baseURL %>employees/<%= employee.id %>/booking/new" id="profile-add-booking-link" class="link-button-style main-button">New</a>
+  <div class="page-header upcoming-bookings-header">
+    <h3>Upcoming Bookings</h3>
+    <a href="<%= baseURL %>employees/<%= employee.id %>/booking/new" class="link-button-style main-button">New</a>
   </div> 
 
   <% if (bookings.length > 0) { %>
     <ul>  
       <% for (const booking of bookings) { %>
+        <hr>
         <a href="<%= baseURL %>employees/<%= employee.id %>/booking/<%= booking.id %>">
-          <li class="booking-info">
-            <p class="booking-customer-name"><%= booking.customerName %></p>
-            <p class="booking-id"> ID: <%= booking.id %></p>
-            <p class="booking-date"> Date: <%= booking.date %></p>
-            <p class="booking-working-hours">
-              Time: <%= booking.start %> - <%= booking.end %>
-            </p>
+          <li>
+            <span><%= booking.customerName %></span>
+            <span> Date: <%= booking.date %></span>
+            <span>Time: <%= booking.start %> - <%= booking.end %></span>
           </li>
         </a>
       <% } %>
