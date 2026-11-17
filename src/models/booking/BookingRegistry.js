@@ -32,6 +32,10 @@ export class BookingRegistry {
     return this.#bookings.get(id)
   }
 
+  getAllBookings() {
+    return [...this.#bookings.values()]
+  }
+  
   /**
    * Returns all bookings of given employee within given date range.
    *

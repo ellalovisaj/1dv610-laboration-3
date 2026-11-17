@@ -56,6 +56,12 @@ export class BookingService {
     // Convert all time slots into time ranges and return an array of them
     return availableSlots.map((timeSlot) => this.#toTimeRange(timeSlot))
   }
+
+  getAllBookings() {
+    const bookings = this.#registry.getAllBookings()
+    return bookings.map((record) => this.#toBookingSummary(record))
+  }
+
   /**
    *
    * @param {Resource} resource - The employees resource.

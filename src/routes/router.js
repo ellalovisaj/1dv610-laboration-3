@@ -10,14 +10,16 @@ export function createRouter(controllers) {
 
   // home page -> emloyees
   router.get('/', (_req, res) => {
-    // TODO: Base url needed here?
     res.redirect('./employees')
   })
 
   router.use('/employees', createEmployeeRouter(controllers.employee))
   router.use('/employees/:id/booking', createBookingRouter(controllers.booking))
   router.use('/vacation', createVacationRouter(controllers.vacation))
+
+  router.get('/booking/all', (req, res, next) => controllers.booking.showAll(req, res, next))
   router.post('/demo/reset', (req, res, next) => controllers.employee.resetDemo(req, res, next))
+
 
   // Catch 404. Always last route in router
   router.use((_req, _res, next) => next(createError(404)))

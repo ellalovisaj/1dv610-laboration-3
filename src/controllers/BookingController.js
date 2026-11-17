@@ -5,6 +5,12 @@ export class BookingController {
     this.#scheduler = bookingScheduler
   }
 
+  showAll(_req, res) {
+    const bookings = this.#scheduler.getAllBookings()
+
+    res.render('booking/all-bookings', { bookings })
+  }
+
   showCreateForm(req, res) {
     const employeeId = req.params.id
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)

@@ -39,6 +39,10 @@ export class BookingScheduler {
     return this.#bookingService.getBookingsOnDate(resource, date)
   }
 
+  getAllBookings() {
+    return this.#bookingService.getAllBookings().map((booking) => this.#addEmployeeNameToSummaryOf(booking))
+  }
+
   /**
    * @returns 
    * id, 
@@ -54,12 +58,14 @@ export class BookingScheduler {
     const employee = this.#employees.getById(employeeId)
     const booking = this.#bookingService.getBookingSummary(employee.getResource(), bookingId)
 
-    const details = {
-      ...booking,
-      employeeName: employee.getName()
-    }
+    return this.#addEmployeeNameToSummaryOf(booking)
+  }
 
-    return details
+  #addEmployeeNameToSummaryOf(booking) {
+    return {
+      ...booking,
+      employeeName: this.#employees.getName(booking.employeeId)
+    }
   }
 
   /**

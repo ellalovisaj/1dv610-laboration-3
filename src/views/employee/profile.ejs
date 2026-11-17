@@ -19,6 +19,10 @@
       <span><%= employee.vacation %></span>
     </div>
 
+    <div class="page-header upcoming-bookings-header">
+      <h3>Upcoming Bookings</h3>
+      <a href="<%= baseURL %>employees/<%= employee.id %>/booking/new" class="link-button-style main-button">New</a>
+    </div>
     <%- include('../booking/list', { employee, bookings }) %>
 
   <% } else { %>
