@@ -64,7 +64,10 @@ export class BookingController {
 
     const bookingId = this.#scheduler.addBooking(input)
 
-    // TODO: Success flash
+    req.session.flash = {
+      message: 'Booking saved!',
+      type: 'success'
+    }
 
     res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
   }
@@ -101,6 +104,11 @@ export class BookingController {
 
     const bookingId = this.#scheduler.editBooking(input)
 
+    req.session.flash = {
+      message: 'Booking saved!',
+      type: 'success'
+    }
+
     res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
   }
 
@@ -109,6 +117,11 @@ export class BookingController {
     const employeeId = req.params.id
 
     this.#scheduler.deleteBooking(bookingId, employeeId)
+
+    req.session.flash = {
+      message: 'Booking deleted!',
+      type: 'success'
+    }
 
     res.redirect(`${res.locals.baseURL}employees/${employeeId}`)
   }

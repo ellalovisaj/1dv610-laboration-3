@@ -7,7 +7,6 @@ export class EmployeeController {
     this.#employees = employeeRegistry
     this.#scheduler = scheduler
     this.#demoData = demoData
-    
   }
 
   // get
@@ -33,7 +32,10 @@ export class EmployeeController {
 
     const employee = this.#employees.createEmployee(input)
 
-    // TODO: Success flash
+    req.session.flash = {
+      message: 'Employee created!',
+      type: 'success',
+    }
 
     res.redirect(`${res.locals.baseURL}employees/${employee.getId()}`)
   }
@@ -53,7 +55,7 @@ export class EmployeeController {
       previousDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getPreviousWorkday(date)),
       nextDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getWorkdayAfter(date)),
       availableTimesURL: `${res.locals.baseURL}employees/${employeeId}/booking/available-times?date=${date}`,
-      backURL: `${res.locals.baseURL}employees`
+      backURL: `${res.locals.baseURL}employees`,
     })
   }
 
@@ -69,7 +71,7 @@ export class EmployeeController {
 
     res.render('employee/edit-form', {
       employee,
-      backURL: `${res.locals.baseURL}employees/${employeeId}`
+      backURL: `${res.locals.baseURL}employees/${employeeId}`,
     })
   }
 
@@ -86,6 +88,11 @@ export class EmployeeController {
     this.#employees.editWorkinghours(id, input.start, input.end)
     this.#employees.editVacationDaysPerYear(id, input.vacationDays)
 
+    req.session.flash = {
+      message: 'Employee saved!',
+      type: 'success',
+    }
+
     res.redirect(`${res.locals.baseURL}employees/${id}`)
   }
 
@@ -95,12 +102,23 @@ export class EmployeeController {
 
     this.#scheduler.deleteAllBookingsFor(employeeId)
     this.#employees.deleteEmployee(employeeId)
-    
+
+    req.session.flash = {
+      message: 'Employee deleted!',
+      type: 'success',
+    }
+
     res.redirect(`${res.locals.baseURL}employees`)
   }
 
-  resetDemo(_req, res) {
+  resetDemo(req, res) {
     this.#demoData.reset()
+
+    req.session.flash = {
+      message: 'Demo data reset succesfully!',
+      type: 'success',
+    }
+
     res.redirect(`${res.locals.baseURL}employees`)
   }
 
