@@ -9,16 +9,24 @@
 </head>
 
 <body>
-
   <header>
     <a href="<%= baseURL %>employees" class="link-button-style"> Home </a>
     <a href="<%= baseURL %>booking/all" class="link-button-style"> All bookings </a>
   </header>
 
+   <% if (locals.flash) { %>
+      <div class="flash flash-<%= flash.type %>">
+        <p>Flash</p>
+        <p><%= flash.message %></p>
+        <p><%= flash.type %></p>
+      </div>
+    <% } %>
   <main>
     <% if (locals.backURL) { %>
       <a href="<%= backURL %>" class="link-button-style secondary-button back-link">Back</a>
     <% } %>
+
+    
 
     <div class="page-content">
       <%- body %>

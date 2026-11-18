@@ -13,6 +13,11 @@ export function createRouter(controllers) {
     res.redirect('./employees')
   })
 
+  router.get('/flash-test', (req, res) => {
+    req.session.flash = { type: 'success', message: 'Flash message here' }
+    res.redirect(`${res.locals.baseURL}booking/all`)
+  })
+
   router.use('/employees', createEmployeeRouter(controllers.employee))
   router.use('/employees/:id/booking', createBookingRouter(controllers.booking))
   router.use('/vacation', createVacationRouter(controllers.vacation))
