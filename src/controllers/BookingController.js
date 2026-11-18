@@ -11,10 +11,37 @@ export class BookingController {
     res.render('booking/all-bookings', { bookings })
   }
 
+  showAvailableSlots(req, res) {
+    const employeeId = req.params.id
+    const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
+
+    //TODO: Remove test duration
+    const duration = 30
+    const workday = this.#scheduler.getNextWorkdayFromToday()
+
+    if(req.query.date !== workday) {
+      return res.redirect(this.#timeSlotsURL(res, employeeId, workday))
+    }
+
+    const slots = this.#scheduler.getAvailableTimeSlots(employeeId, duration, workday)
+
+    res.render('booking/available-slots', {
+      date: workday,
+      slots,
+      employeeInfo,
+      backURL: `${res.locals.baseURL}employees/${employeeId}`
+    })
+  }
+
+  #timeSlotsURL(res, employeeId, date) {
+    const query = new URLSearchParams({ date })
+    return `${res.locals.baseURL}employees/${employeeId}/booking/available-times?${query}`
+  }
+
   showCreateForm(req, res) {
     const employeeId = req.params.id
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
-    const nextWorkday = this.#scheduler.getNextWorkday()
+    const nextWorkday = this.#scheduler.getNextWorkdayFromToday()
 
     res.render('booking/create-form', { employeeInfo, nextWorkday, backURL: `${res.locals.baseURL}employees/${employeeId}`})
   }

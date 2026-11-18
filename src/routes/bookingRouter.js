@@ -3,7 +3,7 @@ import express from 'express'
 export function createBookingRouter(controller) {
   const router = express.Router({ mergeParams: true })
 
-  // path baseURL/employee/:id/booking
+  // path baseURL/employees/:id/booking
 
   router.get('/', (_req, res) => {
     res.redirect('../')
@@ -12,6 +12,7 @@ export function createBookingRouter(controller) {
   router.get('/new', (req, res, next) => controller.showCreateForm(req, res, next))
   router.post('/new', (req, res, next) => controller.createNew(req, res, next))
 
+  router.get('/available-times', (req, res, next) => controller.showAvailableSlots(req, res, next))
 
   router.get('/:bookingId/edit', (req, res, next) => controller.edit(req, res, next))
   router.post('/:bookingId/delete', (req, res, next) => controller.delete(req, res, next))

@@ -1,0 +1,24 @@
+<div class="list-page">
+  <div class="page-header">
+    <h2>Available time slots</h2>
+  </div> 
+
+  
+  <% if (slots.length > 0) { %>
+    <ul>  
+      <% for (const slot of slots) { %>
+        <hr>
+        <a href="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new">
+          <li>
+            <span><%= employeeInfo.name %></span>
+            <span> Date: <%= date %></span>
+            <span>Time: <%= slot.start %> - <%= slot.end %></span>
+          </li>
+        </a>
+      <% } %>
+    </ul>
+  <% } else { %>
+    <p>No Bookings</p>
+  <% } %>
+
+</div>
