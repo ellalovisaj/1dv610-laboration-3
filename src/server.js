@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
+import session from 'express-session'
 import expressLayouts from 'express-ejs-layouts'
 import helmet from 'helmet'
 import morgan from 'morgan'
@@ -39,22 +40,37 @@ try {
   const baseURL = process.env.BASE_URL || '/'
   const port = process.env.PORT || 3000
 
-  // view engine
   app.set('view engine', 'ejs')
   app.set('views', join(fullDirectoryName, 'views'))
   app.use(expressLayouts)
   app.set('layout', join(fullDirectoryName, 'views', 'layouts', 'default'))
 
-  // parse requests
   app.use(express.urlencoded({ extended: false }))
-
-  // makes it possible to use public folder (css etc) in browser
   app.use(express.static(join(fullDirectoryName, '..', 'public')))
 
-  // Specify middleware to be executed before the routes
-  app.use((_req, res, next) => {
-    // Pass the base URL to the views.
+  const sessionOptions = {
+    name: process.env.SESSION_NAME,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: 'lax',
+      // secure: true
+    }
+  }
+
+  app.use(session(sessionOptions))
+
+  app.use((req, res, next) => {
     res.locals.baseURL = baseURL
+
+    if (req.session.flash) {
+      res.locals.flash = req.session.flash
+      delete req.session.flash
+    }
+
     next()
   })
 
