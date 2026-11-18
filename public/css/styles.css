@@ -127,20 +127,34 @@ button {
   max-width: 84px;
 }
 
-.button-box {
-  display: flex;
-  justify-content: space-between;
+.one-button-box {
+  font-size: small;
+  height: 34px;
+  width: 100%;
+}
+
+.one-button-box a,
+.one-button-box button {
+  height: 34px;
+  padding: 0px 5px;
+  width: 100%;
+}
+
+.two-button-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   font-size: small;
   height: 34px;
   gap: 1em;
 }
 
-.button-box a,
-.button-box button {
-  font-size: small;
+.two-button-box button,
+.two-button-box a {
   height: 34px;
-  width: 6rem;
+  padding: 0px 5px;
+  width: max-content;
 }
+
 
 /* Main buttons */
 .main-button {
