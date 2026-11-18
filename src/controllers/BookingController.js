@@ -19,18 +19,18 @@ export class BookingController {
     const duration = 30
     const workday = this.#scheduler.getNextWorkdayFromToday()
 
-    if(req.query.date !== workday) {
-      return res.redirect(this.#timeSlotsURL(res, employeeId, workday))
+    if (req.query.date !== workday) {
+      res.redirect(this.#timeSlotsURL(res, employeeId, workday))
+    } else {
+      const slots = this.#scheduler.getAvailableTimeSlots(employeeId, duration, workday)
+
+      res.render('booking/available-slots', {
+        date: workday,
+        slots,
+        employeeInfo,
+        backURL: `${res.locals.baseURL}employees/${employeeId}`,
+      })
     }
-
-    const slots = this.#scheduler.getAvailableTimeSlots(employeeId, duration, workday)
-
-    res.render('booking/available-slots', {
-      date: workday,
-      slots,
-      employeeInfo,
-      backURL: `${res.locals.baseURL}employees/${employeeId}`
-    })
   }
 
   #timeSlotsURL(res, employeeId, date) {
@@ -43,7 +43,11 @@ export class BookingController {
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
     const nextWorkday = this.#scheduler.getNextWorkdayFromToday()
 
-    res.render('booking/create-form', { employeeInfo, nextWorkday, backURL: `${res.locals.baseURL}employees/${employeeId}`})
+    res.render('booking/create-form', {
+      employeeInfo,
+      nextWorkday,
+      backURL: `${res.locals.baseURL}employees/${employeeId}`,
+    })
   }
 
   createNew(req, res) {
@@ -75,7 +79,10 @@ export class BookingController {
     const bookingId = req.params.bookingId
     const booking = this.#scheduler.getBookingDetails(employeeId, bookingId)
 
-    res.render('booking/edit-form', { booking, backURL: `${res.locals.baseURL}employees/${employeeId}/booking/${bookingId}` })
+    res.render('booking/edit-form', {
+      booking,
+      backURL: `${res.locals.baseURL}employees/${employeeId}/booking/${bookingId}`,
+    })
   }
 
   editPost(req, res) {

@@ -56,7 +56,7 @@ export class EmployeeRegistry {
     this.#validateInput(input)
 
     const id = this.#createEmployeeId()
-    const resource = this.#createResource(id, name)
+    const resource = this.#createResource(id, input.name)
 
     const employee = new Employee(resource, input.workdayStart, input.workdayEnd, input.vacationDaysPerYear)
 

@@ -44,7 +44,12 @@ export class EmployeeController {
     const employee = this.#toEmployeeView(this.#employees.getById(employeeId))
     const bookings = this.#scheduler.getUpcomingBookingsFor(employeeId)
 
-    res.render('employee/profile', { employee, bookings, backURL: `${res.locals.baseURL}employees`})
+    res.render('employee/profile', {
+      employee,
+      bookings,
+      availableTimesURL: `${res.locals.baseURL}employees/${employeeId}/booking/available-times?${this.#scheduler.getNextWorkdayFromToday()}`,
+      backURL: `${res.locals.baseURL}employees`
+    })
   }
 
   // get
