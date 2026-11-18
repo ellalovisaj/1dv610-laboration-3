@@ -29,8 +29,8 @@ export class BookingController {
         date,
         slots,
         employeeInfo,
-        previousDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getNextWorkdayFromToday()),
-        nextDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getNextWorkdayAfter(date)),
+        previousDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getPreviousWorkday(date)),
+        nextDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getWorkdayAfter(date)),
         backURL: `${res.locals.baseURL}employees/${employeeId}`,
       })
     }

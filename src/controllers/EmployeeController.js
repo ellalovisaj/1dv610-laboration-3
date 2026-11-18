@@ -50,8 +50,8 @@ export class EmployeeController {
       date,
       employee,
       bookings,
-      previousDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getNextWorkdayFromToday()),
-      nextDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getNextWorkdayAfter(date)),
+      previousDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getPreviousWorkday(date)),
+      nextDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getWorkdayAfter(date)),
       availableTimesURL: `${res.locals.baseURL}employees/${employeeId}/booking/available-times?date=${date}`,
       backURL: `${res.locals.baseURL}employees`
     })

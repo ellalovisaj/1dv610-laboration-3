@@ -18,7 +18,6 @@
  */
 
 export class BookingScheduler {
-
   #holidayService
   #bookingService
   #employees
@@ -44,14 +43,14 @@ export class BookingScheduler {
   }
 
   /**
-   * @returns 
-   * id, 
-   * employeeId, 
-   * employeeName, 
-   * type, 
-   * customerName, 
-   * date, 
-   * start, 
+   * @returns
+   * id,
+   * employeeId,
+   * employeeName,
+   * type,
+   * customerName,
+   * date,
+   * start,
    * end
    */
   getBookingDetails(employeeId, bookingId) {
@@ -64,7 +63,7 @@ export class BookingScheduler {
   #addEmployeeNameToSummaryOf(booking) {
     return {
       ...booking,
-      employeeName: this.#employees.getName(booking.employeeId)
+      employeeName: this.#employees.getName(booking.employeeId),
     }
   }
 
@@ -86,10 +85,11 @@ export class BookingScheduler {
     }
   }
 
+  // TODO: Remove? No longer in use
   /**
    * Returns all bookings for a given employee the next workday.
-   * 
-   * @param {string} employeeId 
+   *
+   * @param {string} employeeId
    * @returns {object[]} - The bookings in an array of plain objects
    */
   getUpcomingBookingsFor(employeeId) {
@@ -104,8 +104,26 @@ export class BookingScheduler {
     return this.#getNextWorkdayFrom(today)
   }
 
-  getNextWorkdayAfter(date) {
+  getWorkdayAfter(date) {
     return this.#holidayService.addWorkdays(date, 1)
+  }
+
+  getPreviousWorkday(date) {
+    let dayBefore = this.#getPreviousDay(date)
+    
+    do {
+      if (this.#isWorkday(dayBefore))  return dayBefore
+      dayBefore = this.#getPreviousDay(dayBefore)
+
+    } while (!this.#isWorkday(dayBefore))
+
+    return dayBefore
+  }
+
+  #getPreviousDay(date) {
+    const dayBefore = new Date(date)
+    dayBefore.setUTCDate(dayBefore.getUTCDate() - 1)
+    return this.convertToString(dayBefore)
   }
 
   // TODO: Add a workdaysInPeriod in Module that returns the dates, not just how many days there are?
@@ -119,7 +137,7 @@ export class BookingScheduler {
       customerName: formInput.customerName,
       date: formInput.date,
       start: formInput.start,
-      duration: formInput.duration
+      duration: formInput.duration,
     }
   }
 
