@@ -3,13 +3,13 @@
   <ul>  
     <% for (const booking of bookings) { %>
       <hr>
-      <a href="<%= baseURL %>employees/<%= employee.id %>/booking/<%= booking.id %>">
-        <li>
+      <li>
+        <a href="<%= baseURL %>employees/<%= employee.id %>/booking/<%= booking.id %>">
           <span><%= booking.customerName %></span>
-          <span> Date: <%= booking.date %></span>
-          <span>Time: <%= booking.start %> - <%= booking.end %></span>
-        </li>
-      </a>
+        </a>
+        <span> Date: <%= booking.date %></span>
+        <span>Time: <%= booking.start %> - <%= booking.end %></span>
+      </li>
     <% } %>
   </ul>
 <% } else { %>

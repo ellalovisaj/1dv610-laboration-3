@@ -14,17 +14,17 @@
     <% if (allEmployees) { %>
       <ul>  
         <% for (const employee of allEmployees) { %>
-          <a href="<%= baseURL %>employees/<%= employee.id %>">
-            <li>
+          <li>
+            <a href="<%= baseURL %>employees/<%= employee.id %>">
               <span class="employee-name"><%= employee.name %></span>
-              <span><%= employee.start %> - <%= employee.end %></span>
-              <div>
-                <span> Vacation: </span>
-                <span><%= employee.vacation %> days</span>
-              </div>
-            </li>
-            <hr>
-          </a>
+            </a>
+            <span><%= employee.start %> - <%= employee.end %></span>
+            <div>
+              <span> Vacation: </span>
+              <span><%= employee.vacation %> days</span>
+            </div>
+          </li>
+          <hr>
         <% } %>
       </ul>
     <% } else { %>

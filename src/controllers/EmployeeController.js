@@ -31,7 +31,7 @@ export class EmployeeController {
       vacationDays: Number(req.body.vacationDaysPerYear),
     }
 
-    const employee = this.#employees.createEmployee(input.name, input.start, input.end, input.vacationDays)
+    const employee = this.#employees.createEmployee(input)
 
     // TODO: Success flash
 

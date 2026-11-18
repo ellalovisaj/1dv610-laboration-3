@@ -11,13 +11,13 @@
     <p class="details-id"> ID: <%= employee.id %><p></p>
 
     <form action="<%= baseURL %>employees/<%= employee.id %>" method="post">
-      <fieldset class="form-row">
+      <div class="form-row">
 
         <label for="edit-employee-vacation-days">Vacation days per year</label>
         <input type="number" id="edit-employee-vacation-days"
         name="vacationDaysPerYear" class="form-input-field" max="100" min="0" step="1" value="<%= employee.vacation %>" required>
 
-      </fieldset>
+      </div>
 
       <fieldset class="form-row">
         <legend>Working Hours</legend>

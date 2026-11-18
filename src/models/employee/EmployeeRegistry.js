@@ -47,16 +47,18 @@ export class EmployeeRegistry {
 
   // EDITORS AND REMOVERS ########################
   /**
-   * @param {string} name 
-   * @param {string} workdayStart - 'HH:MM' format.
-   * @param {string} workdayEnd - 'HH:MM' format.
-   * @param {number} vacationDaysPerYear - vacation days per year.
+   * @param {string} input.name 
+   * @param {string} input.workdayStart - 'HH:MM' format.
+   * @param {string} input.workdayEnd - 'HH:MM' format.
+   * @param {number} input.vacationDaysPerYear - vacation days per year.
    */
-  createEmployee(name, workdayStart, workdayEnd, vacationDaysPerYear) {
+  createEmployee(input) {
+    this.#validateInput(input)
+
     const id = this.#createEmployeeId()
     const resource = this.#createResource(id, name)
 
-    const employee = new Employee(resource, workdayStart, workdayEnd, vacationDaysPerYear)
+    const employee = new Employee(resource, input.workdayStart, input.workdayEnd, input.vacationDaysPerYear)
 
     this.#addEmployeeToRegistry(id, employee)
 
@@ -65,16 +67,15 @@ export class EmployeeRegistry {
 
   editWorkinghours(id, newStartTime, newEndTime) {
     const employee = this.#getEmployee(id)
-
-    if (newStartTime >= newEndTime) {
-      throw new Error('Start time must be earlier than end time.')
-    }
+    this.#validateWorkingHours(newStartTime, newEndTime)
 
     employee.editWorkinghours(newStartTime, newEndTime)
   }
 
   editVacationDaysPerYear(id, newDayCount) {
     // TODO: day count validation in vacayPlanner to avoid changing to less than already used
+    
+    this.#validateVacationDays(newDayCount)
     this.#getEmployee(id).editVacationDaysPerYear(newDayCount)
   }
 
@@ -106,11 +107,35 @@ export class EmployeeRegistry {
     this.#employees.set(id, employee)
   }
 
-  #validateEmployeeId(id) {
-    if (!this.#isEmployeeId(id)) throw new Error('Employee ID is not in registry')
-  }
-
   #isEmployeeId(id) {
     return this.#employees.has(id)
+  }
+
+  #validateInput(input) {
+    this.#validateEmployeeName(input.name)
+    this.#validateWorkingHours(input.start, input.end)
+    this.#validateVacationDays(input.vacationDays)
+  }
+
+  #validateEmployeeName(name) {
+    if (name.length < 3) {
+      throw new Error('Employee name must be at least three characters')
+    }
+  }
+
+  #validateWorkingHours(start, end) {
+    if (start > end) {
+      throw new Error('Start time must come before end time')
+    }
+  }
+
+  #validateVacationDays(vacationDays) {
+    if (vacationDays < 3) {
+      throw new Error('Employee name must be at least three characters')
+    }
+  }
+
+  #validateEmployeeId(id) {
+    if (!this.#isEmployeeId(id)) throw new Error('Employee ID is not in registry')
   }
 }

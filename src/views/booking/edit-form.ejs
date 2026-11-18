@@ -9,12 +9,8 @@
     <div class="details-id">
       <span> Booking ID: <%= booking.id %></span>
     </div>
-    
-
-    
 
     <form action="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>" method="post" class="forms">
-      <h3><%= booking.name %></h3>
       <div>
         <label for="customer-name">Customer Name</label>
         <input id="customer-name" class="large-text-input" name="customerName" type="text" value="<%= booking.customerName %>" required>
