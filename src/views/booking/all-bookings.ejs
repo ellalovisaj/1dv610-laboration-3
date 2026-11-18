@@ -4,23 +4,21 @@
     <h2>All Bookings</h2>
   </div> 
 
-  
   <% if (bookings.length > 0) { %>
     <ul>  
       <% for (const booking of bookings) { %>
         <hr>
-        <a href="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>">
-          <li>
+        <li>
+          <a href="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>">
             <span><%= booking.employeeName %></span>
             <span><%= booking.customerName %></span>
             <span> Date: <%= booking.date %></span>
             <span>Time: <%= booking.start %> - <%= booking.end %></span>
-          </li>
-        </a>
+          </a>
+        </li>
       <% } %>
     </ul>
   <% } else { %>
     <p>No Bookings</p>
   <% } %>
-
 </div>

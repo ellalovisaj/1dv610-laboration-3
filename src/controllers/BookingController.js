@@ -15,19 +15,22 @@ export class BookingController {
     const employeeId = req.params.id
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
 
-    //TODO: Remove test duration
-    const duration = 30
-    const workday = this.#scheduler.getNextWorkdayFromToday()
+    const date = req.query.date || this.#scheduler.getNextWorkdayFromToday()
 
-    if (req.query.date !== workday) {
-      res.redirect(this.#timeSlotsURL(res, employeeId, workday))
+    //TODO: Remove test duration
+    const duration = 60
+
+    if (req.query.date !== date) {
+      res.redirect(this.#timeSlotsURL(res, employeeId, date))
     } else {
-      const slots = this.#scheduler.getAvailableTimeSlots(employeeId, duration, workday)
+      const slots = this.#scheduler.getAvailableTimeSlots(employeeId, duration, date)
 
       res.render('booking/available-slots', {
-        date: workday,
+        date,
         slots,
         employeeInfo,
+        previousDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getNextWorkdayFromToday()),
+        nextDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getNextWorkdayAfter(date)),
         backURL: `${res.locals.baseURL}employees/${employeeId}`,
       })
     }
@@ -41,11 +44,11 @@ export class BookingController {
   showCreateForm(req, res) {
     const employeeId = req.params.id
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
-    const nextWorkday = this.#scheduler.getNextWorkdayFromToday()
 
     res.render('booking/create-form', {
       employeeInfo,
-      nextWorkday,
+      date: req.query.date || this.#scheduler.getNextWorkdayFromToday(),
+      start: req.query.start || '',
       backURL: `${res.locals.baseURL}employees/${employeeId}`,
     })
   }

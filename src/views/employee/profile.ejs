@@ -6,7 +6,6 @@
         <%= employee.name %>
       </h2>
       <div class="two-button-box">
-        <a href="<%= availableTimesURL %>" class="link-button-style secondary-button">Available times</a>
         <a href="<%= baseURL %>employees/<%= employee.id %>/edit" class="link-button-style secondary-button">Edit Employee</a>
       </div>
       
@@ -21,7 +20,8 @@
 
     <div class="page-header upcoming-bookings-header">
       <h3>Upcoming Bookings</h3>
-      <a href="<%= baseURL %>employees/<%= employee.id %>/booking/new" class="link-button-style main-button">New</a>
+
+      <a href="<%= availableTimesURL %>" class="link-button-style main-button">New</a>
     </div>
     <%- include('../booking/list', { employee, bookings }) %>
 

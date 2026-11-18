@@ -12,13 +12,13 @@
 
     <div class="form-row">
       <label for="new-appointment-date">Date</label>
-      <input type="date" id="new-appointment-date" name="date" class="form-input-field" value="<%= nextWorkday %>" required>
+      <input type="date" id="new-appointment-date" name="date" class="form-input-field" value="<%= date %>" required>
     </div>
 
 
     <div class="form-row">
       <label for="new-appointment-start">Start time</label>
-      <input type="time" id="new-appointment-start" class="form-input-field" name="start" value="10:00" step="1800" required>
+      <input type="time" id="new-appointment-start" class="form-input-field" name="start" value="<%= start %>" step="1800" required>
     </div>
 
     <div class="form-row">

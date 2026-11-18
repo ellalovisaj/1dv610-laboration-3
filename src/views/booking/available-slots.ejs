@@ -1,20 +1,24 @@
 <div class="list-page">
   <div class="page-header">
-    <h2>Available time slots</h2>
+    <h2>Book with <%= employeeInfo.name %></h2>
   </div> 
+
+  <div class="page-header">
+    <a href="<%= previousDayURL %>" class="link-button-style secondary-button">←</a>
+    <h3><%= date %></h3>
+    <a href="<%= nextDayURL %>" class="link-button-style secondary-button">→</a>
+  </div>
 
   
   <% if (slots.length > 0) { %>
     <ul>  
       <% for (const slot of slots) { %>
         <hr>
-        <a href="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new">
-          <li>
-            <span><%= employeeInfo.name %></span>
-            <span> Date: <%= date %></span>
-            <span>Time: <%= slot.start %> - <%= slot.end %></span>
-          </li>
-        </a>
+        <li>
+          <a href="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new?date=<%= date %>&start=<%= slot.start %>" class="link-button-style main-button">
+            <%= slot.start %> - <%= slot.end %>
+          </a>
+        </li>
       <% } %>
     </ul>
   <% } else { %>
