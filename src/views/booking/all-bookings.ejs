@@ -5,15 +5,21 @@
   </div> 
 
   <% if (bookings.length > 0) { %>
-    <ul>  
+    <ul class="all-bookings-list">
+      <li class="list-title">
+        <span>Employee</span>
+        <span>Customer</span>
+        <span>Date</span>
+        <span>Time</span>
+      </li>
       <% for (const booking of bookings) { %>
         <hr>
         <li>
           <a href="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>">
             <span><%= booking.employeeName %></span>
             <span><%= booking.customerName %></span>
-            <span> Date: <%= booking.date %></span>
-            <span>Time: <%= booking.start %> - <%= booking.end %></span>
+            <span><%= booking.date %></span>
+            <span><%= booking.start %> - <%= booking.end %></span>
           </a>
         </li>
       <% } %>

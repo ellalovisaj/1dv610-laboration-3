@@ -38,7 +38,7 @@ header {
 main {
   grid-area: main;
   display: grid;
-  grid-template-columns: 1fr minmax(0, 500px) 1fr;
+  grid-template-columns: 1fr minmax(0, 600px) 1fr;
   align-items: start;
   gap: 1rem;
 }
@@ -231,7 +231,7 @@ button {
 /* ---------- List pages ---------- */
 
 .list-page {
-  width: 500px;
+  width: 600px;
 }
 
 ul {
@@ -263,6 +263,27 @@ li {
   margin-top: 60px;
 }
 
+.list-title {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  color: rgb(98, 98, 98);
+  font-size: 18px;
+  margin: 0px;
+}
+
+.all-bookings-list li {
+  margin: 0;
+  padding: 0%;
+}
+
+.all-bookings-list li a {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  padding: 1rem 0rem;
+}
 
 /* ---------- Form pages ---------- */
 
