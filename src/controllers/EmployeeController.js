@@ -42,14 +42,24 @@ export class EmployeeController {
   showProfile(req, res) {
     const employeeId = req.params.id
     const employee = this.#toEmployeeView(this.#employees.getById(employeeId))
-    const bookings = this.#scheduler.getUpcomingBookingsFor(employeeId)
+
+    const date = req.query.date || this.#scheduler.getNextWorkdayFromToday()
+    const bookings = this.#scheduler.getBookingsForEmployeeOnDate(employeeId, date)
 
     res.render('employee/profile', {
+      date,
       employee,
       bookings,
-      availableTimesURL: `${res.locals.baseURL}employees/${employeeId}/booking/available-times?${this.#scheduler.getNextWorkdayFromToday()}`,
+      previousDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getNextWorkdayFromToday()),
+      nextDayURL: this.#upcomingBookingsURL(res, employeeId, this.#scheduler.getNextWorkdayAfter(date)),
+      availableTimesURL: `${res.locals.baseURL}employees/${employeeId}/booking/available-times?date=${date}`,
       backURL: `${res.locals.baseURL}employees`
     })
+  }
+
+  #upcomingBookingsURL(res, employeeId, date) {
+    const query = new URLSearchParams({ date })
+    return `${res.locals.baseURL}employees/${employeeId}?${query}`
   }
 
   // get

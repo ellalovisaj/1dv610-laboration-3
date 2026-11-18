@@ -17,13 +17,8 @@
       <span> Vacation days:</span>
       <span><%= employee.vacation %></span>
     </div>
-
-    <div class="page-header upcoming-bookings-header">
-      <h3>Upcoming Bookings</h3>
-
-      <a href="<%= availableTimesURL %>" class="link-button-style main-button">New</a>
-    </div>
-    <%- include('../booking/list', { employee, bookings }) %>
+    
+    <%- include('../booking/list') %>
 
   <% } else { %>
     <p>No employee.</p>

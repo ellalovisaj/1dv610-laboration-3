@@ -264,11 +264,14 @@ li {
 }
 
 .list-title {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr;
   color: rgb(98, 98, 98);
   font-size: 18px;
   margin: 0px;
+}
+
+.all-bookings.list-title {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
 }
 
 .all-bookings-list li {
@@ -283,6 +286,16 @@ li {
   height: 100%;
   width: 100%;
   padding: 1rem 0rem;
+}
+
+.upcoming-bookings.list-title {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.upcoming-bookings-list li a {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 
 /* ---------- Form pages ---------- */
