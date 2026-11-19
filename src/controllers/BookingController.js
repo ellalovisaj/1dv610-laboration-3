@@ -54,22 +54,33 @@ export class BookingController {
   }
 
   createNew(req, res) {
-    const input = {
-      employeeId: req.params.id,
-      customerName: req.body.customerName,
-      date: req.body.date,
-      start: req.body.start,
-      duration: Number(req.body.duration),
+    try {
+      const input = {
+        employeeId: req.params.id,
+        customerName: req.body.customerName,
+        date: req.body.date,
+        start: req.body.start,
+        duration: Number(req.body.duration),
+      }
+
+      const bookingId = this.#scheduler.addBooking(input)
+
+      req.session.flash = {
+        message: 'Booking saved!',
+        type: 'success',
+      }
+
+      res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
+    } catch (error) {
+      req.session.flash = {
+        message: error.message,
+        type: 'error',
+      }
+
+      const query = new URLSearchParams({ date: req.body.date, start: req.body.start })
+
+      res.redirect(`${res.locals.baseURL}employees/${req.params.id}/booking/new?${query}`)
     }
-
-    const bookingId = this.#scheduler.addBooking(input)
-
-    req.session.flash = {
-      message: 'Booking saved!',
-      type: 'success'
-    }
-
-    res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
   }
 
   showDetails(req, res) {
@@ -92,24 +103,33 @@ export class BookingController {
   }
 
   editPost(req, res) {
-    const input = {
-      id: req.params.bookingId,
-      employeeId: req.params.id,
-      type: 'appointment',
-      customerName: req.body.customerName,
-      date: req.body.date,
-      start: req.body.start,
-      duration: Number(req.body.duration),
+    try {
+      const input = {
+        id: req.params.bookingId,
+        employeeId: req.params.id,
+        type: 'appointment',
+        customerName: req.body.customerName,
+        date: req.body.date,
+        start: req.body.start,
+        duration: Number(req.body.duration),
+      }
+
+      const bookingId = this.#scheduler.editBooking(input)
+
+      req.session.flash = {
+        message: 'Booking saved!',
+        type: 'success',
+      }
+
+      res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
+    } catch (error) {
+      req.session.flash = {
+        message: error.message,
+        type: 'error',
+      }
+
+      res.redirect(`${res.locals.baseURL}employees/${req.params.id}/booking/${req.params.bookingId}/edit`)
     }
-
-    const bookingId = this.#scheduler.editBooking(input)
-
-    req.session.flash = {
-      message: 'Booking saved!',
-      type: 'success'
-    }
-
-    res.redirect(`${res.locals.baseURL}employees/${input.employeeId}/booking/${bookingId}`)
   }
 
   delete(req, res) {
@@ -120,7 +140,7 @@ export class BookingController {
 
     req.session.flash = {
       message: 'Booking deleted!',
-      type: 'success'
+      type: 'success',
     }
 
     res.redirect(`${res.locals.baseURL}employees/${employeeId}`)

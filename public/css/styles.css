@@ -376,7 +376,7 @@ fieldset {
 
   border: 1px solid black;
   border-radius: 4px;
-  
+
   height: 50px;
 }
 
@@ -386,7 +386,7 @@ fieldset {
   color: rgb(1, 70, 1);
 }
 
-.flash-fail {
+.flash-error {
   background-color: rgb(255, 173, 173);
   border-color: rgb(160, 82, 82);
   color: rgb(94, 0, 0);
