@@ -10,6 +10,11 @@
       <span> Booking ID: <%= bookingId %></span>
     </div>
 
+    <div class="form-row">
+      <span>Current booking: </span>
+      <span><%= date %>, <%= timeRange.start %> - <%= timeRange.end %></span>
+    </div>
+  
     <form method="get" class="forms">
       <div class="form-row">
         <label for="edit-appointment-date">Date</label>
