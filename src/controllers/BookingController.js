@@ -80,13 +80,36 @@ export class BookingController {
 
   edit(req, res) {
     const employeeId = req.params.id
+    const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
+
     const bookingId = req.params.bookingId
     const booking = this.#scheduler.getBookingDetails(employeeId, bookingId)
 
+    const date = req.query.date || booking.date ||this.#scheduler.getNextWorkdayFromToday()
+    const duration = Number(req.query.duration) || booking.duration || 30
+
+    // There's only date in query parameters when user has searched. Only get availble
+    // slots if that is true.
+    const hasSearched = req.query.date ? true : false
+    const slots = hasSearched ? this.#scheduler.getAvailableTimeSlots(employeeId, duration, booking.date) : []
+
     res.render('booking/edit-form', {
-      booking,
+      slots,
+      hasSearched,
+      bookingId,
+      date,
+      duration,
+      customerName: booking.customerName,
+      employeeInfo,
+      previousDayURL: this.#createEditURL(res, employeeId, bookingId, this.#scheduler.getPreviousWorkday(date), duration),
+      nextDayURL: this.#createEditURL(res, employeeId, bookingId, this.#scheduler.getWorkdayAfter(date), duration),
       backURL: `${res.locals.baseURL}employees/${employeeId}/booking/${bookingId}`,
     })
+  }
+
+  #createEditURL(res, employeeId, bookingId, date, duration) {
+    const query = new URLSearchParams({ date, duration })
+    return `${res.locals.baseURL}employees/${employeeId}/booking/${bookingId}/edit?${query}`
   }
 
   editPost(req, res) {

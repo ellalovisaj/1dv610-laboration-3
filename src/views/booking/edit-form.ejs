@@ -1,61 +1,61 @@
 <div class="form-page edit-form">
-  <% if (booking) { %>
+  <% if (bookingId) { %>
     <div class="page-header">
       <h2>
-        Edit booking for <%= booking.employeeName %>
+        Edit booking for <%= employeeInfo.name %>
       </h2>
     </div>
 
     <div class="details-id">
-      <span> Booking ID: <%= booking.id %></span>
+      <span> Booking ID: <%= bookingId %></span>
     </div>
 
-    <form action="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>" method="post" class="forms">
-      <div>
-        <label for="customer-name">Customer Name</label>
-        <input id="customer-name" class="large-text-input" name="customerName" type="text" value="<%= booking.customerName %>" required>
-      </div>
-
+    <form method="get" class="forms">
       <div class="form-row">
         <label for="edit-appointment-date">Date</label>
-        <input type="date" id="edit-appointment-date" name="date" class="form-input-field" value="<%= booking.date %>" required>
+        <input type="date" id="edit-appointment-date" name="date" class="form-input-field" value="<%= date %>" required>
       </div>
-
-      <fieldset class="form-row">
-        <legend>Appointment time</legend>
-
-        <div>
-          <label for="edit-appointment-start" class="visually-hidden">Start time</label>
-          <input type="time" id="edit-appointment-start" class="form-input-field" name="start" value="<%= booking.start %>" step="1800" required>
-          
-          <span>to</span>
-          
-          <label for="edit-appointment-end" class="visually-hidden">End time</label>
-          <input type="time" id="edit-appointment-end" class="form-input-field" name="end" value="<%= booking.end %>" step="1800" disabled>
-        </div>
-      </fieldset>
-
+    
       <div class="form-row">
         <label for="edit-appointment-duration">Duration</label>
         <select name="duration" id="edit-appointment-duration" class="form-input-field" required>
-        <% if (booking.duration === 30) { %>
           <option value="" disabled>Select</option>
-          <option value="30" selected>30 minutes</option>
-          <option value="60">60 minutes</option>
-        <% } else { %>
-          <option value="" disabled>Select</option>
-          <option value="30">30 minutes</option>
-          <option value="60" selected>60 minutes</option>
-        <% } %>
+          <% if (duration === 60) { %>
+            <option value="30">30 minutes</option>
+            <option value="60" selected>60 minutes</option>
+          <% } else { %>
+            <option value="30" selected>30 minutes</option>
+            <option value="60">60 minutes</option>
+          <% } %>
         </select>
       </div>
 
-      <div class="form-row">
-        <button type="submit" form="delete-booking-form" class="warning-button">Delete</button>
-        <button type="submit" class="main-button">Save changes</button>
+      <div class="one-button-box">
+        <button type="submit" class="main-button">Find a new time</button>
       </div>
     </form>
-    <form action="<%= baseURL %>employees/<%= booking.employeeId %>/booking/<%= booking.id %>/delete" id="delete-booking-form" method="post"></form>
+
+    <form action="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/<%= bookingId %>" method="post" class="forms">
+      <input type="hidden" name="date" value="<%= date %>">
+      <input type="hidden" name="duration" value="<%= duration %>">
+      <input type="hidden" name="customerName" value="<%= customerName %>">
+
+      <% if (hasSearched) { %>
+        <%- include('../booking/available-slots') %>
+
+        <div>
+          <label for="customer-name">Customer Name</label>
+          <input id="customer-name" class="large-text-input" name="customerName" type="text" value="<%= customerName %>" required>
+        </div>
+
+        <div class="one-button-box">
+          <button type="submit" class="main-button">Save changes</button>
+        </div>
+      <% } %>      
+    </form>
+
+    <button type="submit" form="delete-booking-form" class="warning-button">Delete</button>
+    <form action="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/<%= bookingId %>/delete" id="delete-booking-form" method="post"></form>
   <% } else { %>
     <p>No booking.</p>
   <% } %>

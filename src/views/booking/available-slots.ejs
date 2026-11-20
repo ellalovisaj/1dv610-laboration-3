@@ -12,7 +12,7 @@
       <% for (const slot of slots) { %>
         <hr>
         <label class="radio-button-style main-button">
-          <input type="radio" name="start" value="<%= slot.start %>" class="visually-hidden">
+          <input type="radio" name="start" value="<%= slot.start %>" class="visually-hidden" required>
           <%= slot.start %> - <%= slot.end %>
         </label>
       <% } %>
