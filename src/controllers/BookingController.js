@@ -98,7 +98,7 @@ export class BookingController {
       hasSearched,
       bookingId,
       date,
-      timeRange: {start: booking.start, end: booking.end},
+      original: {date: booking.date, start: booking.start, end: booking.end},
       duration,
       customerName: booking.customerName,
       employeeInfo,
