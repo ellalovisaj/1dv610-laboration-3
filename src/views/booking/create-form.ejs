@@ -1,37 +1,53 @@
 <div class="form-page">
   <div class="page-header">
-    <h2>New Booking</h2>
+    <h2>Book with <%= employeeInfo.name %></h2>
   </div>
 
-  <form action="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new" method="post">
-    <h3><%= employeeInfo.name %></h3>
-    <div>
-      <label for="customer-name">Customer Name</label>
-      <input id="customer-name" class="large-text-input" name="customerName" type="text" placeholder="Full name" required>
-    </div>
+  <form method="get">
+    <h3>
+
+    </h3>
 
     <div class="form-row">
       <label for="new-appointment-date">Date</label>
       <input type="date" id="new-appointment-date" name="date" class="form-input-field" value="<%= date %>" required>
     </div>
 
-
-    <div class="form-row">
-      <label for="new-appointment-start">Start time</label>
-      <input type="time" id="new-appointment-start" class="form-input-field" name="start" value="<%= start %>" step="1800" required>
-    </div>
-
     <div class="form-row">
       <label for="new-appointment-duration">Duration</label>
       <select name="duration" id="new-appointment-duration" class="form-input-field" required>
-        <option value="" disabled selected>Select</option>
-        <option value="30">30 minutes</option>
-        <option value="60">60 minutes</option>
+        <option value="" disabled>Select</option>
+        <% if (duration === 60) { %>
+          <option value="30">30 minutes</option>
+          <option value="60" selected>60 minutes</option>
+        <% } else { %>
+          <option value="30" selected>30 minutes</option>
+          <option value="60">60 minutes</option>
+        <% } %>
       </select>
     </div>
 
     <div class="one-button-box">
-      <button type="submit" class="main-button">Save</button>
+      <button type="submit" class="main-button">Get available times</button>
     </div>
+  </form>
+
+  <form action="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new" method="post">
+    <input type="hidden" name="date" value="<%= date %>">
+    <input type="hidden" name="duration" value="<%= duration %>">
+
+    <% if (hasSearched) { %>
+      <%- include('../booking/available-slots') %>
+
+      <div>
+        <label for="customer-name">Customer Name</label>
+        <input id="customer-name" class="large-text-input" name="customerName" type="text" placeholder="Full name" required>
+      </div>
+
+      <div class="one-button-box">
+        <button type="submit" class="main-button">Save</button>
+      </div>
+    <% } %>
+
   </form>
 </div>

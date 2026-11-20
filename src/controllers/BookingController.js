@@ -11,44 +11,31 @@ export class BookingController {
     res.render('booking/all-bookings', { bookings })
   }
 
-  showAvailableSlots(req, res) {
-    const employeeId = req.params.id
-    const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
-
-    const date = req.query.date || this.#scheduler.getNextWorkdayFromToday()
-
-    //TODO: Remove test duration
-    const duration = 60
-
-    if (req.query.date !== date) {
-      res.redirect(this.#timeSlotsURL(res, employeeId, date))
-    } else {
-      const slots = this.#scheduler.getAvailableTimeSlots(employeeId, duration, date)
-
-      res.render('booking/available-slots', {
-        date,
-        slots,
-        employeeInfo,
-        previousDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getPreviousWorkday(date)),
-        nextDayURL: this.#timeSlotsURL(res, employeeId, this.#scheduler.getWorkdayAfter(date)),
-        backURL: `${res.locals.baseURL}employees/${employeeId}`,
-      })
-    }
-  }
-
-  #timeSlotsURL(res, employeeId, date) {
-    const query = new URLSearchParams({ date })
-    return `${res.locals.baseURL}employees/${employeeId}/booking/available-times?${query}`
+  #createNewURL(res, employeeId, date, duration) {
+    const query = new URLSearchParams({ date, duration })
+    return `${res.locals.baseURL}employees/${employeeId}/booking/new?${query}`
   }
 
   showCreateForm(req, res) {
     const employeeId = req.params.id
     const employeeInfo = this.#scheduler.getEmployeeInfo(employeeId)
 
+    const date = req.query.date || this.#scheduler.getNextWorkdayFromToday()
+    const duration = Number(req.query.duration) || 30
+
+    // There's only date in query parameters when user has searched. Only get availble
+    // slots if that is true.
+    const hasSearched = req.query.date ? true : false
+    const slots = hasSearched ? this.#scheduler.getAvailableTimeSlots(employeeId, duration, date) : []
+
     res.render('booking/create-form', {
+      date,
+      slots,
+      hasSearched,
+      duration,
       employeeInfo,
-      date: req.query.date || this.#scheduler.getNextWorkdayFromToday(),
-      start: req.query.start || '',
+      previousDayURL: this.#createNewURL(res, employeeId, this.#scheduler.getPreviousWorkday(date), duration),
+      nextDayURL: this.#createNewURL(res, employeeId, this.#scheduler.getWorkdayAfter(date), duration),
       backURL: `${res.locals.baseURL}employees/${employeeId}`,
     })
   }
@@ -77,7 +64,7 @@ export class BookingController {
         type: 'error',
       }
 
-      const query = new URLSearchParams({ date: req.body.date, start: req.body.start })
+      const query = new URLSearchParams({ date: req.body.date, start: req.body.start, duration: req.body.duration })
 
       res.redirect(`${res.locals.baseURL}employees/${req.params.id}/booking/new?${query}`)
     }

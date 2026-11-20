@@ -1,7 +1,4 @@
-<div class="list-page">
-  <div class="page-header">
-    <h2>Book with <%= employeeInfo.name %></h2>
-  </div> 
+<div class="slot-page">
 
   <div class="page-header">
     <a href="<%= previousDayURL %>" class="link-button-style secondary-button">←</a>
@@ -9,20 +6,18 @@
     <a href="<%= nextDayURL %>" class="link-button-style secondary-button">→</a>
   </div>
 
-  
+
   <% if (slots.length > 0) { %>
-    <ul>  
+    <fieldset>
       <% for (const slot of slots) { %>
         <hr>
-        <li>
-          <a href="<%= baseURL %>employees/<%= employeeInfo.id %>/booking/new?date=<%= date %>&start=<%= slot.start %>" class="link-button-style main-button">
-            <%= slot.start %> - <%= slot.end %>
-          </a>
-        </li>
+        <label class="radio-button-style main-button">
+          <input type="radio" name="start" value="<%= slot.start %>" class="visually-hidden">
+          <%= slot.start %> - <%= slot.end %>
+        </label>
       <% } %>
-    </ul>
+    </fieldset>
   <% } else { %>
-    <p>No Bookings</p>
+    <p>No available times this day</p>
   <% } %>
-
 </div>
